@@ -26,3 +26,11 @@
 .courses{
   padding-top: 40px;
 }
+
+.plan-course{
+  background-color: rgb(172, 214, 227);
+  border: 2px, solid;
+  width: 190px;
+  font-size: 14px;
+  margin-top: 25px;
+}

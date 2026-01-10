@@ -32,25 +32,30 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 courses">
-                    <table>
+                    <input type="search" placeholder="search..." class="mb-5">
+                    <!-- <table>
                         <thead>
                             <tr>
                                 <th>Available CS Courses</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody> -->
+
+                        <!--display cs db table with dropdown menu-->
+                        <select id="planCourse" name="planCourse" class="mt-5 plan-course">
+                        <option value="">Add courses to Planner</option>
                             <?php
                                 while($row = mysqli_fetch_array($result)) {
-                                    echo "<tr>";
-                                echo "<td class='title'>" . $row['courseName'] .  "</td>";
-                                    echo "</tr>";
+                                    
+                                echo "<option value='". $row['courseName'] . "'>" . $row["courseName"] . "</option>";
                                 }
                                 // Free result set
                                 mysqli_free_result($result);
                                 mysqli_close($con);
                         ?>
-                        </tbody>
-                    </table>
+                        </select>
+                        <!-- </tbody>
+                    </table> -->
                 </div>
                 <div class="col-md-7">
                     <h2>Planner</h2>
@@ -63,7 +68,6 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="search" placeholder="search...">
                     <h3>Recommended courses</h3>
                     <ul>
                         <li>Course 1</li>
