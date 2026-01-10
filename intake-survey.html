@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="cmap_logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Course Map</title>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="btn btn-primary">Back</a>
+        <h1>Welcome to C-map!</h1>
+        <form class="col-md-5">
+            <div class="form-group">
+                <label for="comp-year">What year are you in?</label>
+                <select name="comp-year" id="comp-year" class="form-control" required>
+                    <option value="">--Select an option--</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5+">5+</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comp-type">What type of Computer Science are you taking?</label>
+                <select name="comp-type" id="comp-type" class="form-control" required>
+                    <option value="">--Select an option--</option>
+                    <option value="BCS">BCS</option>
+                    <option value="BCS with Honours">BCS with Honours</option>
+                    <option value="BACS">BACS</option>
+                </select>
+            </div>
+            <div id="applied-option-group" class="form-group hidden">
+                <label for="applied-option">Select a specialisation for Applied Computer Science:</label>
+                <select name="applied-option" id="applied-option" class="form-control">
+                    <option value="">--Select an option--</option>
+                    <option value="muc">BACS with Mobile and Ubiquitous Computing Option</option>
+                    <option value="game-dev">BACS with Game Development Defined Option</option>
+                    <option value="software-dev">BACS with Software Development Defined Option</option>
+                    <option value="data-analytics">Data Analytics Option (Special Program)</option>
+                    <option value="interdisciplinary-studies">BACS with Interdisciplinary Study</option>
+                </select> 
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <script src="survey.js"></script>
+</body>
+</html>
