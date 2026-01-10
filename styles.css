@@ -1,15 +1,15 @@
 .background-div {
-    /* background-image: url('images/library-background.jpg'); */
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    height: max(50vh, 300px); 
-    background-color: cornflowerblue; 
-    color: white;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
+  /* background-image: url('images/library-background.jpg'); */
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  height: max(50vh, 300px); 
+  background-color: cornflowerblue; 
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
 }
 
 #home-navbar {
