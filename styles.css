@@ -16,3 +16,9 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.semester {
+  border: 2px solid black;
+  height: 100px;
+  box-sizing: border-box;
+}
