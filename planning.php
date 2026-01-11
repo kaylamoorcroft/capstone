@@ -22,11 +22,11 @@
 </head>
 <body>
     <div class="container">
-        <nav id="home-navbar" class="navbar navbar-nav navbar-expand-lg my-2">
-            <a class="navbar-brand" href="index.html">
+        <nav id="home-navbar" class="navbar navbar-expand-lg my-2">
+            <a id="logo" class="navbar-brand" href="index.html">
                 <img src="cmap_logo.png" width="60" height="50">
             </a>
-            <a class="btn btn-outline-primary nav-link"><i class="fa-solid fa-gear"></i></a>
+            <a class="btn btn-outline-primary nav-link"><i class="fa-solid fa-gear fa-2x"></i></a>
         </nav>
     </div>
         <div class="container">

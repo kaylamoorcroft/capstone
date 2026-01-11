@@ -17,6 +17,10 @@
   justify-content: flex-end;
 }
 
+#logo{
+  margin-right: auto;
+}
+
 .semester {
   border: 1px solid black;
   height: 100px;
