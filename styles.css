@@ -18,19 +18,33 @@
 }
 
 .semester {
-  border: 2px solid black;
+  border: 1px solid black;
   height: 100px;
   box-sizing: border-box;
 }
+.course {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.course-list {
+  list-style-type: none;
+  padding: 0; 
+  margin: 0; 
+  margin-top: 10px;
+}
+
 
 .courses{
   padding-top: 40px;
 }
 
-.plan-course{
+.blue-input{
   background-color: rgb(172, 214, 227);
-  border: 2px, solid;
-  width: 190px;
-  font-size: 14px;
-  margin-top: 25px;
+}
+#planCourse {
+  margin-top: 1.5em;
 }

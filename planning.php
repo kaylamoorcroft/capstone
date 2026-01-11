@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 courses">
-                    <input type="search" placeholder="search..." class="mb-5">
+                    <input class="form-control" type="search" placeholder="Search...">
                     <!-- <table>
                         <thead>
                             <tr>
@@ -41,38 +41,61 @@
                         </thead>
                         <tbody> -->
 
-                        <!--display cs db table with dropdown menu-->
-                        <select id="planCourse" name="planCourse" class="mt-5 plan-course">
+                    <!--display cs db table with dropdown menu-->
+                    <select id="planCourse" name="planCourse" class="blue-input form-control w-100">
                         <option value="">Add courses to Planner</option>
-                            <?php
-                                while($row = mysqli_fetch_array($result)) {
-                                    
-                                echo "<option value='". $row['courseName'] . "'>" . $row["courseName"] . "</option>";
-                                }
-                                // Free result set
-                                mysqli_free_result($result);
-                                mysqli_close($con);
+                        <?php
+                            while($row = mysqli_fetch_array($result)) {
+                                
+                            echo "<option value='". $row['courseName'] . "'>" . $row["courseName"] . "</option>";
+                            }
+                            // Free result set
+                            mysqli_free_result($result);
+                            mysqli_close($con);
                         ?>
-                        </select>
+                    </select>
                         <!-- </tbody>
                     </table> -->
                 </div>
                 <div class="col-md-7">
                     <h2>Planner</h2>
                     <div class="row">
-                        <div class="col-md-4 semester"></div>
-                    
-                        <div class="col-md-4 semester"></div>
-                        
-                        <div class="col-md-4 semester"></div>
+                        <div class="col-md-6">
+                            <div class="form-row">
+                                <select name="semester-1" id="semester-1" class="form-control blue-input" required>
+                                    <option value="Fall">Fall</option>
+                                    <option value="Winter">Winter</option>
+                                </select>
+                                <input id="year-1" type="number" value="2026" class="form-control blue-input">
+                            </div>
+                            <ul class="course-list">
+                                <li class="course">Course 1</li>
+                                <li class="course">Course 2</li>
+                                <li class="course">Course 3</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-row">
+                                <select name="semester-2" id="semester-2" class="form-control blue-input" required>
+                                    <option value="Fall">Fall</option>
+                                    <option selected value="Winter">Winter</option>
+                                </select>
+                                <input id="year-2" type="number" value="2027" class="form-control blue-input">
+                            </div>
+                            <ul class="course-list">
+                                <li class="course">Course 1</li>
+                                <li class="course">Course 2</li>
+                                <li class="course">Course 3</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <h3>Recommended courses</h3>
-                    <ul>
-                        <li>Course 1</li>
-                        <li>Course 2</li>
-                        <li>Course 3</li>
+                    <ul class="course-list">
+                        <li class="course">Course 1</li>
+                        <li class="course">Course 2</li>
+                        <li class="course">Course 3</li>
                     </ul>
                 </div>
             </div>
