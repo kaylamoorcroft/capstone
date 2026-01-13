@@ -41,7 +41,6 @@
   margin-top: 10px;
 }
 
-
 .courses{
   padding-top: 40px;
 }
@@ -51,4 +50,66 @@
 }
 #planCourse {
   margin-top: 1.5em;
+}
+
+/* planner-collection.html*/
+#pc-navbar{
+  background-color: white;
+  height: 65px;
+  align-items: center;
+  display: flex;
+}
+
+#pc-menu{
+  display: flex;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+#pc-icon{
+  cursor: pointer;
+  margin-right: 20px;
+  color: rgb(100, 100, 100);
+  font-size: 30px;
+}
+
+#pc-sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  height: 100%;
+  width: 260px;
+  padding: 20px 0px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+#pc-sidebar-content{
+  padding: 30px 16px;
+}
+
+#pc-list{
+  list-style: none;
+  color: rgb(100, 100, 100);
+  font-size: 23px;
+  padding: 0px;
+}
+
+#pc-listItem{
+  padding: 0px 0px 8px 0px;
+}
+
+#pc-link{
+  display: flex;
+  align-items: center;
+  color: rgb(100, 100, 100);
+  text-decoration: none;
+  background-color:white;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+#pc-iconTitle{
+  font-size: 16px;
+  margin-left: 10px;
 }
