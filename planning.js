@@ -1,27 +1,59 @@
+// get list of sems that contain list of courses from cookies
+let planner = JSON.parse(localStorage.getItem("planner")) || [];
+console.log("initial planner:");
+console.log(planner);
+// let planner = [
+//     {
+//         sem: "Fall 2026", 
+//         courses: []
+//     }, 
+//     {
+//         sem: "Winter 2027", 
+//         courses: []
+//     }
+// ];
+
+let currentSem = $("#semester").val();
+
+/** load courses based on sem */ 
+function loadSemCourses() {
+    const courses = planner.find(plan => plan.sem === currentSem).courses;
+    $('.course-list').first().html("");
+    courses.forEach(course => {
+        const courseItem = $("<li class='course'></li>").text(course.name);
+        courseItem.appendTo($('.course-list')[0]);
+    });
+}
+
+/** add course to sem and save to cookies */
+function addCourse(course) {
+    const plan = planner.find(plan => plan.sem === currentSem);
+    plan.courses.push(course);
+    const courseItem = $(`<li class='course' data-courseid='${course.id}'></li>`).text(course.name);
+    courseItem.appendTo($('.course-list')[0]);
+    console.log(planner);
+    localStorage.setItem("planner", JSON.stringify(planner));
+}
+
 let selectedCourse = "";
+loadSemCourses();
+
+// update courses when change sem
+$('#semester').change(function() {
+    currentSem = $(this).val(); // Get the value
+    loadSemCourses();
+});
 
 $('#myModal').on('show.bs.modal', function (event) {
     const button = $(event.relatedTarget); // Button that triggered the modal
-    selectedCourse = button.data('courseid');
-    console.log("course to add: " + selectedCourse);
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    const modal = $(this);
-    modal.find('.modal-title').text('Select semester for ' + selectedCourse);
-    const opt1 = `${$("#semester-1").val()} ${$("#year-1").val()}`;
-    const opt2 = `${$("#semester-2").val()} ${$("#year-2").val()}`;
-    $("#sem-year-add").html(`<option value="1">${opt1}</option>
-                            <option value="2">${opt2}</option>`);
+    selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
+    console.log("course to add: " + selectedCourse.id + " " + selectedCourse.name);
+    $(this).find('.modal-title').text(`Add ${selectedCourse.name}?`);
 });
 
-$("#add-course-btn").on("click", function (event) {
+$("#add-course-btn").click(function (event) {
     $('#myModal').modal("hide");
-    const sem = $("#sem-year-add").val();
-    const courseItem = $("<li class='course'></li>").text(selectedCourse);
-    if (sem == 1) {
-        courseItem.appendTo($('.course-list')[0]);
-    }
-    else {
-        courseItem.appendTo($('.course-list')[1]);
-    }
+    // const courseItem = $("<li class='course'></li>").text(selectedCourse);
+    // courseItem.appendTo($('.course-list')[0]);
+    addCourse(selectedCourse);
 });
