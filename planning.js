@@ -1,17 +1,16 @@
 // get list of sems that contain list of courses from cookies
-let planner = JSON.parse(localStorage.getItem("planner")) || [];
+let planner = JSON.parse(localStorage.getItem("planner")) || [
+    {
+        sem: "Fall 2026", 
+        courses: []
+    }, 
+    {
+        sem: "Winter 2027", 
+        courses: []
+    }
+]; // will remove hardcoded once have ability to add sems
 console.log("initial planner:");
 console.log(planner);
-// let planner = [
-//     {
-//         sem: "Fall 2026", 
-//         courses: []
-//     }, 
-//     {
-//         sem: "Winter 2027", 
-//         courses: []
-//     }
-// ];
 
 let currentSem = $("#semester").val();
 
