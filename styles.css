@@ -52,64 +52,120 @@
   margin-top: 1.5em;
 }
 
-/* planner-collection.html*/
-#pc-navbar{
+/* planner-collection.html: sidebar*/
+.pc-navbar{
   background-color: white;
-  height: 65px;
+  height: 70px;
   align-items: center;
   display: flex;
 }
 
-#pc-menu{
+.pc-menu{
   display: flex;
   align-items: center;
   margin: 0px 20px;
 }
 
-#pc-icon{
+.pc-bars{
   cursor: pointer;
   margin-right: 20px;
   color: rgb(100, 100, 100);
   font-size: 30px;
 }
 
-#pc-sidebar{
+nav .pc-sidebar{
   position: fixed;
   top: 0;
-  left: 0;
+  left: -100%;
   background-color: white;
   height: 100%;
-  width: 260px;
+  width: 235px;
   padding: 20px 0px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
 }
 
-#pc-sidebar-content{
+nav.open .pc-sidebar{
+  left: 0;
+}
+
+.pc-logo{
+  font-size: large;
+  color: rgb(100, 100, 100);
+  padding: 0px 20px;
+}
+
+.pc-sidebar-content{
   padding: 30px 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-#pc-list{
+.pc-list{
   list-style: none;
   color: rgb(100, 100, 100);
   font-size: 23px;
   padding: 0px;
 }
 
-#pc-listItem{
+.pc-listItem{
   padding: 0px 0px 8px 0px;
 }
 
-#pc-link{
+.pc-link{
   display: flex;
   align-items: center;
   color: rgb(100, 100, 100);
-  text-decoration: none;
   background-color:white;
   border-radius: 8px;
   padding: 10px;
+  text-decoration: none;
 }
 
-#pc-iconTitle{
+.pc-iconTitle{
   font-size: 16px;
   margin-left: 10px;
+}
+
+.pc-link:hover{
+  background-color: rgb(218, 239, 246);
+  text-decoration: none;
+  color: rgb(100, 100, 100);
+}
+
+.pc-bottom-links{
+  font-size: 16px;
+  list-style: none;
+  font-size: 23px;
+  padding: 12px 0px;
+}
+
+.pc-openMenu{
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 100vh;
+  width: 200%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+nav.open ~ .pc-openMenu{
+  opacity: 1;
+  left: 235px;
+  pointer-events: auto;
+}
+
+/* planner-collection.html: created plans */
+.pc-plans{
+  border-style: solid;
+  border-radius: 25px;
+  margin: 30px 0px 20px 0px;
+  height: 220px;
+  text-align: center;
+  padding: 6px 0px;
 }
