@@ -21,11 +21,6 @@
   margin-right: auto;
 }
 
-.semester {
-  border: 1px solid black;
-  height: 100px;
-  box-sizing: border-box;
-}
 .course {
   border: 1px solid black;
   border-radius: 5px;
@@ -48,6 +43,11 @@
 .blue-input{
   background-color: rgb(172, 214, 227);
 }
+
+select {
+  margin: 5px 0;
+}
+
 #planCourse {
   margin-top: 1.5em;
 }

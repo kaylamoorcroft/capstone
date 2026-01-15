@@ -48,14 +48,30 @@
             </div>
             <div class="col-md-6">
                 <h1>Planner</h1>
-                    <div class="form-row">
-                        <select name="semester" id="semester" class="form-control blue-input" required>
-                            <option value="Fall 2026">Fall 2026</option>
-                            <option value="Winter 2027">Winter 2027</option>
+                <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#collapseSemAdd" aria-expanded="false" aria-controls="collapseSemAdd">
+                    Add new semester
+                </button>
+                <div class="collapse" id="collapseSemAdd">
+                    <div class="card card-body">
+                        <select name="sem-add" id="sem-add" class="form-control" required>
+                            <option value="Fall">Fall</option>
+                            <option value="Winter">Winter</option>
+                            <option value="Summer">Summer</option>
                         </select>
+                        <select name="year-add" id="year-add" class="form-control" required>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                        <button id="add-sem-btn" type="button" class="btn btn-primary">Add</button>
                     </div>
-                    <ul class="course-list">
-                    </ul>
+                </div>
+                <select name="semester" id="semester" class="form-control blue-input" required>
+                </select>
+                <ul class="course-list">
+                </ul>
             </div>
             <div class="col-md-3">
                 <h3>Recommended courses</h3>
