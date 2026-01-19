@@ -13,6 +13,7 @@
     <div class="container">
         <a href="index.html" class="btn btn-primary">Back</a>
         <h1>Welcome to C-map!</h1>
+        <br>
         <form class="col-md-5">
             <div class="form-group">
                 <label for="comp-year">Which year are you in?</label>
@@ -24,6 +25,18 @@
                     <option value="4">4</option>
                     <option value="5+">5+</option>
                 </select>
+            </div>
+            <div id="first-year-group" class="form-group hidden">
+                <label for="first-year">Choose a first year course preference:</label>
+                <select name="first-year" id="first-year" class="form-control">
+                    <option value="">--Select an option--</option>
+                    <option value="programming">Computer Programming 1 and 2</option>
+                    <option value="intro-cs">Intro to Computer Science</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="start-year">When did you begin at Acadia?</label>
+                <input type="month" id="start-year" placeholder="YYYY-MM" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="comp-type">Which stream of Computer Science are you taking?</label>
@@ -43,6 +56,14 @@
                     <option value="software-dev">BACS with Software Development Defined Option</option>
                     <option value="data-analytics">Data Analytics Option (Special Program)</option>
                     <option value="interdisciplinary-studies">BACS with Interdisciplinary Study</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="student-type">Are you a Full-Time or Part-Time Student?</label>
+                <select name="student-type" id="student-type" class="form-control" required>
+                    <option value="">--Select an option--</option>
+                    <option value="full-time">Full-Time</option>
+                    <option value="part-time">Part-Time</option>
                 </select>
             </div>
             <input type="submit" value="Submit">

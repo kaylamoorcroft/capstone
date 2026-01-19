@@ -1,3 +1,17 @@
+$("#comp-year").on("change", () => {
+    //show first year preference options
+    if ($("#comp-year").val() == "1") {
+        $("#first-year-group").removeClass("hidden");
+        $('#first-year').prop('required', true); // require first year preference option
+    }
+
+    else {
+        $("#first-year-group").addClass("hidden");
+        $("#first-year").val("");
+        $('#first-year').prop('required', false); // applied option field is now not required
+    }
+});
+
 // listener for comp type value change
 $("#comp-type").on("change", () => {
     // show applied option dropdown if comp type is applied
