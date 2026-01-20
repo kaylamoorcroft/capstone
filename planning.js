@@ -2,9 +2,18 @@
 let planner = JSON.parse(localStorage.getItem("planner")) || []; 
 console.log("initial planner:");
 console.log(planner);
-let sems = JSON.parse(localStorage.getItem("sems")) || []; // ["Fall 2026", "Winter 2027"];
+let sems = JSON.parse(localStorage.getItem("sems")) || []; 
+console.log("sems:")
 console.log(sems);
 let currentSem = "";
+
+/** Create html element for course item */
+function formatCourseItem(course) {
+    const courseItem = $(`<li class='course' id=${course.id} data-courseid=${course.id} data-coursename=${course.name}>${course.name}</li>`);
+    const removeBtn = $(`<i class='fa-regular fa-square-minus remove' onclick=removeCourse('${course.id}')></i>`);
+    removeBtn.appendTo(courseItem);
+    return courseItem;
+}
 
 /** load courses based on sem */ 
 function loadSemCourses() {
@@ -12,10 +21,7 @@ function loadSemCourses() {
     if (plan) {
         const courses = plan.courses;
         $('.course-list').first().html("");
-        courses.forEach(course => {
-            const courseItem = $("<li class='course'></li>").text(course.name);
-            courseItem.appendTo($('.course-list')[0]);
-        });
+        courses.forEach(course => formatCourseItem(course).appendTo($('.course-list')[0]));
     }
     else {
         console.log("No sems exist");
@@ -55,14 +61,21 @@ function addSem(sem) {
 function addCourse(course) {
     const plan = planner.find(plan => plan.sem === currentSem);
     // prevent adding duplicate course in same sem
-    if (plan.courses.some(course => course.id === course.id)) {
+    if (plan.courses.some(curCourse => curCourse.id === course.id)) {
         window.alert("Could not add " + course.name + " because it is already in " + currentSem);
         return;
     }
     plan.courses.push(course);
-    const courseItem = $(`<li class='course' data-courseid='${course.id}'></li>`).text(course.name);
-    courseItem.appendTo($('.course-list')[0]);
+    formatCourseItem(course).appendTo($('.course-list')[0]);
     localStorage.setItem("planner", JSON.stringify(planner));
+}
+
+/** remove course from sem and update cookies */
+function removeCourse(id) {
+    const plan = planner.find(plan => plan.sem === currentSem);
+    plan.courses = plan.courses.filter(course => course.id != id);
+    localStorage.setItem("planner", JSON.stringify(planner));
+    loadSemCourses();
 }
 
 let selectedCourse = "";
@@ -78,7 +91,6 @@ $('#semester').change(function() {
 $('#myModal').on('show.bs.modal', function (event) {
     const button = $(event.relatedTarget); // Button that triggered the modal
     selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
-    console.log("course to add: " + selectedCourse.id + " " + selectedCourse.name);
     $(this).find('.modal-title').text(`Add ${selectedCourse.name}?`);
 });
 

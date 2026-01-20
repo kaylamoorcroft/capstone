@@ -30,11 +30,26 @@
 }
 
 .course {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
   box-sizing: border-box;
   margin-bottom: 10px;
+}
+
+.remove {
+  font-size: 1.5em;
+  color: rgb(188, 25, 7);
+}
+.remove:hover {
+  color: rgb(228, 108, 94);
+  cursor: pointer;
+}
+.remove:active {
+  color: rgb(65, 33, 29);
 }
 
 .course-list {
@@ -176,6 +191,12 @@ nav.open ~ .pc-openMenu{
   height: 220px;
   text-align: center;
   padding: 6px 0px;
+}
+
+.pc-plan-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
 }
 
 .pc-plans ul {
