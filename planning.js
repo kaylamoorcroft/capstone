@@ -31,16 +31,22 @@ function loadSems() {
 }
 
 function addSem(sem) {
+    // prevent adding duplicate sem
+    if (sems.includes(sem)) {
+        window.alert("Could not add " + sem + " because it already exists");
+        return;
+    }
+    // update planner & list of sems
     const plan = {
         sem: sem, 
         courses: []
     };
     planner.push(plan);
     sems.push(sem);
-    console.log(sems);
+    // update UI
     const semItem = $(`<option value='${sem}'>${sem}</option>`);
     semItem.appendTo($('#semester'));
-    console.log(planner);
+    // update cookies
     localStorage.setItem("planner", JSON.stringify(planner));
     localStorage.setItem("sems", JSON.stringify(sems));
 }
@@ -48,10 +54,14 @@ function addSem(sem) {
 /** add course to sem and save to cookies */
 function addCourse(course) {
     const plan = planner.find(plan => plan.sem === currentSem);
+    // prevent adding duplicate course in same sem
+    if (plan.courses.some(course => course.id === course.id)) {
+        window.alert("Could not add " + course.name + " because it is already in " + currentSem);
+        return;
+    }
     plan.courses.push(course);
     const courseItem = $(`<li class='course' data-courseid='${course.id}'></li>`).text(course.name);
     courseItem.appendTo($('.course-list')[0]);
-    console.log(planner);
     localStorage.setItem("planner", JSON.stringify(planner));
 }
 
