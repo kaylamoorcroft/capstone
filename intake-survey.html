@@ -16,6 +16,22 @@
         <br>
         <form class="col-md-5">
             <div class="form-group">
+                <label for="degree-level">Are you an Undergraduate or Postgraduate Student?</label>
+                <select name="degree-level" id="degree-level" class="form-control">
+                    <option value="">--Select an option--</option>
+                    <option value="undergrad">Undergraduate Student</option>
+                    <option value="postgrad">Postgraduate Student</option>
+                </select>
+            </div>
+            <div id="postgrad-group" class="form-group d-none">
+                <label for="postgrad-option">Select a Postgraduate Degree:</label>
+                <select name="postgrad-option" id="postgrad-option" class="form-control">
+                    <option value="">--Select an option--</option>
+                    <option value="masters">Masters Degree</option>
+                    <option value="doctoral">Doctoral Degree</option>
+                </select>
+            </div>
+            <div>
                 <label for="comp-year">Which year are you in?</label>
                 <select name="comp-year" id="comp-year" class="form-control" required>
                     <option value="">--Select an option--</option>
@@ -26,7 +42,7 @@
                     <option value="5+">5+</option>
                 </select>
             </div>
-            <div id="first-year-group" class="form-group hidden">
+            <div id="first-year-group" class="form-group d-none">
                 <label for="first-year">Choose a first year course preference:</label>
                 <select name="first-year" id="first-year" class="form-control">
                     <option value="">--Select an option--</option>
@@ -47,7 +63,7 @@
                     <option value="BACS">BACS</option>
                 </select>
             </div>
-            <div id="applied-option-group" class="form-group hidden">
+            <div id="applied-option-group" class="form-group d-none">
                 <label for="applied-option">Select a specialization for Applied Computer Science:</label>
                 <select name="applied-option" id="applied-option" class="form-control">
                     <option value="">--Select an option--</option>
