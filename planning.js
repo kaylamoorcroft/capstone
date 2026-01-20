@@ -74,8 +74,6 @@ $('#myModal').on('show.bs.modal', function (event) {
 
 $("#add-course-btn").click(function (event) {
     $('#myModal').modal("hide");
-    // const courseItem = $("<li class='course'></li>").text(selectedCourse);
-    // courseItem.appendTo($('.course-list')[0]);
     addCourse(selectedCourse);
 });
 

@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</head>
+<body>
     <div class="container">
         <nav id="home-navbar" class="navbar navbar-expand-lg my-2">
             <a id="logo" class="navbar-brand" href="index.html">
@@ -29,7 +31,6 @@
             <a class="btn btn-outline-primary nav-link"><i class="fa-solid fa-gear fa-2x"></i></a>
         </nav>
     </div>
-<body>
     <div class="container">
         <div class="row">
             <div class="col-md-3">
@@ -38,7 +39,7 @@
                 <div class="list-group" id="planCourse">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
-                            echo "<button type='button' data-toggle='modal' data-target='#myModal' class='list-group-item list-group-item-action' data-courseid='" . $row['courseID'] . "' data-coursename='" . $row['courseName'] . "'>" . $row['courseName'] . "</td><tr>";
+                            echo "<button type='button' data-bs-toggle='modal' data-bs-target='#myModal' class='list-group-item list-group-item-action' data-courseid='" . $row['courseID'] . "' data-coursename='" . $row['courseName'] . "'>" . $row['courseName'] . "</td><tr>";
                         }
                         // Free result set
                         mysqli_free_result($result);
@@ -48,7 +49,7 @@
             </div>
             <div class="col-md-6">
                 <h1>Planner</h1>
-                <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#collapseSemAdd" aria-expanded="false" aria-controls="collapseSemAdd">
+                <button type="button" class="btn btn-outline-dark" data-bs-toggle="collapse" data-bs-target="#collapseSemAdd" aria-expanded="false" aria-controls="collapseSemAdd">
                     Add new semester
                 </button>
                 <div class="collapse" id="collapseSemAdd">
@@ -91,19 +92,15 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Add course</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Add course to current semester?</p>
-                    <!--
-                    <select name="sem-year-add" id="sem-year-add" class="form-control" required>
-                    </select>
-                    -->
                 </div>
                 <div class="modal-footer">
                     <button id="add-course-btn" type="button" class="btn btn-primary">Add</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
 
