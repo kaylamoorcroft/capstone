@@ -11,9 +11,13 @@ function displaySemPlans() {
     planner.forEach(plan => {
         let planItem = `<div class="pc-plans"><span class="pc-plan-header"><span><!--empty span for spacing--></span><h4>${plan.sem}</h4>`;
         planItem += `<button type="button" class="btn-close delete-plan" onclick="removeSem('${plan.sem}')" aria-label="Close"></button></span><ul>`;
-        plan.courses.forEach(course => planItem += `<li>${course.id}</li>`);
+        plan.courses.forEach(course => planItem += `<li data-bs-toggle="tooltip" data-bs-placement="top" title="${course.name}">${course.id}</li>`);
         planItem += `</ul></div>`
         $(planItem).appendTo($("#plan-collection"));
+    });
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
     });
 }
 
