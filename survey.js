@@ -40,3 +40,12 @@ $("#comp-type").on("change", () => {
         $('#applied-option').prop('required', false); // applied option field is now not required
     }
 });
+
+const form = document.getElementById('survey');
+form.addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent default submission
+    const formData = new FormData(form);
+    const formObject = Object.fromEntries(formData.entries());
+    console.log(formObject); 
+    localStorage.setItem("survey", JSON.stringify(formObject));
+});

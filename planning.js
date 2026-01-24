@@ -7,6 +7,37 @@ console.log("sems:")
 console.log(sems);
 let currentSem = "";
 
+//info from survey:
+let prefs = JSON.parse(localStorage.getItem("survey")) || {
+    "applied-option": "",
+    "comp-type": "BCS",
+    "comp-year": "1",
+    "degree-level": "undergrad",
+    "first-year": "intro-cs",
+    "postgrad-option": "",
+    "student-type": "full-time"
+}; //default prefs if none set
+console.log(prefs);
+
+// going to get this info from DB later for prepopulating courses
+// need to build different pathways in DB first
+const progFirstYear = [
+	{id: "COMP-1113", name: "Computer Programming 1"},
+	{id: "COMP-1123", name: "Computer Programming 2"}
+];
+const csFirstYear = [{id: "COMP-1233", name: "Intro to Computer Science"}];
+
+/** Determine if it's the user's first time accessing this page or not */
+function isFirstAccess() {
+    if (localStorage.getItem('accessed') === null) {
+        // If it does not exist, it's a first visit.
+        localStorage.setItem('accessed', 'true');
+        return true; // first access
+    } else {
+        return false; // already accessed before
+    }
+}
+
 /** Create html element for course item */
 function formatCourseItem(course) {
     const courseItem = $(`<li class='course' id=${course.id} data-courseid=${course.id} data-coursename=${course.name}>${course.name}</li>`);
@@ -81,6 +112,29 @@ function removeCourse(id) {
 let selectedCourse = "";
 loadSems();
 loadSemCourses();
+
+if(isFirstAccess()) {
+    // prepopulate required courses
+    // but if no prefs set, should open survey page before go to planning page.
+    console.log("first access");
+    if (prefs["comp-year"] == 1) {
+        console.log("first year");
+        // add sems for first year - need to do programatically based on date join
+        addSem("Fall 2026");
+        addSem("Winter 2027");
+        currentSem = $("#semester").val();
+        if (prefs["first-year"] == "programming") {
+            console.log("first year programming. adding:");
+            progFirstYear.forEach(course => {addCourse(course);
+                console.log(course.id);
+            });
+        } // need to distinguish between winter / fall too
+        else {
+            console.log("first year cs. adding:");
+            csFirstYear.forEach(course => {addCourse(course); console.log(course.id);});
+        }
+    }
+}
 
 // update courses when change sem
 $('#semester').change(function() {
