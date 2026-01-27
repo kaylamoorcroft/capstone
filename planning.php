@@ -50,9 +50,12 @@
             </div>
             <div class="col-md-6">
                 <h1>Planner</h1>
-                <button type="button" class="btn btn-outline-dark" data-bs-toggle="collapse" data-bs-target="#collapseSemAdd" aria-expanded="false" aria-controls="collapseSemAdd">
-                    Add new semester
-                </button>
+                <div id="planner-controls" class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="collapse" data-bs-target="#collapseSemAdd" aria-expanded="false" aria-controls="collapseSemAdd">
+                        Add new semester
+                    </button>
+                    <button type="button" id="clear-sem-btn" class="btn btn-outline-dark">Clear semester</button>
+                </div>
                 <div class="collapse" id="collapseSemAdd">
                     <div class="card card-body">
                         <select name="sem-add" id="sem-add" class="form-control" required>

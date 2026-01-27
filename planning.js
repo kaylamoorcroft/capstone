@@ -88,6 +88,21 @@ function addSem(sem) {
     localStorage.setItem("sems", JSON.stringify(sems));
 }
 
+/** remove courses from current semester */
+function clearCurrentSem() {
+    // check with user first, in case it was an accident
+    const confirmClear = window.confirm(`Are you sure you want to clear ${currentSem}?`);
+    if (confirmClear) {
+        const plan = planner.find(plan => plan.sem === currentSem);
+        if (plan) {
+            plan.courses = [];
+            loadSemCourses();
+            // save to cookies
+            localStorage.setItem("planner", JSON.stringify(planner));
+        }
+    }
+}
+
 /** add course to sem and save to cookies */
 function addCourse(course) {
     const plan = planner.find(plan => plan.sem === currentSem);
@@ -136,6 +151,8 @@ if(isFirstAccess()) {
     }
 }
 
+// EVENT LISTENERS
+
 // update courses when change sem
 $('#semester').change(function() {
     currentSem = $(this).val(); // Get the value
@@ -156,4 +173,8 @@ $("#add-course-btn").click(function (event) {
 $("#add-sem-btn").click(function (event) {
     addSem(`${$("#sem-add").val()} ${$("#year-add").val()}`);
     $("#collapseSemAdd").collapse('hide');
+});
+
+$("#clear-sem-btn").click(function (event) {
+    clearCurrentSem();
 });

@@ -23,15 +23,35 @@ function displaySemPlans() {
 
 /** remove sem and associated courses from planner */
 function removeSem(sem) {
-    const i = sems.indexOf(sem);
-    if (i !== -1) {
-        sems.splice(i, 1);
-        planner.splice(i,1);
+    // check with user first, in case it was an accident
+    const confirmDelete = window.confirm(`Are you sure you want to delete ${sem}?`);
+    if (confirmDelete) {
+        const i = sems.indexOf(sem);
+        if (i !== -1) {
+            sems.splice(i, 1);
+            planner.splice(i,1);
+        }
+        displaySemPlans();
+        // save to cookies
+        localStorage.setItem("sems", JSON.stringify(sems));
+        localStorage.setItem("planner", JSON.stringify(planner));
     }
+}
+
+/** Clear the entire planner to restart */
+function clearPlanner() {
+    console.log("Clearing entire planner");
+    planner = [];
+    sems = [];
     displaySemPlans();
-    // save to cookies
     localStorage.setItem("sems", JSON.stringify(sems));
     localStorage.setItem("planner", JSON.stringify(planner));
 }
 
 displaySemPlans();
+
+// Event Listeners
+
+$("#reset-planner").click(function (event) {
+    clearPlanner();
+});
