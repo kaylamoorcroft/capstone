@@ -48,4 +48,5 @@ form.addEventListener('submit', function (event) {
     const formObject = Object.fromEntries(formData.entries());
     console.log(formObject); 
     localStorage.setItem("survey", JSON.stringify(formObject));
+    window.location.href = "planning.php"; // redirect to planning page
 });

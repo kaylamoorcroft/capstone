@@ -1,5 +1,12 @@
 import { insertSorted } from './utils.js';
 
+// redirect to survey if prefs not set
+if (localStorage.getItem('survey') === null) {
+    window.location.href = "intake-survey.html"
+}
+let prefs = JSON.parse(localStorage.getItem("survey"));
+console.log(prefs);
+
 // get list of sems that contain list of courses from cookies
 let planner = JSON.parse(localStorage.getItem("planner")) || []; 
 console.log("initial planner:");
@@ -27,18 +34,6 @@ const semComparator = (sem1, sem2) => {
 
 /** compare the sems within the plans to sort in order*/
 const planComparator = (plan1, plan2) => semComparator(plan1.sem, plan2.sem);
-
-//info from survey:
-let prefs = JSON.parse(localStorage.getItem("survey")) || {
-    "applied-option": "",
-    "comp-type": "BCS",
-    "comp-year": "1",
-    "degree-level": "undergrad",
-    "first-year": "intro-cs",
-    "postgrad-option": "",
-    "student-type": "full-time"
-}; //default prefs if none set
-console.log(prefs);
 
 // going to get this info from DB later for prepopulating courses
 // need to build different pathways in DB first
