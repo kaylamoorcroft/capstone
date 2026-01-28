@@ -73,6 +73,7 @@
                         <button id="add-sem-btn" type="button" class="btn btn-primary">Add</button>
                     </div>
                 </div>
+                <p class="empty-msg d-none">There are no semesters in the planner yet... click "Add new semester" to add a semester.</p>
                 <select name="semester" id="semester" class="form-control blue-input" required>
                 </select>
                 <ul class="course-list">
@@ -110,6 +111,6 @@
 
         </div>
     </div>
-    <script src="planning.js"></script>
+    <script type="module" src="planning.js"></script>
 </body>
 </html>

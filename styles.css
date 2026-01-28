@@ -14,7 +14,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  /* grid-template-columns: auto auto auto auto; */
   padding: 10px 30px;
   gap: 20px;
 }
@@ -187,7 +188,6 @@ nav.open ~ .pc-openMenu{
 .pc-plans{
   border-style: solid;
   border-radius: 25px;
-  margin: 30px 0px 20px 0px;
   height: 220px;
   text-align: center;
   padding: 6px 0px;
@@ -209,12 +209,7 @@ nav.open ~ .pc-openMenu{
   font-size: 1.5em;
 }
 
-/* Styles for screens 600px and smaller */
-@media screen and (max-width: 600px) {
-  .grid {
-    display: grid;
-    grid-template-columns: auto;
-    padding: 10px 30px;
-    gap: 10px;
-  }
+.empty-msg {
+  padding: 10px;
+  text-align: center;
 }

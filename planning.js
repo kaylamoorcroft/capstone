@@ -1,3 +1,5 @@
+import { insertSorted } from './utils.js';
+
 // get list of sems that contain list of courses from cookies
 let planner = JSON.parse(localStorage.getItem("planner")) || []; 
 console.log("initial planner:");
@@ -6,6 +8,25 @@ let sems = JSON.parse(localStorage.getItem("sems")) || [];
 console.log("sems:")
 console.log(sems);
 let currentSem = "";
+
+/** comparator to determine how to sort sems in order
+ *  ie., Fall 2026, Winter 2027, Summer 2027, Fall 2027
+ */
+const semComparator = (sem1, sem2) => {
+    const [s1, y1] = sem1.split(" ");
+    const [s2, y2] = sem2.split(" ");
+
+    // 1st level of sorting: by year
+    if (y1 < y2) return -1;
+    if (y1 > y2) return 1;
+
+    // 2nd level of sorting: by season (inverted = winter < summer < spring < fall)
+    if (s1 > s2) return -1;
+    if (s1 < s2) return 1;
+};
+
+/** compare the sems within the plans to sort in order*/
+const planComparator = (plan1, plan2) => semComparator(plan1.sem, plan2.sem);
 
 //info from survey:
 let prefs = JSON.parse(localStorage.getItem("survey")) || {
@@ -54,17 +75,24 @@ function loadSemCourses() {
         $('.course-list').first().html("");
         courses.forEach(course => formatCourseItem(course).appendTo($('.course-list')[0]));
     }
-    else {
-        console.log("No sems exist");
-    }
 }
 /** load sems into dropdown */
 function loadSems() {
+    $("#semester").html("");
     sems.forEach(sem => {
         const semItem = $(`<option value='${sem}'>${sem}</option>`);
         semItem.appendTo($('#semester'));
     });
-    currentSem = $("#semester").val();
+    if(sems.length > 0) {
+        $("#semester").removeClass("d-none");
+        $(".empty-msg").addClass("d-none");
+        currentSem = $("#semester").val();
+    }
+    else {
+        console.log("No sems exist");
+        $("#semester").addClass("d-none");
+        $(".empty-msg").removeClass("d-none");
+    }
 }
 
 function addSem(sem) {
@@ -78,11 +106,10 @@ function addSem(sem) {
         sem: sem, 
         courses: []
     };
-    planner.push(plan);
-    sems.push(sem);
+    insertSorted(planner, plan, planComparator);
+    insertSorted(sems, sem, semComparator);
     // update UI
-    const semItem = $(`<option value='${sem}'>${sem}</option>`);
-    semItem.appendTo($('#semester'));
+    loadSems();
     // update cookies
     localStorage.setItem("planner", JSON.stringify(planner));
     localStorage.setItem("sems", JSON.stringify(sems));

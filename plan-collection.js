@@ -15,6 +15,14 @@ function displaySemPlans() {
         planItem += `</ul></div>`
         $(planItem).appendTo($("#plan-collection"));
     });
+    // control visibility of planner empty message
+    if (planner.length > 0) {
+        $(".empty-msg").addClass("d-none");
+    }
+    else {
+        $(".empty-msg").removeClass("d-none");
+    }
+    // initialise tooltips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
