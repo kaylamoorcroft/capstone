@@ -12,7 +12,7 @@
 
 <html lang="en">
 <head>
-    <link rel="icon" href="cmap_logo.png" type="image/x-icon">
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/ededc88243.js" crossorigin="anonymous"></script>
@@ -26,7 +26,7 @@
     <div class="container">
         <nav id="home-navbar" class="navbar navbar-expand-lg my-2">
             <a id="logo" class="navbar-brand" href="index.html">
-                <img src="cmap_logo.png" width="60" height="50">
+                <img src="images/logo.png" width="60" height="50">
             </a>
             <button style="margin-right: auto"><a style="padding: 10px; text-decoration: none" href="planner-collection.html">View all Courses</a></button>
             <a class="btn btn-outline-primary nav-link"><i class="fa-solid fa-gear fa-2x"></i></a>
@@ -111,6 +111,6 @@
 
         </div>
     </div>
-    <script type="module" src="planning.js"></script>
+    <script type="module" src="js/planning.js"></script>
 </body>
 </html>

@@ -62,7 +62,8 @@ function isFirstAccess() {
 /** Create html element for course item */
 function formatCourseItem(course) {
     const courseItem = $(`<li class='course' id=${course.id} data-courseid=${course.id} data-coursename=${course.name}>${course.name}</li>`);
-    const removeBtn = $(`<i class='fa-regular fa-square-minus remove' onclick=removeCourse('${course.id}')></i>`);
+    const removeBtn = $(`<i class='fa-regular fa-square-minus remove'></i>`);
+    removeBtn.click(() => removeCourse(course.id));
     removeBtn.appendTo(courseItem);
     return courseItem;
 }
