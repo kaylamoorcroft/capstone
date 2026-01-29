@@ -12,6 +12,7 @@ let planner = JSON.parse(localStorage.getItem("planner")) || [];
 console.log("initial planner:");
 console.log(planner);
 let sems = JSON.parse(localStorage.getItem("sems")) || []; 
+const semNames = ["Fall", "Winter", "Summer", "COIN"]
 console.log("sems:")
 console.log(sems);
 let currentSem = "";
@@ -63,6 +64,26 @@ function formatCourseItem(course) {
     return courseItem;
 }
 
+function getOfferedSems(binSemString) {
+    const offeredSems = [];
+    for (let i = 0; i < binSemString.length; i++) {
+        if (binSemString[i] == "1"){
+            offeredSems.push(semNames[i]);
+        }
+    }
+    return offeredSems.join(", ");
+}
+
+function isCourseOfferedInSem(course, currentSem) {
+    for (let i = 0; i < course.sem.length; i++) {
+        if (currentSem.includes(semNames[i])) {
+            if (course.sem[i] == "1") return true;
+            else return false;
+        }
+    }
+    return false;
+} 
+
 /** load courses based on sem */ 
 function loadSemCourses() {
     const plan = planner.find(plan => plan.sem === currentSem);
@@ -105,7 +126,12 @@ function addSem(sem) {
     insertSorted(planner, plan, planComparator);
     insertSorted(sems, sem, semComparator);
     // update UI
+    const oldSem = currentSem;
     loadSems();
+    // if value of current sem changed during add, load new sem's courses
+    if (currentSem != oldSem) { 
+        loadSemCourses(); 
+    }
     // update cookies
     localStorage.setItem("planner", JSON.stringify(planner));
     localStorage.setItem("sems", JSON.stringify(sems));
@@ -134,6 +160,11 @@ function addCourse(course) {
         window.alert("Could not add " + course.name + " because it is already in " + currentSem);
         return;
     }
+    // if course is not offered in current sem, don't add
+    if (!isCourseOfferedInSem(course, currentSem)) {
+        window.alert(`Sorry. Could not add ${course.name} because it is not offered in ${currentSem}. It is offered in: ${getOfferedSems(course.sem)}`);
+        return;
+    };
     plan.courses.push(course);
     formatCourseItem(course).appendTo($('.course-list')[0]);
     localStorage.setItem("planner", JSON.stringify(planner));
@@ -184,13 +215,14 @@ $('#semester').change(function() {
 
 $('#myModal').on('show.bs.modal', function (event) {
     const button = $(event.relatedTarget); // Button that triggered the modal
-    selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
+    selectedCourse = {name: button.data('coursename'), id: button.data('courseid'), sem: button.data("sem").toString(2).padStart(4,'0')};
     $(this).find('.modal-title').text(`Add ${selectedCourse.name}?`);
 });
 
 $("#add-course-btn").click(function (event) {
     $('#myModal').modal("hide");
-    addCourse(selectedCourse);
+    // brief delay for modal to disappear before exeuting code in case of alert
+    setTimeout(() => addCourse(selectedCourse), 10);
 });
 
 $("#add-sem-btn").click(function (event) {

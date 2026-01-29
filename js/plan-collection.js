@@ -48,12 +48,16 @@ function removeSem(sem) {
 
 /** Clear the entire planner to restart */
 function clearPlanner() {
-    console.log("Clearing entire planner");
-    planner = [];
-    sems = [];
-    displaySemPlans();
-    localStorage.setItem("sems", JSON.stringify(sems));
-    localStorage.setItem("planner", JSON.stringify(planner));
+    // check with user first, in case it was an accident
+    const confirmClear = window.confirm(`Are you sure you want to clear the entire planner? You cannot undo this.`);
+        if (confirmClear) {
+        console.log("Clearing entire planner");
+        planner = [];
+        sems = [];
+        displaySemPlans();
+        localStorage.setItem("sems", JSON.stringify(sems));
+        localStorage.setItem("planner", JSON.stringify(planner));
+    }
 }
 
 displaySemPlans();

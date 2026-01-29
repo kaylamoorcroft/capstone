@@ -6,7 +6,7 @@
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
-    $sql_statement = "SELECT courseID, courseName FROM compsci";
+    $sql_statement = "SELECT courseID, courseName, sem FROM compsci";
     $result = mysqli_query($con, $sql_statement);
 ?>
 
@@ -40,7 +40,7 @@
                 <div class="list-group" id="planCourse">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
-                            echo "<button type='button' data-bs-toggle='modal' data-bs-target='#myModal' class='list-group-item list-group-item-action' data-courseid='" . $row['courseID'] . "' data-coursename='" . $row['courseName'] . "'>" . $row['courseName'] . "</td><tr>";
+                            echo "<button type='button' data-bs-toggle='modal' data-bs-target='#myModal' class='list-group-item list-group-item-action' data-courseid='" . $row['courseID'] . "' data-coursename='" . $row['courseName'] . "' data-sem='" . $row['sem'] . "'>" . $row['courseName'] . "</td><tr>";
                         }
                         // Free result set
                         mysqli_free_result($result);
