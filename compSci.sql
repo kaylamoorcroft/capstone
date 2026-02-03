@@ -29,7 +29,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, FILE ON *.* TO 'catalogue_user'@'localhost
 INSERT INTO compSci (courseName, courseID, credits, mandatory, courseDescription, preRequisites, lab, sem) VALUES
 ('Intro to Computer Science', 'COMP-1233', 3, 1, '', '', 'COMP-1230L', b'1000'),
 ('Computer Programming 1', 'COMP-1113', 3, 1, 'Python', '', 'COMP-1110L', b'1101'),
-('Computer Programming 2', 'COMP-1123', 3, 1, 'Java', 'COMP-1123', 'COMP-1120L', b'1100'),
+('Computer Programming 2', 'COMP-1123', 3, 1, 'Java', 'COMP-1113', 'COMP-1120L', b'1100'),
 ('Computer Programming 3', 'COMP-2103', 3, 1, 'C', 'COMP-1123 / COMP-1233', 'COMP-2100L', b'1100'),
 ('Data Structures and Algorithms', 'COMP-2113', 3, 1, '', 'MATH-1323, COMP-1123 / COMP-1233', '', b'1100'),
 ('Computer Architecture and Organization 1', 'COMP-2203', 3, 1, '', '6hr Math', 'COMP-2200L', b'1001'),

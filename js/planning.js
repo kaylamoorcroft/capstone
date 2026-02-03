@@ -55,6 +55,32 @@ function isFirstAccess() {
     }
 }
 
+async function fetchCourseInfo(courseId) {
+    // Use the fetch API to send a POST request
+    try {
+        const response = await fetch('courses.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ courseId: courseId }) // Send data as form data
+        });
+        const data = await response.json(); // Parse the JSON response from the PHP script
+
+        if (data.error) {
+            console.log('Error: ' + data.error);
+            return null;
+        } 
+
+        data.sem = data.sem.toString(2).padStart(4,'0');
+        return data;
+
+    } catch(error) {
+        console.error('Error:', error);
+        return null;
+    }
+}
+
 /** Create html element for course item */
 function formatCourseItem(course) {
     const courseItem = $(`<li class='course' id=${course.id} data-courseid=${course.id} data-coursename=${course.name}>${course.name}</li>`);
@@ -83,6 +109,94 @@ function isCourseOfferedInSem(course, currentSem) {
     }
     return false;
 } 
+
+/** Check if prereqs are in sems before current sem */
+function prereqsNotMet(prereqString) {
+    if (!prereqString) { // no prereqs, just return
+        return [];
+    }
+    // parse prereqs into proper list - how handle / for or??? - maybe 2d array?
+    const prereqs = prereqString.split(", ");
+    const prereqsNotMet = [];
+    // iterate through prereqs
+    prereqs.forEach(req => {
+        // initialise variables needed for this section
+        let [creds, credCount, dep, coursePlanned, isHourReq, isChoiceReq, choiceReqs] = [0, 0, "", false, false, false, []];
+        // if not a course but something like "6h Comp"
+        if (!isNaN(parseInt(req[0]))) { 
+            isHourReq = true;
+            let hrs = 0;
+            [hrs, dep] = req.split(" ");
+            creds = parseInt(hrs)/3;
+        }
+        // if there is a choice of courses eg. "COMP-1123 / COMP-1233"
+        if (req.includes("/")) {
+            isChoiceReq = true;
+            choiceReqs = req.split(" / ");
+        }
+        // iterate through each sem
+        for (const plan of planner) {
+            if (plan.sem == currentSem) { // only check before current sem
+                break;
+            } 
+            if (isChoiceReq) {
+                for (const choice of choiceReqs) { // if at least 1 course completed
+                    if (plan.courses.some(currentCourse => currentCourse.id == choice)) {
+                        coursePlanned = true;
+                        break;
+                    }
+                }
+            }
+            else if (isHourReq) { // check if course id contains enough hours from dep (ie. COMP-1123 contains "Comp")
+                plan.courses.some(currentCourse => {
+                    if (currentCourse.id.includes(dep.toUpperCase())) {
+                        console.log(`${currentCourse.id} contains ${dep.toUpperCase()}`);
+                        credCount++;
+                    }
+                });
+                coursePlanned = credCount >= creds ? true : false;
+            }
+            else {
+                coursePlanned = plan.courses.some(currentCourse => currentCourse.id == req);
+            }
+            if (coursePlanned) {
+                console.log(`${req} √`);
+                break;
+            }
+        }
+        if (!coursePlanned) {
+            console.log(`${req} X`)
+            prereqsNotMet.push(req);
+        }
+    });
+    return prereqsNotMet;
+}
+/** Check if course is a prereq for any courses occuring it after in the plan
+ *  Useful for validation when wanting to remove a course
+ */
+function isCoursePrereq(id) {
+    // only have to start checking at index after curSem
+    const startIndex = planner.findIndex(plan => plan.sem === currentSem) + 1;
+    const coursesWithPrereq = []; // courses that have id as a prereq
+    for (let i = startIndex; i < planner.length; i++) {
+        for (const course of planner[i].courses) {
+            for (const req of course.prereqs.split(",")) {
+                if (!isNaN(parseInt(req[0]))) {  // how will know if have enough hours????
+                    const [hrs, dep] = req.split(" ");
+                    const creds = parseInt(hrs)/3;
+                    console.log(`need ${creds} courses in ${dep}. Dunno if will have enough if remove course -> ${id} might be a prereq for ${course.id}`);
+                }
+                // if there is a choice of courses eg. "COMP-1123 / COMP-1233"
+                else if (req.includes("/")) {
+                    const choiceReqs = req.split(" / ");
+                    if (choiceReqs.some(req => req == id)) { coursesWithPrereq.push(course.id); }
+                }
+                else if (req == id) { coursesWithPrereq.push(course.id); }
+            }
+        }
+    }
+    return coursesWithPrereq;
+}
 
 /** load courses based on sem */ 
 function loadSemCourses() {
@@ -153,25 +267,37 @@ function clearCurrentSem() {
 }
 
 /** add course to sem and save to cookies */
-function addCourse(course) {
+async function addCourse(course) {
     const plan = planner.find(plan => plan.sem === currentSem);
     // prevent adding duplicate course in same sem
     if (plan.courses.some(curCourse => curCourse.id === course.id)) {
         window.alert("Could not add " + course.name + " because it is already in " + currentSem);
         return;
     }
+    const courseInfo = await fetchCourseInfo(course.id);
+    console.log(courseInfo);
     // if course is not offered in current sem, don't add
-    if (!isCourseOfferedInSem(course, currentSem)) {
-        window.alert(`Sorry. Could not add ${course.name} because it is not offered in ${currentSem}. It is offered in: ${getOfferedSems(course.sem)}`);
+    if (!isCourseOfferedInSem(courseInfo, currentSem)) {
+        window.alert(`Sorry. Could not add ${courseInfo.name} because it is not offered in ${currentSem}. It is offered in: ${getOfferedSems(courseInfo.sem)}`);
         return;
     };
-    plan.courses.push(course);
+    const missingCourses = prereqsNotMet(courseInfo.prereqs);
+    if (missingCourses.length > 0) {
+        window.alert(`Cannot add course. You do not meet the following prerequisites: ${missingCourses}`);
+        return;
+    }
+    plan.courses.push(courseInfo);
     formatCourseItem(course).appendTo($('.course-list')[0]);
     localStorage.setItem("planner", JSON.stringify(planner));
 }
 
 /** remove course from sem and update cookies */
 function removeCourse(id) {
+    const coursesWithPrereq = isCoursePrereq(id);
+    if (coursesWithPrereq.length > 0) {
+        window.alert(`Cannot remove ${id} because it is a prereq for ${coursesWithPrereq}`);
+        return;
+    }
     const plan = planner.find(plan => plan.sem === currentSem);
     plan.courses = plan.courses.filter(course => course.id != id);
     localStorage.setItem("planner", JSON.stringify(planner));
@@ -215,14 +341,15 @@ $('#semester').change(function() {
 
 $('#myModal').on('show.bs.modal', function (event) {
     const button = $(event.relatedTarget); // Button that triggered the modal
-    selectedCourse = {name: button.data('coursename'), id: button.data('courseid'), sem: button.data("sem").toString(2).padStart(4,'0')};
+    selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
     $(this).find('.modal-title').text(`Add ${selectedCourse.name}?`);
 });
 
 $("#add-course-btn").click(function (event) {
     $('#myModal').modal("hide");
     // brief delay for modal to disappear before exeuting code in case of alert
-    setTimeout(() => addCourse(selectedCourse), 10);
+    //setTimeout(() => addCourse(selectedCourse), 10);
+    addCourse(selectedCourse);
 });
 
 $("#add-sem-btn").click(function (event) {
