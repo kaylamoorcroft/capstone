@@ -16,8 +16,8 @@
         <br>
         <form class="col-md-5" id="survey">
             <div class="form-group">
-                <label for="degree-level">Are you an Undergraduate or Postgraduate Student?</label>
-                <select name="degree-level" id="degree-level" class="form-control">
+                <label for="degree-level">Are you an Undergraduate or Postgraduate student?</label>
+                <select name="degree-level" id="degree-level" class="form-control" required>
                     <option value="">--Select an option--</option>
                     <option value="undergrad">Undergraduate Student</option>
                     <option value="postgrad">Postgraduate Student</option>
@@ -43,16 +43,31 @@
                 </select>
             </div>
             <div id="first-year-group" class="form-group d-none">
-                <label for="first-year">Choose a first year course preference:</label>
-                <select name="first-year" id="first-year" class="form-control">
+                <label for="first-year-pref">Choose a first year course preference:</label>
+                <select name="first-year-pref" id="first-year-pref" class="form-control">
                     <option value="">--Select an option--</option>
-                    <option value="programming">Computer Programming 1 and 2</option>
+                    <option value="comp-programming">Computer Programming 1 and 2</option>
                     <option value="intro-cs">Intro to Computer Science</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="start-year">When did you begin at Acadia?</label>
-                <input type="month" id="start-year" placeholder="YYYY-MM" class="form-control" required>
+                <label for="start-semester">When did you begin at Acadia?</label>
+                <select name="start-semester" id="start-semester" class="form-control">
+                    <option value="">--Select an option--</option>
+                    <option value="fall">Fall</option>
+                    <option value="winter">Winter</option>
+                </select>
+                <select name="start-year" id="start-year" class="form-control">
+                    <option value="">--Select an option--</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="comp-type">Which stream of Computer Science are you taking?</label>
@@ -82,9 +97,14 @@
                     <option value="part-time">Part-Time</option>
                 </select>
             </div>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" id="submit">
+            <br><br>
+            
         </form>
+        <p id="display-area"></p> <!-- hold form input when displayed -->
+        <br>
     </div>
+    <button id="display-button" type="button" class="btn btn-outline-primary" style="margin-left: 80px">Load Saved Data</button>
     <script src="js/survey.js"></script>
 </body>
 </html>

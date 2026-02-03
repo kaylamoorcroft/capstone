@@ -2,13 +2,13 @@ $("#comp-year").on("change", () => {
     //show first year preference options
     if ($("#comp-year").val() == "1") {
         $("#first-year-group").removeClass("d-none");
-        $('#first-year').prop('required', true);
+        $('#first-year-pref').prop('required', true);
     }
 
     else {
         $("#first-year-group").addClass("d-none");
-        $("#first-year").val("");
-        $('#first-year').prop('required', false);
+        $("#first-year-pref").val("");
+        $('#first-year-pref').prop('required', false);
     }
 });
 
@@ -41,12 +41,27 @@ $("#comp-type").on("change", () => {
     }
 });
 
+//store form info in localStorage
 const form = document.getElementById('survey');
 form.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent default submission
     const formData = new FormData(form);
-    const formObject = Object.fromEntries(formData.entries());
+    const formObject = Object.fromEntries(formData.entries()); //convert form data to JS object
     console.log(formObject); 
     localStorage.setItem("survey", JSON.stringify(formObject));
     window.location.href = "planning.php"; // redirect to planning page
 });
+
+//display form info
+const displayButton = document.getElementById("display-button");
+displayButton.addEventListener("click", displayForm); //on click, display form data
+
+function displayForm(){
+const surveyObject = JSON.parse(localStorage.getItem("survey"));
+    //loop over object.entries
+    let surveyData = "";
+        for (const [key, value] of Object.entries(surveyObject)){
+            surveyData += key + ": " + value + "<br>";
+        }
+        document.getElementById("display-area").innerHTML = surveyData; //show form data in <p>
+    }
