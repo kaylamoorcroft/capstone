@@ -28,7 +28,7 @@
             <a id="logo" class="navbar-brand" href="index.html">
                 <img src="images/logo.png" width="60" height="50">
             </a>
-            <button style="margin-right: auto"><a style="padding: 10px; text-decoration: none" href="planner-collection.html">View all Courses</a></button>
+            <button style="margin-right: auto"><a style="padding: 10px; text-decoration: none" href="planner-collection.html">View all Plans</a></button>
             <a class="btn btn-outline-primary nav-link"><i class="fa-solid fa-gear fa-2x"></i></a>
         </nav>
     </div>
