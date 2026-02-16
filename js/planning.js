@@ -14,7 +14,7 @@ $(document).ready(function(){
 
         //if no results match search, return empty string
         if (request == ""){
-            $("#search-results").html("");
+            $("#planCourse").html("");
         }
         else{
             //call AJAX
@@ -26,11 +26,10 @@ $(document).ready(function(){
                 },
                 //call function if result is found
                 success: function(param){
-                    $("#search-results").html(param);
+                    $("#planCourse").html(param);
                 }
             });
         }
-        console.log(request);
     });
 });
 

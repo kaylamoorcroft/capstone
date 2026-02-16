@@ -24,7 +24,7 @@
                 <img src="images/logo.png" width="60" height="50">
             </a>
             <button style="margin-right: auto"><a style="padding: 10px; text-decoration: none" href="planner-collection.html">View all Plans</a></button>
-            <a class="btn btn-outline-primary nav-link"><i class="fa-solid fa-gear fa-2x"></i></a>
+            <a class="btn nav-link"><i class="fa-solid fa-gear fa-2x"></i></a>
         </nav>
     </div>
     <div class="container">
@@ -40,7 +40,7 @@
                 <div class="list-group" id="planCourse">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
-                            echo "<button type='button' data-bs-toggle='modal' data-bs-target='#myModal' class='list-group-item list-group-item-action' data-courseid='" . $row['courseID'] . "' data-coursename='" . $row['courseName'] . "'>" . $row['courseName'] . "</td><tr>";
+                            echo "<button type='button' data-bs-toggle='modal' data-bs-target='#myModal' class='list-group-item list-group-item-action' data-courseid='" . $row['courseID'] . "' data-coursename='" . $row['courseName'] . "'>" . $row['courseName'];
                         }
                         // Free result set
                         mysqli_free_result($result);

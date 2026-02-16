@@ -15,14 +15,9 @@ if (isset($_POST['course_search'])) {
 
     while ($Result = MySQLi_fetch_array($ExecQuery)) {
     ?>
-    <tr>
-        <td>
-            <a>
     <!-- Assigning searched result in "Search box" in "planning.php" file. -->
-            <?php echo $Result['courseName']; ?>
-    </td>
-</tr>
-</a>
+            <?php echo "<button type='button' data-bs-toggle='modal' data-bs-target='#myModal' class='list-group-item list-group-item-action data-courseid='" . $Result['courseID'] . "' data-coursename='" . $Result['courseName'] . "'>" . $Result['courseName']; ?>
+
     <?php
 }}
 ?>
