@@ -7,6 +7,33 @@ if (localStorage.getItem('survey') === null) {
 let prefs = JSON.parse(localStorage.getItem("survey"));
 console.log(prefs);
 
+//search bar script
+$(document).ready(function(){
+    $("#course_search").keyup(function(){
+        var request = $('#course_search').val();
+
+        //if no results match search, return empty string
+        if (request == ""){
+            $("#search-results").html("");
+        }
+        else{
+            //call AJAX
+            $.ajax({
+                type: "POST",
+                url: "search-ajax.php",
+                data: {
+                course_search: request
+                },
+                //call function if result is found
+                success: function(param){
+                    $("#search-results").html(param);
+                }
+            });
+        }
+        console.log(request);
+    });
+});
+
 // get list of sems that contain list of courses from cookies
 let planner = JSON.parse(localStorage.getItem("planner")) || []; 
 console.log("initial planner:");

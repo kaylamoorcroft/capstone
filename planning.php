@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <?php
-    $con = mysqli_connect("localhost", "catalogue_user", "passw0rd", "courseCatalogue_db");
-
-    // Check connection
-    if (mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    }
+    include "dbConnection.php";
     $sql_statement = "SELECT courseID, courseName FROM compsci";
     $result = mysqli_query($con, $sql_statement);
 ?>
@@ -36,7 +31,12 @@
         <div class="row">
             <div class="col-md-3">
                 <h3>Add courses to Planner</h3>
-                <input id="course-search" class="form-control" type="search" placeholder="Search...">
+
+                <!-- search bar feature -->
+                <input id="course_search" class="form-control" type="search" placeholder="Search...">
+                <!-- display search results -->
+                <div id="search-results"></div> <!-- where search results will be shown-->
+
                 <div class="list-group" id="planCourse">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
