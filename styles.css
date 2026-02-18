@@ -76,6 +76,14 @@ select {
   margin-top: 1.5em;
 }
 
+#recommendations{
+  margin-top: 80px;
+}
+
+a {
+  text-decoration: none;
+}
+
 /* planner-collection.html: sidebar*/
 .pc-navbar{
   background-color: white;

@@ -23,7 +23,6 @@
             <a id="logo" class="navbar-brand" href="index.html">
                 <img src="images/logo.png" width="60" height="50">
             </a>
-            <button style="margin-right: auto"><a style="padding: 10px; text-decoration: none" href="planner-collection.html">View all Plans</a></button>
             <a class="btn nav-link"><i class="fa-solid fa-gear fa-2x"></i></a>
         </nav>
     </div>
@@ -76,14 +75,25 @@
                 </select>
                 <ul class="course-list">
                 </ul>
-            </div>
-            <div class="col-md-3">
+                
+                <div class="d-flex justify-content-end">
+                    <button style="background-color: rgb(172, 214, 227); border-color: rgb(172, 214, 227); border-radius: 8px; padding: 4px; border-style: solid">
+                        <a style="padding: 10px; color: black" href="planner-collection.html">View all Plans</a>
+                    </button>
+                </div>
+
+                <div id="recommendations">
                 <h3>Recommended courses</h3>
                 <ul class="course-list">
                     <li class="course">Course 1</li>
                     <li class="course">Course 2</li>
                     <li class="course">Course 3</li>
                 </ul>
+            </div>
+            </div>
+
+            <div class="col-md-3">
+                <h3>Add Manual Entry</h3>
             </div>
         </div>
     </div>
