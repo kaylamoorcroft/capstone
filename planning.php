@@ -34,8 +34,6 @@
 
                 <!-- search bar feature -->
                 <input id="course_search" class="form-control" type="search" placeholder="Search...">
-                <!-- display search results -->
-                <div id="search-results"></div> <!-- where search results will be shown-->
 
                 <div class="list-group" id="planCourse">
                     <?php
