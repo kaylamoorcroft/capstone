@@ -33,7 +33,7 @@
                 <h3>Add courses to Planner</h3>
 
                 <!-- search bar feature -->
-                <input id="course_search" class="form-control" type="search" placeholder="Search...">
+                <input id="course_search" type="text" class="form-control" placeholder="Search...">
 
                 <div class="list-group" id="planCourse">
                     <?php

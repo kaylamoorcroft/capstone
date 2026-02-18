@@ -13,7 +13,7 @@ $(document).ready(function(){
         var request = $('#course_search').val();
 
         //if no results match search, return empty string
-        if (request == ""){
+        if (request == null){
             $("#planCourse").html("");
         }
         else{
