@@ -23,12 +23,12 @@
             <a id="logo" class="navbar-brand" href="index.html">
                 <img src="images/logo.png" width="60" height="50">
             </a>
-            <a class="btn nav-link"><i class="fa-solid fa-gear fa-2x"></i></a>
+            <!-- <a class="btn nav-link"><i class="fa-solid fa-gear fa-2x"></i></a> -->
         </nav>
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h3>Add courses to Planner</h3>
 
                 <!-- search bar feature -->
@@ -45,13 +45,13 @@
                     ?>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <h1>Planner</h1>
                 <div id="planner-controls" class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="collapse" data-bs-target="#collapseSemAdd" aria-expanded="false" aria-controls="collapseSemAdd">
+                    <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseSemAdd" aria-expanded="false" aria-controls="collapseSemAdd">
                         Add new semester
                     </button>
-                    <button type="button" id="clear-sem-btn" class="btn btn-outline-dark">Clear semester</button>
+                    <button type="button" id="clear-sem-btn" class="btn btn-outline-dark btn-sm">Clear semester</button>
                 </div>
                 <div class="collapse" id="collapseSemAdd">
                     <div class="card card-body">
@@ -93,7 +93,20 @@
             </div>
 
             <div class="col-md-3">
-                <h3>Add Manual Entry</h3>
+                <h3 style="margin-bottom: 20px">Add New Course</h3>
+                <form id="newCourse">
+                    <div class="form-group pb-4">
+                        <label for="nCourseName">Course Name</label>
+                        <input type="text" class="form-control" id="nCourseName" placeholder="Enter name..." required>
+                    </div>
+                    <div class="form-group pb-4">
+                        <label for="nCourseID">Course ID</label>
+                        <input type="text" class="form-control" id="nCourseID" placeholder="XXXX-NNNN">
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" id="add-new-course" class="btn btn-outline-dark btn-sm" data-bs-toggle='modal' data-bs-target='#myModal' data-type='new-course'>Add Course</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

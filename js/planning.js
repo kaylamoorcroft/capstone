@@ -367,7 +367,12 @@ $('#semester').change(function() {
 
 $('#myModal').on('show.bs.modal', function (event) {
     const button = $(event.relatedTarget); // Button that triggered the modal
-    selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
+    if (button.data('type') === 'new-course'){
+        selectedCourse = {name: $('#nCourseName').val(), id: $('#nCourseID').val()};
+    } else{
+        selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
+    }
+
     $(this).find('.modal-title').text(`Add ${selectedCourse.name}?`);
 });
 
