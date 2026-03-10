@@ -1,4 +1,4 @@
-import { insertSorted } from './utils.js';
+import { insertSorted, toTitleCase } from './utils.js';
 
 // redirect to survey if prefs not set
 if (localStorage.getItem('survey') === null) {
@@ -38,7 +38,30 @@ let planner = JSON.parse(localStorage.getItem("planner")) || [];
 console.log("initial planner:");
 console.log(planner);
 let sems = JSON.parse(localStorage.getItem("sems")) || []; 
-const semNames = ["Fall", "Winter", "Summer", "COIN"]
+const Semesters = [
+    { id: "FA", name: "Fall" },
+    { id: "WI", name: "Winter" },
+    { id: "SU", name: "Summer" },
+    { id: "CI", name: "Continuous Intake" }
+];
+Semesters.forEach((sem, i) => {
+    Semesters[sem.id] = { ...sem, index: i };
+}); // now can access by Semesters.FA.name or Semesters[0].name
+/**
+ * find next sem & year but exclude CI, and optionally include summer
+ * @param {int} i Current semester index
+ * @param {int} year Current year
+ * @param {int} y Current year
+ * @returns {string} the string of next semester after the current one
+ */
+const findNextSem = (i, year, summer=false) => {
+    switch(i) {
+        case 0: return `${Semesters[++i].name} ${++year}`;
+        case 1: return `${(summer ? Semesters[++i].name : Semesters[0].name)} ${year}`;
+        case 2: return `${Semesters[0].name} ${year}`;
+        default: return "Undefined";
+    }
+};
 console.log("sems:")
 console.log(sems);
 let currentSem = "";
@@ -120,7 +143,7 @@ function getOfferedSems(binSemString) {
     const offeredSems = [];
     for (let i = 0; i < binSemString.length; i++) {
         if (binSemString[i] == "1"){
-            offeredSems.push(semNames[i]);
+            offeredSems.push(Semesters[i].name);
         }
     }
     return offeredSems.join(", ");
@@ -128,7 +151,7 @@ function getOfferedSems(binSemString) {
 
 function isCourseOfferedInSem(course, currentSem) {
     for (let i = 0; i < course.sem.length; i++) {
-        if (currentSem.includes(semNames[i])) {
+        if (currentSem.includes(Semesters[i].name)) {
             if (course.sem[i] == "1") return true;
             else return false;
         }
@@ -330,24 +353,39 @@ function removeCourse(id) {
     loadSemCourses();
 }
 
+// UI upon page load
+
 let selectedCourse = "";
 loadSems();
 loadSemCourses();
 
-if(isFirstAccess()) {
+// place year options in add sem dialog based on start year in survey
+console.log("Years:");
+const startYear = parseInt(prefs["start-year"]);
+for (let year = startYear; year <= startYear + 4; year++) {
+    console.log(year);
+    const yearOption = $(`<option value='${year}'>${year}</option>`);
+    yearOption.appendTo($('#year-add'));
+}
+
+if(true) { //isFirstAccess()) {
     // prepopulate required courses
     // but if no prefs set, should open survey page before go to planning page.
     console.log("first access");
     if (prefs["comp-year"] == 1) {
         console.log("first year");
         // add sems for first year - need to do programatically based on date join
-        addSem("Fall 2026");
-        addSem("Winter 2027");
+        const startSem = toTitleCase(prefs["start-semester"]);
+        const startSemIndex = Semesters.findIndex(sem => sem.name === startSem);
+        addSem(`${startSem} ${prefs["start-year"]}`);
+        const secondSem = findNextSem(startSemIndex, prefs["start-year"]);
+        addSem(secondSem);
         currentSem = $("#semester").val();
-        if (prefs["first-year"] == "programming") {
+        if (prefs["first-year-pref"] == "comp-programming") {
             console.log("first year programming. adding:");
             progFirstYear.forEach(course => {addCourse(course);
                 console.log(course.id);
+                $("#semester").val(secondSem);
             });
         } // need to distinguish between winter / fall too
         else {

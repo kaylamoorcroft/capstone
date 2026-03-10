@@ -24,3 +24,13 @@ export function insertSorted(arr, newItem, comparator) {
     arr.splice(low, 0, newItem);
     return arr;
 }
+
+/**
+ * 
+ * @param {string} str 
+ * @returns formatted string in title case. E.g. "APPLE CIDER" => "Apple Cider"
+ */
+export function toTitleCase(str) {
+  return str.toLowerCase().split(' ').map((word) =>
+    word.charAt(0).toUpperCase() + word.slice(1)).join(' '); 
+}

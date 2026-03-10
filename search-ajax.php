@@ -6,7 +6,8 @@
         $searchRequest = $_POST['course_search'];
         
     //show course name results which match value in search bar
-        $Query = "SELECT courseID, courseName FROM compSci WHERE courseName LIKE '%$searchRequest%'";
+        $Query = "SELECT courseID, courseName FROM compSci WHERE courseName LIKE '%$searchRequest%' 
+            UNION SELECT courseID, courseName FROM math WHERE courseName LIKE '%$searchRequest%'";
 
     //Query execution
         $ExecQuery = MySQLi_query($con, $Query);

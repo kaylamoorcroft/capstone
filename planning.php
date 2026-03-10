@@ -61,11 +61,6 @@
                             <option value="Summer">Summer</option>
                         </select>
                         <select name="year-add" id="year-add" class="form-control" required>
-                            <option value="2026">2026</option>
-                            <option value="2027">2027</option>
-                            <option value="2028">2028</option>
-                            <option value="2029">2029</option>
-                            <option value="2030">2030</option>
                         </select>
                         <button id="add-sem-btn" type="button" class="btn btn-primary">Add</button>
                     </div>
