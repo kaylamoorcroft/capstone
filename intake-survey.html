@@ -10,101 +10,120 @@
     <title>Course Map</title>
 </head>
 <body>
-    <div class="container">
         <a href="index.html" class="btn btn-primary">Back</a>
         <h1>Welcome to C-map!</h1>
         <br>
-        <form class="col-md-5" id="survey">
-            <div class="form-group">
-                <label for="degree-level">Are you an Undergraduate or Postgraduate student?</label>
-                <select name="degree-level" id="degree-level" class="form-control" required>
-                    <option value="">--Select an option--</option>
-                    <option value="undergrad">Undergraduate Student</option>
-                    <option value="postgrad">Postgraduate Student</option>
-                </select>
+        <div id="survey_border" class="container">
+            <form id="survey"> <!--class="col-md-6"-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="degree-level">Are you an Undergraduate or Postgraduate student?</label>
+                            <select name="degree-level" id="degree-level" class="form-control" required>
+                                <option value="">--Select an option--</option>
+                                <option value="undergrad">Undergraduate Student</option>
+                                <option value="postgrad">Postgraduate Student</option>
+                            </select>
+                        </div>
+                        <div id="postgrad-group" class="form-group d-none">
+                            <label for="postgrad-option">Select a Postgraduate Degree:</label>
+                            <select name="postgrad-option" id="postgrad-option" class="form-control">
+                                <option value="">--Select an option--</option>
+                                <option value="masters">Masters Degree</option>
+                                <option value="doctoral">Doctoral Degree</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="comp-year">Which year are you in?</label>
+                            <select name="comp-year" id="comp-year" class="form-control" required>
+                                <option value="">--Select an option--</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5+">5+</option>
+                            </select>
+                        </div>
+                        <div id="first-year-group" class="form-group d-none">
+                            <label for="first-year-pref">Choose a first year course preference:</label>
+                            <select name="first-year-pref" id="first-year-pref" class="form-control">
+                                <option value="">--Select an option--</option>
+                                <option value="comp-programming">Computer Programming 1 and 2</option>
+                                <option value="intro-cs">Intro to Computer Science</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="start-semester">When did you begin at Acadia?</label>
+                            <select name="start-semester" id="start-semester" class="form-control">
+                                <option value="">--Select an option--</option>
+                                <option value="fall">Fall</option>
+                                <option value="winter">Winter</option>
+                            </select>
+                            <select name="start-year" id="start-year" class="form-control">
+                                <option value="">--Select an option--</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="comp-type">Which stream of Computer Science are you taking?</label>
+                            <select name="comp-type" id="comp-type" class="form-control" required>
+                                <option value="">--Select an option--</option>
+                                <option value="BCS">BCS</option>
+                                <option value="BCS with Honours">BCS with Honours</option>
+                                <option value="BACS">BACS</option>
+                            </select>
+                        </div>
+                        <div id="applied-option-group" class="form-group d-none">
+                            <label for="applied-option">Select a specialization for Applied Computer Science:</label>
+                            <select name="applied-option" id="applied-option" class="form-control">
+                                <option value="">--Select an option--</option>
+                                <option value="muc">BACS with Mobile and Ubiquitous Computing Option</option>
+                                <option value="game-dev">BACS with Game Development Defined Option</option>
+                                <option value="software-dev">BACS with Software Development Defined Option</option>
+                                <option value="data-analytics">Data Analytics Option (Special Program)</option>
+                                <option value="interdisciplinary-studies">BACS with Interdisciplinary Study</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="padding-bottom: 20px">
+                        <div class="form-group">
+                            <label for="student-type">Are you a Full-Time or Part-Time Student?</label>
+                            <select name="student-type" id="student-type" class="form-control" required>
+                                <option value="">--Select an option--</option>
+                                <option value="full-time">Full-Time</option>
+                                <option value="part-time">Part-Time</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            <div style="justify-content: flex-end; text-align: right">
+                <input type="submit" value="Submit" id="submit" style="text-align: right">
             </div>
-            <div id="postgrad-group" class="form-group d-none">
-                <label for="postgrad-option">Select a Postgraduate Degree:</label>
-                <select name="postgrad-option" id="postgrad-option" class="form-control">
-                    <option value="">--Select an option--</option>
-                    <option value="masters">Masters Degree</option>
-                    <option value="doctoral">Doctoral Degree</option>
-                </select>
-            </div>
-            <div>
-                <label for="comp-year">Which year are you in?</label>
-                <select name="comp-year" id="comp-year" class="form-control" required>
-                    <option value="">--Select an option--</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5+">5+</option>
-                </select>
-            </div>
-            <div id="first-year-group" class="form-group d-none">
-                <label for="first-year-pref">Choose a first year course preference:</label>
-                <select name="first-year-pref" id="first-year-pref" class="form-control">
-                    <option value="">--Select an option--</option>
-                    <option value="comp-programming">Computer Programming 1 and 2</option>
-                    <option value="intro-cs">Intro to Computer Science</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="start-semester">When did you begin at Acadia?</label>
-                <select name="start-semester" id="start-semester" class="form-control">
-                    <option value="">--Select an option--</option>
-                    <option value="fall">Fall</option>
-                    <option value="winter">Winter</option>
-                </select>
-                <select name="start-year" id="start-year" class="form-control">
-                    <option value="">--Select an option--</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="comp-type">Which stream of Computer Science are you taking?</label>
-                <select name="comp-type" id="comp-type" class="form-control" required>
-                    <option value="">--Select an option--</option>
-                    <option value="BCS">BCS</option>
-                    <option value="BCS with Honours">BCS with Honours</option>
-                    <option value="BACS">BACS</option>
-                </select>
-            </div>
-            <div id="applied-option-group" class="form-group d-none">
-                <label for="applied-option">Select a specialization for Applied Computer Science:</label>
-                <select name="applied-option" id="applied-option" class="form-control">
-                    <option value="">--Select an option--</option>
-                    <option value="muc">BACS with Mobile and Ubiquitous Computing Option</option>
-                    <option value="game-dev">BACS with Game Development Defined Option</option>
-                    <option value="software-dev">BACS with Software Development Defined Option</option>
-                    <option value="data-analytics">Data Analytics Option (Special Program)</option>
-                    <option value="interdisciplinary-studies">BACS with Interdisciplinary Study</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="student-type">Are you a Full-Time or Part-Time Student?</label>
-                <select name="student-type" id="student-type" class="form-control" required>
-                    <option value="">--Select an option--</option>
-                    <option value="full-time">Full-Time</option>
-                    <option value="part-time">Part-Time</option>
-                </select>
-            </div>
-            <input type="submit" value="Submit" id="submit">
-            <br><br>
-            
-        </form>
-        <p id="display-area"></p> <!-- hold form input when displayed -->
+            </form>
+        </div>
         <br>
-    </div>
-    <button id="display-button" type="button" class="btn btn-outline-primary" style="margin-left: 80px">Load Saved Data</button>
+
+        <button id="display-button" type="button" class="btn btn-outline-primary" style="margin-left: 45px">Load Saved Data</button>
+
+    <p id="display-area"> <!-- hold form input when displayed --> </p>
     <script src="js/survey.js"></script>
 </body>
 </html>
