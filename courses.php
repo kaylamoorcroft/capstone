@@ -2,21 +2,15 @@
 // query page for whenever want to get more info on a course from the course id
 header('Content-Type: application/json'); // Set header to indicate JSON response
 
-// Create connection
-$con = mysqli_connect("localhost", "catalogue_user", "passw0rd", "courseCatalogue_db");
-
-// Check connection
-if (mysqli_connect_errno()) {
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+include "dbConnection.php";
 
 // Get data sent from JavaScript via POST request
 // Use prepared statements to prevent SQL injection!
 $course_id = $_POST['courseId'] ?? ''; 
 
 if (!empty($course_id)) {
-    $stmt = $con->prepare("SELECT courseID, courseName, sem, preRequisites, lab FROM compSci WHERE courseID = ?");
-    $stmt->bind_param("s", $course_id); // "i" for integer type
+    $stmt = $con->prepare("SELECT courseID, courseName, sem, preRequisites, lab FROM compSci UNION SELECT courseID, courseName, sem, preRequisites, lab FROM math WHERE courseID = ?");
+    $stmt->bind_param("s", $course_id); // "i" for integer type, "s" for string type
     // Execute the query
     $stmt->execute();
 

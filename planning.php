@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
     include "dbConnection.php";
-    $sql_statement = "SELECT courseID, courseName FROM compsci";
+    $sql_statement = "SELECT courseID, courseName FROM compsci UNION SELECT courseID, courseName FROM math";
     $result = mysqli_query($con, $sql_statement);
 ?>
 
