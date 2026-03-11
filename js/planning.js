@@ -115,7 +115,7 @@ function isFirstAccess() {
     }
 }
 
-async function fetchCourseInfo(courseId) {
+async function fetchCourseInfo(course) {
     // Use the fetch API to send a POST request
     try {
         const response = await fetch('courses.php', {
@@ -123,13 +123,20 @@ async function fetchCourseInfo(courseId) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: new URLSearchParams({ courseId: courseId }) // Send data as form data
+            body: new URLSearchParams({ courseId: course.id }) // Send data as form data
         });
         const data = await response.json(); // Parse the JSON response from the PHP script
 
         if (data.error) {
             console.log('Error: ' + data.error);
-            return null;
+            return {
+                "id": course.id,
+                "name": course.name,
+                "sem": '1111',
+                "prereqs": '',
+                "lab": ''
+            };
+            //return null;
         } 
 
         data.sem = data.sem.toString(2).padStart(4,'0');
@@ -334,7 +341,7 @@ async function addCourse(course, sem) {
         window.alert("Could not add " + course.name + " because it is already in " + sem);
         return;
     }
-    const courseInfo = await fetchCourseInfo(course.id);
+    const courseInfo = await fetchCourseInfo(course);
     console.log(courseInfo);
     // if course is not offered in current sem, don't add
     if (!isCourseOfferedInSem(courseInfo, sem)) {

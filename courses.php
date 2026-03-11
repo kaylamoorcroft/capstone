@@ -37,33 +37,6 @@ if (!empty($course_id)) {
         echo json_encode(["error" => "0 results for courseId"]);
     }
     $stmt->close();
-    // $rawData = [];
-    // if ($row = $result->fetch_assoc()) {
-    //     $rawData = $row;
-    // }
-    // extract($rawData);
-    // $data = array(
-    //     "id" => $courseID,
-    //     "name" => $courseName
-    // );
-    // $data = [];
-    // if ($result->num_rows > 0) {
-    //     // Output data of the unique row
-    //     while($row = $result->fetch_assoc()) {
-    //         $data = $row;
-    //         //echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-    //     }
-    //     echo json_encode(["id" => $course_id, "name" => "course name"]);
-    // } else {
-    //     echo json_encode(["error" => "0 results for courseId"])
-    // }
-    // $stmt->execute();
-    // $result = $stmt->get_result();
-    
-    
-    //$stmt->close();
-    // echo json_encode(["id" => "id", "name" => "course name"]);
-    //echo json_encode($data); // Encode the result into a JSON object for the JavaScript
 } else {
     echo json_encode(["error" => "No course ID provided"]);
 }
