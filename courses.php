@@ -9,8 +9,9 @@ include "dbConnection.php";
 $course_id = $_POST['courseId'] ?? ''; 
 
 if (!empty($course_id)) {
-    $stmt = $con->prepare("SELECT courseID, courseName, sem, preRequisites, lab FROM compSci UNION SELECT courseID, courseName, sem, preRequisites, lab FROM math WHERE courseID = ?");
-    $stmt->bind_param("s", $course_id); // "i" for integer type, "s" for string type
+    $stmt = $con->prepare("SELECT courseID, courseName, sem, preRequisites, lab FROM compSci WHERE courseID = ?
+        UNION SELECT courseID, courseName, sem, preRequisites, lab FROM math WHERE courseID = ?");
+    $stmt->bind_param("ss", $course_id, $course_id); // "i" for integer type, "s" for string type
     // Execute the query
     $stmt->execute();
 

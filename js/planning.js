@@ -5,6 +5,17 @@ if (localStorage.getItem('survey') === null) {
     window.location.href = "intake-survey.html"
 }
 let prefs = JSON.parse(localStorage.getItem("survey"));
+// {
+//     "applied-option": "",
+//     "comp-type": "BCS",
+//     "comp-year": "1",
+//     "degree-level": "undergrad",
+//     "first-year-pref": "comp-programming",
+//     "postgrad-option": "",
+//     "start-semester": "fall",
+//     "start-year": "2020",
+//     "student-type": "full-time"
+// }
 console.log(prefs);
 
 //search bar script
@@ -160,7 +171,7 @@ function isCourseOfferedInSem(course, currentSem) {
 } 
 
 /** Check if prereqs are in sems before current sem */
-function prereqsNotMet(prereqString) {
+function prereqsNotMet(prereqString, sem) {
     if (!prereqString) { // no prereqs, just return
         return [];
     }
@@ -185,7 +196,7 @@ function prereqsNotMet(prereqString) {
         }
         // iterate through each sem
         for (const plan of planner) {
-            if (plan.sem == currentSem) { // only check before current sem
+            if (plan.sem == sem) { // only check before current sem
                 break;
             } 
             if (isChoiceReq) {
@@ -316,27 +327,29 @@ function clearCurrentSem() {
 }
 
 /** add course to sem and save to cookies */
-async function addCourse(course) {
-    const plan = planner.find(plan => plan.sem === currentSem);
+async function addCourse(course, sem) {
+    const plan = planner.find(plan => plan.sem === sem);
     // prevent adding duplicate course in same sem
     if (plan.courses.some(curCourse => curCourse.id === course.id)) {
-        window.alert("Could not add " + course.name + " because it is already in " + currentSem);
+        window.alert("Could not add " + course.name + " because it is already in " + sem);
         return;
     }
     const courseInfo = await fetchCourseInfo(course.id);
     console.log(courseInfo);
     // if course is not offered in current sem, don't add
-    if (!isCourseOfferedInSem(courseInfo, currentSem)) {
-        window.alert(`Sorry. Could not add ${courseInfo.name} because it is not offered in ${currentSem}. It is offered in: ${getOfferedSems(courseInfo.sem)}`);
+    if (!isCourseOfferedInSem(courseInfo, sem)) {
+        window.alert(`Sorry. Could not add ${courseInfo.name} because it is not offered in ${sem}. It is offered in: ${getOfferedSems(courseInfo.sem)}`);
         return;
     };
-    const missingCourses = prereqsNotMet(courseInfo.prereqs);
+    console.log(`checking course ${course.id} for ${sem}`);
+    const missingCourses = prereqsNotMet(courseInfo.prereqs, sem);
     if (missingCourses.length > 0) {
         window.alert(`Cannot add course. You do not meet the following prerequisites: ${missingCourses}`);
         return;
     }
     plan.courses.push(courseInfo);
-    formatCourseItem(course).appendTo($('.course-list')[0]);
+    // update UI if add on current sem
+    if (sem == currentSem) { formatCourseItem(course).appendTo($('.course-list')[0]); } 
     localStorage.setItem("planner", JSON.stringify(planner));
 }
 
@@ -368,30 +381,42 @@ for (let year = startYear; year <= startYear + 4; year++) {
     yearOption.appendTo($('#year-add'));
 }
 
-if(true) { //isFirstAccess()) {
+if(isFirstAccess()) {
     // prepopulate required courses
     // but if no prefs set, should open survey page before go to planning page.
     console.log("first access");
     if (prefs["comp-year"] == 1) {
         console.log("first year");
-        // add sems for first year - need to do programatically based on date join
+        // add sems for first year - programatically based on date join
         const startSem = toTitleCase(prefs["start-semester"]);
-        const startSemIndex = Semesters.findIndex(sem => sem.name === startSem);
-        addSem(`${startSem} ${prefs["start-year"]}`);
-        const secondSem = findNextSem(startSemIndex, prefs["start-year"]);
-        addSem(secondSem);
-        currentSem = $("#semester").val();
-        if (prefs["first-year-pref"] == "comp-programming") {
-            console.log("first year programming. adding:");
-            progFirstYear.forEach(course => {addCourse(course);
-                console.log(course.id);
-                $("#semester").val(secondSem);
-            });
-        } // need to distinguish between winter / fall too
-        else {
-            console.log("first year cs. adding:");
-            csFirstYear.forEach(course => {addCourse(course); console.log(course.id);});
-        }
+        let currentYear = prefs["start-year"];
+        let curSemIndex = Semesters.findIndex(sem => sem.name === startSem);
+        let curSem = `${startSem} ${currentYear}`;
+
+        (async () => {
+            if (prefs["first-year-pref"] == "comp-programming") {
+                console.log("first year programming. adding:");
+                for (const course of progFirstYear) {
+                    addSem(curSem);
+                    await addCourse(course, curSem);
+                    console.log(course.id);
+                    curSem = findNextSem(curSemIndex++, prefs["start-year"]);
+                }
+            } // need to distinguish between winter / fall too
+            else {
+                console.log("first year cs. adding:");
+                //csFirstYear.forEach(course => {addCourse(course, currentSem); console.log(course.id);});
+                for (const course of csFirstYear) {
+                    addSem(curSem);
+                    console.log("adding first course: " + course.id);
+                    await addCourse(course, curSem);
+                    console.log(course.id);
+                    curSem = findNextSem(curSemIndex++, prefs["start-year"]);
+                }
+            }
+            currentSem = $("#semester").val();
+        })();
+        
     }
 }
 
@@ -418,7 +443,7 @@ $("#add-course-btn").click(function (event) {
     $('#myModal').modal("hide");
     // brief delay for modal to disappear before exeuting code in case of alert
     //setTimeout(() => addCourse(selectedCourse), 10);
-    addCourse(selectedCourse);
+    addCourse(selectedCourse, currentSem);
 });
 
 $("#add-sem-btn").click(function (event) {
