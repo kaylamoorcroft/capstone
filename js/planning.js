@@ -115,6 +115,7 @@ function isFirstAccess() {
     }
 }
 
+/** fetch course info from db to add to plan */
 async function fetchCourseInfo(course) {
     // Use the fetch API to send a POST request
     try {
@@ -148,9 +149,25 @@ async function fetchCourseInfo(course) {
     }
 }
 
+/** get existing course info from plan */
+function getCourseInfo(id) {
+    let courseInfo;
+    planner.some(plan => { 
+        courseInfo = plan.courses.find(course => course.id === id);
+        return courseInfo;
+    });
+    return courseInfo;
+}
+
 /** Create html element for course item */
-function formatCourseItem(course) {
+function formatCourseItem(course, warning=false, message="") {
     const courseItem = $(`<li class='course' id=${course.id} data-courseid=${course.id} data-coursename=${course.name}>${course.name}</li>`);
+    if (warning) {
+        courseItem.addClass("bg-warning")
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-placement", "top")
+            .attr("data-bs-title", message);
+    }
     const removeBtn = $(`<i class='fa-regular fa-square-minus remove'></i>`);
     removeBtn.click(() => removeCourse(course.id));
     removeBtn.appendTo(courseItem);
@@ -271,7 +288,14 @@ function loadSemCourses() {
     if (plan) {
         const courses = plan.courses;
         $('.course-list').first().html("");
-        courses.forEach(course => formatCourseItem(course).appendTo($('.course-list')[0]));
+        courses.forEach(course => {
+            let [warning, message] = [false, ""];
+            if (course["missingPrereqs"] && course["missingPrereqs"].length > 0) {
+                warning = true;
+                message = `You do not meet the prerequisites: ${course["missingPrereqs"]}`;
+            }
+            return formatCourseItem(course, warning, message).appendTo($('.course-list')[0]);
+        });
     }
 }
 /** load sems into dropdown */
@@ -350,13 +374,26 @@ async function addCourse(course, sem) {
     };
     console.log(`checking course ${course.id} for ${sem}`);
     const missingCourses = prereqsNotMet(courseInfo.prereqs, sem);
+    let [warning, message] = [false, ""];
     if (missingCourses.length > 0) {
-        window.alert(`Cannot add course. You do not meet the following prerequisites: ${missingCourses}`);
-        return;
+        courseInfo['missingPrereqs'] = missingCourses;
+        warning = true;
+        message = `You do not meet the prerequisites: ${missingCourses}`;
     }
     plan.courses.push(courseInfo);
     // update UI if add on current sem
-    if (sem == currentSem) { formatCourseItem(course).appendTo($('.course-list')[0]); } 
+    if (sem == currentSem) { 
+        formatCourseItem(course, warning, message).appendTo($('.course-list')[0]); 
+    } 
+    // remove warnings from other courses if this course is prereq for them
+    const coursesWithPrereq = isCoursePrereq(course.id);
+    for (const course of coursesWithPrereq) {
+        const courseInfo = getCourseInfo(course);
+        courseInfo.missingPrereqs = courseInfo.missingPrereqs.filter(curCourse => curCourse.id !== course.id);
+        console.log("updated courseInfo:");
+        console.log(courseInfo);
+    }
+
     localStorage.setItem("planner", JSON.stringify(planner));
 }
 
@@ -364,9 +401,23 @@ async function addCourse(course, sem) {
 function removeCourse(id) {
     const coursesWithPrereq = isCoursePrereq(id);
     if (coursesWithPrereq.length > 0) {
-        window.alert(`Cannot remove ${id} because it is a prereq for ${coursesWithPrereq}`);
-        return;
+        const confirm = window.confirm(`Are you sure you want to remove ${id}? It is a prerequisite for ${coursesWithPrereq}`);
+        if (!confirm) return;
     }
+    // update coursesWithPrereq to have warning
+    for (const course of coursesWithPrereq) {
+        const courseInfo = getCourseInfo(course);
+        courseInfo.missingPrereqs ??= []; 
+        courseInfo.missingPrereqs.push(id);
+        console.log("updated courseInfo:");
+        console.log(courseInfo);
+    }
+    // hide tooltip so it doesn't linger after
+    const el = $(`#${id}`);
+    el.removeClass("bg-warning");
+    const tooltip = bootstrap.Tooltip.getInstance(el);
+    if (tooltip) tooltip.hide();
+
     const plan = planner.find(plan => plan.sem === currentSem);
     plan.courses = plan.courses.filter(course => course.id != id);
     localStorage.setItem("planner", JSON.stringify(planner));
@@ -380,10 +431,8 @@ loadSems();
 loadSemCourses();
 
 // place year options in add sem dialog based on start year in survey
-console.log("Years:");
 const startYear = parseInt(prefs["start-year"]);
 for (let year = startYear; year <= startYear + 4; year++) {
-    console.log(year);
     const yearOption = $(`<option value='${year}'>${year}</option>`);
     yearOption.appendTo($('#year-add'));
 }
@@ -460,4 +509,11 @@ $("#add-sem-btn").click(function (event) {
 
 $("#clear-sem-btn").click(function (event) {
     clearCurrentSem();
+});
+
+// tooltips
+$(document).on('mouseenter', '[data-bs-toggle="tooltip"]', function () {
+    if (!bootstrap.Tooltip.getInstance(this)) {
+        new bootstrap.Tooltip(this).show();
+    }
 });
