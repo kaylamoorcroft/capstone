@@ -22,12 +22,12 @@ GRANT SELECT, INSERT, UPDATE, DELETE, FILE ON *.* TO 'catalogue_user'@'localhost
 
 
 INSERT INTO math (courseName, courseID, credits, preRequisites, lab, sem) VALUES
-('Pre Calculus', 'MATH 1003', 3, NULL, NULL, b'1001'),
-('Introductory Calculus 1', 'MATH 1013', 3, NULL, NULL, b'1100'),
-('Introductory Calculus 2', 'MATH 1023', 3, 'MATH 1013', NULL, b'0100'),
-('Discrete Math', 'MATH 1413', 3, NULL, NULL, b'0100'),
-('Statistics 1', 'MATH 1253', 3, NULL, NULL, b'0110'),
-('Matrix Algebra', 'MATH 1323', 3, NULL, NULL, b'1100');
+('Pre Calculus', 'MATH-1003', 3, '', 'MATH-1000L', b'1001'),
+('Introductory Calculus 1', 'MATH-1013', 3, '', 'MATH-1010L', b'1100'),
+('Introductory Calculus 2', 'MATH-1023', 3, 'MATH-1013', 'MATH-1020L', b'0100'),
+('Discrete Math', 'MATH-1413', 3, '', '', b'0100'),
+('Statistics 1', 'MATH-1253', 3, '', 'MATH-1250L', b'0110'),
+('Matrix Algebra', 'MATH-1323', 3, '', 'MATH-1320', b'1100');
 
 -- display table data
 DESCRIBE math;
