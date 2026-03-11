@@ -372,6 +372,10 @@ async function addCourse(course, sem) {
         window.alert(`Sorry. Could not add ${courseInfo.name} because it is not offered in ${sem}. It is offered in: ${getOfferedSems(courseInfo.sem)}`);
         return;
     };
+    if (plan.courses.length >= 8) {
+        window.alert(`Maximum of 8 courses per semester allowed`);
+        return;
+    }
     console.log(`checking course ${course.id} for ${sem}`);
     const missingCourses = prereqsNotMet(courseInfo.prereqs, sem);
     let [warning, message] = [false, ""];
@@ -423,6 +427,57 @@ function removeCourse(id) {
     localStorage.setItem("planner", JSON.stringify(planner));
     loadSemCourses();
 }
+
+// drag n drop
+
+$(function() {
+    // Draggable start event example
+    $(".addCourse").draggable({
+        revert: "invalid", // Snap back if not dropped on a valid drop zone
+        cursor: "grabbing",   
+        helper: 'clone',
+        start: function(event, ui) {
+            console.log("Drag started for: " + $(this).attr("id"));
+            $(this).css("opacity", "0.5"); 
+            // keep same width
+            const originalWidth = $(this).outerWidth();
+            ui.helper.css({
+                'width': originalWidth
+            });
+        },
+        stop: function(event, ui) {
+            console.log("Drag stopped");
+            $(this).css("opacity", "1");
+        }
+    });
+
+    // Droppable drop event example
+    $("#dragZone").droppable({
+        accept: function(draggable) {
+            // Get the ID of the item being dragged
+            var itemId = draggable.data("courseid");
+            // Return true only if no child in the dropzone has this ID
+            // This prevents the dropzone from highlighting if the item is a duplicate
+            return $(this).find("[data-courseid='" + itemId + "']").length === 0;
+        },
+        over: function(event, ui) {
+            $(this).css("background-color", "rgb(245, 237, 216)");
+        },
+        out: function(event, ui) {
+            $(this).css("background-color", "rgb(221, 227, 230)");
+        },
+        drop: function(event, ui) {
+            console.log("Dropped onto: " + $(this).attr("id"));
+            console.log("Dropped item ID: " + ui.draggable.data("courseid"));
+            const course = { 
+                id: ui.draggable.data("courseid"),
+                name: ui.draggable.data("coursename")
+            }
+            $(this).css("background-color", "rgb(221, 227, 230)");
+            addCourse(course, currentSem);
+        }
+    });
+});
 
 // UI upon page load
 

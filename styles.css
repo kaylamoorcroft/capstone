@@ -228,3 +228,30 @@ nav.open ~ .pc-openMenu{
   padding: 10px;
   text-align: center;
 }
+
+#dragZone {
+  height: fit-content(450px);
+  max-height: 450px;
+  width: 100%;
+  background-color: rgb(221, 227, 230);
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+#dragZone::after {
+  content: "";
+  display: block;
+  min-height: 40px; 
+  flex-shrink: 0;  
+}
+
+.addCourse:hover {
+    cursor: grab;
+}
+
+.addCourse:active {
+    cursor: grabbing;
+}
