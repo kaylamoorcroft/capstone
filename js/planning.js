@@ -38,6 +38,7 @@ $(document).ready(function(){
                 //call function if result is found
                 success: function(param){
                     $("#planCourse").html(param);
+                    $(function() { initDraggables(); });
                 }
             });
         }
@@ -430,9 +431,9 @@ function removeCourse(id) {
 
 // drag n drop
 
-$(function() {
-    // Draggable start event example
-    $(".addCourse").draggable({
+function initDraggables() {
+    // Select items that aren't already initialized to avoid "double-binding"
+    $(".addCourse:not(.ui-draggable)").draggable({
         revert: "invalid", // Snap back if not dropped on a valid drop zone
         cursor: "grabbing",   
         helper: 'clone',
@@ -451,13 +452,10 @@ $(function() {
         }
     });
 
-    // Droppable drop event example
     $("#dragZone").droppable({
         accept: function(draggable) {
-            // Get the ID of the item being dragged
             var itemId = draggable.data("courseid");
             // Return true only if no child in the dropzone has this ID
-            // This prevents the dropzone from highlighting if the item is a duplicate
             return $(this).find("[data-courseid='" + itemId + "']").length === 0;
         },
         over: function(event, ui) {
@@ -477,7 +475,7 @@ $(function() {
             addCourse(course, currentSem);
         }
     });
-});
+}
 
 // UI upon page load
 
@@ -530,6 +528,10 @@ if(isFirstAccess()) {
         
     }
 }
+
+$(function() {
+    initDraggables();
+});
 
 // EVENT LISTENERS
 
