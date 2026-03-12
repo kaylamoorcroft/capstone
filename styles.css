@@ -43,14 +43,11 @@
 
 .remove {
   font-size: 1.5em;
-  color: rgb(188, 25, 7);
+  color: rgb(0, 0, 0);
 }
 .remove:hover {
-  color: rgb(228, 108, 94);
+  color: rgb(213, 53, 53);
   cursor: pointer;
-}
-.remove:active {
-  color: rgb(65, 33, 29);
 }
 
 .course-list {
@@ -89,6 +86,11 @@ a {
   border: 1px solid;
   border-radius: 12px;
   border-color: rgb(197, 197, 197);
+}
+
+.course-warning{
+  background-color: rgb(255, 251, 153);
+  /* background-color: rgb(255, 134, 94); */
 }
 
 /* planner-collection.html: sidebar*/
@@ -199,10 +201,20 @@ nav.open ~ .pc-openMenu{
   pointer-events: auto;
 }
 
+.material-symbols-outlined{
+  font-size: 30px;
+  font-variation-settings:
+  'FILL' 0;
+  /* 'wght' 600,
+  'GRAD' 0,
+  'opsz' 48; */
+}
+
 /* planner-collection.html: created plans */
 .pc-plans{
   border-style: solid;
-  border-radius: 25px;
+  border-width: 2px;
+  border-radius: 8px;
   height: 220px;
   text-align: center;
   padding: 6px 0px;

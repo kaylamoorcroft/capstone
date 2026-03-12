@@ -164,12 +164,14 @@ function getCourseInfo(id) {
 function formatCourseItem(course, warning=false, message="") {
     const courseItem = $(`<li class='course' id=${course.id} data-courseid=${course.id} data-coursename=${course.name}>${course.name}</li>`);
     if (warning) {
-        courseItem.addClass("bg-warning")
+        courseItem.addClass("course-warning")
             .attr("data-bs-toggle", "tooltip")
             .attr("data-bs-placement", "top")
             .attr("data-bs-title", message);
     }
-    const removeBtn = $(`<i class='fa-regular fa-square-minus remove'></i>`);
+    else{courseItem.addClass("bg-light")}
+    
+    const removeBtn = $(`<i class='material-icons material-symbols-outlined remove'>disabled_by_default</i>`);
     removeBtn.click(() => removeCourse(course.id));
     removeBtn.appendTo(courseItem);
     return courseItem;
@@ -193,7 +195,7 @@ function isCourseOfferedInSem(course, currentSem) {
         }
     }
     return false;
-} 
+}
 
 /** Check if prereqs are in sems before current sem */
 function prereqsNotMet(prereqString, sem) {
@@ -387,9 +389,9 @@ async function addCourse(course, sem) {
     }
     plan.courses.push(courseInfo);
     // update UI if add on current sem
-    if (sem == currentSem) { 
-        formatCourseItem(course, warning, message).appendTo($('.course-list')[0]); 
-    } 
+    if (sem == currentSem) {
+        formatCourseItem(course, warning, message).appendTo($('.course-list')[0]);
+    }
     // remove warnings from other courses if this course is prereq for them
     const coursesWithPrereq = isCoursePrereq(course.id);
     for (const course of coursesWithPrereq) {
