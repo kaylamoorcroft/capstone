@@ -535,6 +535,25 @@ $(function() {
     initDraggables();
 });
 
+//validate course ID input
+jQuery.validator.addMethod("courseID", function(value, element){
+    return this.optional(element) || /^[A-Z]{4}-[0-9]{4}$/.test(value);
+}, "Please enter a valid course ID.");
+
+//validate course name input
+jQuery.validator.addMethod("courseName", function(value, element){
+    return this.optional(element) || /^[a-zA-Z][\w ]{10,49}/.test(value);
+}, "Please enter a valid course name.");
+
+//Custom course input validation
+jQuery('#newCourse').validate({
+    errorClass: 'error', //for css styling
+    rules:{
+        nCourseName: {required: true, maxlength: 40, courseName: true},
+        nCourseID: {required: true, courseID: true},
+    }
+});
+
 // EVENT LISTENERS
 
 // update courses when change sem

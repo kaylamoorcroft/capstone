@@ -72,7 +72,7 @@
                 <p class="empty-msg d-none">There are no semesters in the planner yet... click "Add new semester" to add a semester.</p>
                 <select name="semester" id="semester" class="form-control blue-input" required>
                 </select>
-                <ul class="course-list", id="dragZone">
+                <ul class="course-list" id="dragZone">
                 </ul>
                 
                 <div class="d-flex justify-content-end">
@@ -93,19 +93,22 @@
 
             <div class="col-md-3">
                 <h3 style="margin-bottom: 20px">Add New Course</h3>
-                <form id="newCourse">
-                    <div class="form-group pb-4">
-                        <label for="nCourseName">Course Name</label>
-                        <input type="text" class="form-control" id="nCourseName" placeholder="Enter name..." required>
-                    </div>
-                    <div class="form-group pb-4">
-                        <label for="nCourseID">Course ID</label>
-                        <input type="text" class="form-control" id="nCourseID" placeholder="XXXX-NNNN">
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="button" id="add-new-course" class="btn btn-outline-dark btn-sm" data-bs-toggle='modal' data-bs-target='#myModal' data-type='new-course'>Add Course</button>
-                    </div>
-                </form>
+                <div class="form_border">
+                    <form id="newCourse">
+                        <div class="form-group pb-4">
+                            <label for="nCourseName"><h6>Course Name</h6></label>
+                            <input type="text" class="form-control" name="nCourseName" id="nCourseName" placeholder="Enter name...">
+                        </div>
+                        <div class="form-group pb-4">
+                            <label for="nCourseID"><h6>Course ID</h6></label>
+                            <input type="text" class="form-control" name="nCourseID" id="nCourseID" placeholder="XXXX-NNNN">
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" id="add-new-course" class="btn btn-outline-dark btn-sm">Add Course</button>
+                            <!-- <button type="submit" id="add-new-course" class="btn btn-outline-dark btn-sm" data-bs-toggle='modal' data-bs-target='#myModal' data-type='new-course'>Add Course</button> -->
+                        </div>
+                        </form>
+                </div>
             </div>
         </div>
     </div>
@@ -132,5 +135,6 @@
         </div>
     </div>
     <script type="module" src="js/planning.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
