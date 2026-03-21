@@ -104,7 +104,7 @@
                             <input type="text" class="form-control" name="nCourseID" id="nCourseID" placeholder="XXXX-NNNN">
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="submit" id="add-new-course" class="btn btn-outline-dark btn-sm">Add Course</button>
+                            <button type="submit" id="add-new-course" class="btn btn-outline-dark btn-sm" data-bs-target='#myModal'>Add Course</button>
                             <!-- <button type="submit" id="add-new-course" class="btn btn-outline-dark btn-sm" data-bs-toggle='modal' data-bs-target='#myModal' data-type='new-course'>Add Course</button> -->
                         </div>
                         </form>

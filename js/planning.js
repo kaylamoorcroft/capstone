@@ -1,4 +1,4 @@
-import { insertSorted, toTitleCase } from './utils.js';
+import { insertSorted } from './utils.js';
 
 // redirect to survey if prefs not set
 if (localStorage.getItem('survey') === null) {
@@ -722,7 +722,7 @@ jQuery.validator.addMethod("courseID", function(value, element){
 
 //validate course name input
 jQuery.validator.addMethod("courseName", function(value, element){
-    return this.optional(element) || /^[a-zA-Z][\w ]{10,49}/.test(value);
+    return this.optional(element) || /^[a-zA-Z][\w ]{1,49}/.test(value);
 }, "Please enter a valid course name.");
 
 //Custom course input validation
@@ -734,6 +734,25 @@ jQuery('#newCourse').validate({
     }
 });
 
+//prevent "Add Course" button from refreshing the page (type=submit)
+$(function(){
+    jQuery('#newCourse').on('submit', function(event){
+        event.preventDefault();
+
+        //only show modal if form is valid
+        if ($('#newCourse').valid()){
+            $('#myModal').modal('show');
+        }
+
+        // let dataString = $(this).serialize();
+
+        //     $.ajax({
+        //     type: 'POST',
+        //     data: dataString,
+            // });
+    });
+});
+
 // EVENT LISTENERS
 
 // update courses when change sem
@@ -743,12 +762,12 @@ $('#semester').change(function() {
 });
 
 $('#myModal').on('show.bs.modal', function (event) {
-    const button = $(event.relatedTarget); // Button that triggered the modal
-    if (button.data('type') === 'new-course'){
+    // const button = $(event.relatedTarget); // Button that triggered the modal
+    // if (button.data('type') === 'new-course'){
         selectedCourse = {name: $('#nCourseName').val(), id: $('#nCourseID').val()};
-    } else{
-        selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
-    }
+    // } else{
+    //     selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
+    // }
 
     $(this).find('.modal-title').text(`Add ${selectedCourse.name}?`);
 });
