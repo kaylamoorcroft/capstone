@@ -9,8 +9,8 @@ console.log(sems);
 function displaySemPlans() {
     $("#plan-collection").html("");
     planner.forEach(plan => {
-        let planItem = `<div class="pc-plans"><span class="pc-plan-header"><span><!--empty span for spacing--></span><h4>${plan.sem}</h4>`;
-        planItem += `<button type="button" class="btn-close delete-plan" onclick="removeSem('${plan.sem}')" aria-label="Close"></button></span><ul>`;
+        let planItem = `<div class="pc-plans"><span class="pc-plan-header"><span><!--empty span for spacing--></span><h4>${plan.sem.display}</h4>`;
+        planItem += `<button type="button" class="btn-close delete-plan" onclick="removeSem('${plan.sem.display}')" aria-label="Close"></button></span><ul>`;
         plan.courses.forEach(course => planItem += `<li data-bs-toggle="tooltip" data-bs-placement="top" title="${course.name}">${course.id}</li>`);
         planItem += `</ul></div>`
         $(planItem).appendTo($("#plan-collection"));
@@ -34,7 +34,7 @@ function removeSem(sem) {
     // check with user first, in case it was an accident
     const confirmDelete = window.confirm(`Are you sure you want to delete ${sem}?`);
     if (confirmDelete) {
-        const i = sems.indexOf(sem);
+        const i = sems.find(curSem => curSem.display == sem);
         if (i !== -1) {
             sems.splice(i, 1);
             planner.splice(i,1);

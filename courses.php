@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 // query page for whenever want to get more info on a course from the course id
 header('Content-Type: application/json'); // Set header to indicate JSON response
 
@@ -6,39 +9,66 @@ include "dbConnection.php";
 
 // Get data sent from JavaScript via POST request
 // Use prepared statements to prevent SQL injection!
-$course_id = $_POST['courseId'] ?? ''; 
+$id = $_POST['courseId'] ?? ''; 
 
-if (!empty($course_id)) {
-    $stmt = $con->prepare("SELECT courseID, courseName, sem, preRequisites, lab FROM compSci WHERE courseID = ?
-        UNION SELECT courseID, courseName, sem, preRequisites, lab FROM math WHERE courseID = ?");
-    $stmt->bind_param("ss", $course_id, $course_id); // "i" for integer type, "s" for string type
+if (!empty($id)) {
+    $stmt = $con->prepare("
+        SELECT 
+            courses.title AS name,
+            courses.subjectCode AS subjectCode, 
+            courses.Number AS number, 
+            courses.YearsOffered AS years, 
+            courses.TermsOffered AS terms, 
+            requisites.requirementCode AS reqId,
+            requisites.completionorder AS completionOrder, 
+            requisites.displaytext AS reqs, 
+            requisites.displaytextextension AS reqsEx 
+        FROM 
+            requisites 
+        RIGHT JOIN courses ON courses.Id = requisites.courseId 
+        WHERE 
+            courses.Id = ?");
+    $stmt->bind_param("i", $id); // "i" for integer type, "s" for string type
     // Execute the query
     $stmt->execute();
 
     // Get the result
     $result = $stmt->get_result();
-    //echo json_encode($data);
-    $rawData = [];
-    while($row = $result->fetch_assoc()) {
-        $rawData = $row;
+
+    $data = [];
+    $firstRow = true;
+
+    while ($row = $result->fetch_assoc()) {
+        extract($row);
+
+        // Only set the main course data once
+        if ($firstRow) {
+            $data = [
+                "id" => $id,
+                "courseCode" => "$subjectCode-$number",
+                "name" => $name,
+                "years" => $years,
+                "terms" => $terms,
+                "reqs" => [] 
+            ];
+            $firstRow = false;
+        }
+
+        if ($reqId != null) {
+            $data["reqs"][] = [
+                "id" => $reqId,
+                "completionOrder" => $completionOrder,
+                "reqsText" => $reqs,
+                "reqsTextEx" => $reqsEx
+            ];
+        }
     }
-    extract($rawData);
-    if ($courseID != null) {
-        // Output data of the unique row
-        $data = array(
-            "id" => $courseID,
-            "name" => $courseName,
-            "sem" => $sem,
-            "prereqs" => $preRequisites,
-            "lab" => $lab
-        );
+
+    if ($data !== null && $number !== null) {
         echo json_encode($data);
     } else {
-        echo json_encode(["error" => "0 results for courseId"]);
+        echo json_encode(["error" => "Course not found or invalid number"]);
     }
-    $stmt->close();
-} else {
-    echo json_encode(["error" => "No course ID provided"]);
 }
 
 $con->close();

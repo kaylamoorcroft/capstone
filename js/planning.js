@@ -54,10 +54,11 @@ const Semesters = [
     { id: "FA", name: "Fall" },
     { id: "WI", name: "Winter" },
     { id: "SU", name: "Summer" },
-    { id: "CI", name: "Continuous Intake" }
+    { id: "COI", name: "Continuous Intake" }
 ];
 Semesters.forEach((sem, i) => {
     Semesters[sem.id] = { ...sem, index: i };
+    Semesters[sem.name] = { ...sem, index: i };
 }); // now can access by Semesters.FA.name or Semesters[0].name
 /**
  * find next sem & year but exclude CI, and optionally include summer
@@ -82,8 +83,8 @@ let currentSem = "";
  *  ie., Fall 2026, Winter 2027, Summer 2027, Fall 2027
  */
 const semComparator = (sem1, sem2) => {
-    const [s1, y1] = sem1.split(" ");
-    const [s2, y2] = sem2.split(" ");
+    const [s1, y1] = sem1.display.split(" ");
+    const [s2, y2] = sem2.display.split(" ");
 
     // 1st level of sorting: by year
     if (y1 < y2) return -1;
@@ -128,20 +129,18 @@ async function fetchCourseInfo(course) {
             body: new URLSearchParams({ courseId: course.id }) // Send data as form data
         });
         const data = await response.json(); // Parse the JSON response from the PHP script
-
         if (data.error) {
             console.log('Error: ' + data.error);
             return {
-                "id": course.id,
-                "name": course.name,
-                "sem": '1111',
-                "prereqs": '',
-                "lab": ''
+                "courseCode": course.courseCode || "AAAA-0000",
+                "name": course.name || "Course Name",
+                "years": null,
+                "terms": null,
+                "completionOrder": null,
+                "reqsText": null,
+                "reqsTextEx": null
             };
-            //return null;
         } 
-
-        data.sem = data.sem.toString(2).padStart(4,'0');
         return data;
 
     } catch(error) {
@@ -150,11 +149,41 @@ async function fetchCourseInfo(course) {
     }
 }
 
-/** get existing course info from plan */
-function getCourseInfo(id) {
+/** fetch req info from db to display in UI */
+async function fetchReqInfo(reqId) {
+    // Use the fetch API to send a POST request
+    try {
+        const response = await fetch('reqs.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ reqId: reqId }) // Send data as form data
+        });
+        const data = await response.json(); // Parse the JSON response from the PHP script
+        console.log(data);
+        if (data.error) {
+            console.log('Error: ' + data.error);
+            return null;
+        } 
+        return data;
+
+    } catch(error) {
+        console.error('Error:',  error);
+        return null;
+    }
+}
+
+/** get existing course info from plan - by id (byId=true) or by courseCode (byId=false)*/
+function getCourseInfo(id,byId=true) {
     let courseInfo;
     planner.some(plan => { 
-        courseInfo = plan.courses.find(course => course.id === id);
+        if (byId) {
+            courseInfo = plan.courses.find(course => course.id == id);
+        }
+        else {
+            courseInfo = plan.courses.find(course => course.courseCode == id);
+        }
         return courseInfo;
     });
     return courseInfo;
@@ -177,82 +206,202 @@ function formatCourseItem(course, warning=false, message="") {
     return courseItem;
 }
 
-function getOfferedSems(binSemString) {
+/** Instead of reloading all courses when reqs change, can just update the warning tooltip */
+function updateCourseWarning(course, warning=false, message="") {
+    const courseItem = $(`#${course.courseId}`);
+    if (warning) {
+        courseItem.addClass("course-warning")
+            .attr("data-bs-toggle", "tooltip")
+            .attr("data-bs-placement", "top")
+            .attr("data-bs-title", message);
+        courseItem.removeClass("bg-light");
+        console.log(`Added warning to ${course.courseCode}`);
+        courseItem.tooltip('enable');
+    }
+    else {
+        courseItem.addClass("bg-light");
+        courseItem.removeClass("course-warning");
+        courseItem.tooltip('disable');
+        console.log(`removed warning from ${course.courseCode}`);
+    }
+}
+
+function getOfferedSems(terms) {
+    const courseSems = terms.split(",");
     const offeredSems = [];
-    for (let i = 0; i < binSemString.length; i++) {
-        if (binSemString[i] == "1"){
-            offeredSems.push(Semesters[i].name);
-        }
+    for (const sem of courseSems) {
+        offeredSems.push(Semesters[sem].name);
     }
     return offeredSems.join(", ");
 }
 
 function isCourseOfferedInSem(course, currentSem) {
-    for (let i = 0; i < course.sem.length; i++) {
-        if (currentSem.includes(Semesters[i].name)) {
-            if (course.sem[i] == "1") return true;
-            else return false;
-        }
+    if (course.terms == 'NULL') {
+        return true;
+    }
+    const courseSems = course.terms.split(",");
+    const [name, year] = currentSem.split(" ");
+    if (courseSems.includes(Semesters[name].id)) {
+        return true;
     }
     return false;
 }
 
+function _findIndexOf(wordArray, keywordGroup, startIndex) {
+    // not an array, just a single keyword, normal find index
+    if (typeof keywordGroup === 'string') {
+        return wordArray.indexOf(keywordGroup, startIndex);
+    }
+
+    // find index of any of the keywords - return the smallest index
+    if (Array.isArray(keywordGroup)) {
+        let minIndex = -1;
+        for (const keyword of keywordGroup) {
+            const curIndex = wordArray.indexOf(keyword, startIndex);
+            // initial and iterative cases
+            if (minIndex === -1 || (curIndex < minIndex && curIndex != -1)) { 
+                minIndex = curIndex;
+            }
+        }
+        return minIndex;
+    }
+}
+
+// recursive helper fn 
+function _splitFromKeywords(wordArray, keywords, i=0) {
+    let segments = [];
+    const indices = [];
+
+    let startIdx = 0;
+    let idx = _findIndexOf(wordArray,keywords[i], startIdx);
+
+    while (idx !== -1) {
+        segments.push(wordArray.slice(startIdx,idx));
+        indices.push(idx);
+        startIdx = idx + 1;
+        idx = _findIndexOf(wordArray,keywords[i], startIdx); 
+    }
+    segments.push(wordArray.slice(startIdx));
+
+    if (i + 1 == keywords.length) {
+        if (segments[0][0].toLowerCase() == "take") {
+            segments[0] = segments[0].slice(1);
+        }
+        if (segments[0][0].toLowerCase() == "either") {
+            segments[0] = segments[0].slice(1);
+        }
+        if (segments[0][0].toLowerCase().substring(0,3) == "min") {
+            segments[0] = segments[0].slice(2,3);
+        }
+        const isHourReq = segments[0].join(' ').match(/(\d+)-hours from (\w+)/i);
+        if (isHourReq) {
+            segments[0][0] = { hours: parseInt(isHourReq[1], 10), subject: isHourReq[2].toUpperCase() };
+        }
+    
+        return segments.map(segment => {
+            if(typeof segment[0] === 'string' ) {
+                return segment[0].replaceAll(';','');
+            }
+            return segment[0];
+        });
+    }
+    const children =  segments.map(segment => {
+        return _splitFromKeywords(segment, keywords, i + 1);
+    });
+
+    switch(i) {
+        case 0: return {and: children};
+        case 1: 
+
+            if (typeof children[0][0] === 'object' && children[0][0] !== null && !Array.isArray(children[0][0])) {
+                return {choiceCourses: [], minimumGrade: children[1]? children[1][0] : null, hourReq: children[0][0]};
+            }
+            return {choiceCourses: children[0], minimumGrade: children[1]? children[1][0] : null, hourReq: null}; // "minimum grade C- required"
+        case 2: return {choiceCourses: children};
+        default: return children; 
+    }
+}
+
+function requisiteComprehension(reqs) {
+    console.log(reqs);
+    if (reqs.length == 0) {
+        console.log("no reqs");
+        return;
+    }
+    const requisites = []
+    for (const _req of reqs) {
+        const req = _req.reqsText;
+        const reqWords = req.split(" ");
+        console.log(`req: ${req}`);
+        // for (let i = 0; i < reqWords.length; i++) {
+        //     console.log(`${i}: ${reqWords[i]}`);
+        // }
+        const keywords = [["and","plus"], "with", "or"];
+        let segments = _splitFromKeywords(reqWords,keywords);
+        segments["completionOrder"] = _req.completionOrder;
+        segments["id"] = _req.id;
+        requisites.push(segments);
+    }
+    console.log(`--ALL REQS:`);
+    console.log(requisites);
+    return requisites;
+}
+
 /** Check if prereqs are in sems before current sem */
-function prereqsNotMet(prereqString, sem) {
-    if (!prereqString) { // no prereqs, just return
+function prereqsNotMet(reqs, sem) {
+    if (!reqs || reqs.length == 0) { // no prereqs, just return
         return [];
     }
     // parse prereqs into proper list - how handle / for or??? - maybe 2d array?
-    const prereqs = prereqString.split(", ");
     const prereqsNotMet = [];
     // iterate through prereqs
-    prereqs.forEach(req => {
+    reqs.forEach(req => {
         // initialise variables needed for this section
-        let [creds, credCount, dep, coursePlanned, isHourReq, isChoiceReq, choiceReqs] = [0, 0, "", false, false, false, []];
-        // if not a course but something like "6h Comp"
-        if (!isNaN(parseInt(req[0]))) { 
-            isHourReq = true;
-            let hrs = 0;
-            [hrs, dep] = req.split(" ");
-            creds = parseInt(hrs)/3;
-        }
-        // if there is a choice of courses eg. "COMP-1123 / COMP-1233"
-        if (req.includes("/")) {
-            isChoiceReq = true;
-            choiceReqs = req.split(" / ");
-        }
-        // iterate through each sem
-        for (const plan of planner) {
-            if (plan.sem == sem) { // only check before current sem
-                break;
-            } 
-            if (isChoiceReq) {
-                for (const choice of choiceReqs) { // if at least 1 course completed
-                    if (plan.courses.some(currentCourse => currentCourse.id == choice)) {
-                        coursePlanned = true;
-                        break;
+        let [creds, coursePlanned] = [0, false];
+
+        req.and.forEach(andCourse => {
+            // iterate through each sem
+            for (const plan of planner) {
+                // only check till previous sem if PREreq
+                if (req.completionOrder == 'Previous' && plan.sem.display == sem) {
+                    break;
+                }
+                coursePlanned = false;
+                if (andCourse.choiceCourses.length > 0) {
+                    for (const choiceCourse of andCourse.choiceCourses) {
+                        if (plan.courses.some(currentCourse => currentCourse.courseCode == choiceCourse)) {
+                            coursePlanned = true;
+                            break;
+                        }
                     }
                 }
-            }
-            else if (isHourReq) { // check if course id contains enough hours from dep (ie. COMP-1123 contains "Comp")
-                plan.courses.some(currentCourse => {
-                    if (currentCourse.id.includes(dep.toUpperCase())) {
-                        console.log(`${currentCourse.id} contains ${dep.toUpperCase()}`);
-                        credCount++;
+                else if (andCourse.hourReq) {
+                    plan.courses.forEach(course => {
+                        if (course.courseCode.includes(andCourse.hourReq.subject.toUpperCase())) {
+                            creds++;
+                            console.log(`Taking ${course.courseCode} in ${sem} - creds++ (hours = ${creds*3} now)`);
+                        }
+                    });
+                    if (creds*3 >= andCourse.hourReq.hours) {
+                        coursePlanned = true;
                     }
-                });
-                coursePlanned = credCount >= creds ? true : false;
+                }
+                // if (andCourse.minimumGrade) { // will use later on
+                //     console.log("min grade: " + andCourse.minimumGrade);
+                // }
+                if (coursePlanned) {
+                    console.log(andCourse);
+                    console.log('√');
+                    break;
+                }
+                if (plan.sem.display == sem) { // only check till current sem if coreq / pre/co req
+                    break;
+                } 
             }
-            else {
-                coursePlanned = plan.courses.some(currentCourse => currentCourse.id == req);
-            }
-            if (coursePlanned) {
-                console.log(`${req} √`);
-                break;
-            }
-        }
+        });
         if (!coursePlanned) {
-            console.log(`${req} X`)
+            console.log(req);
+            console.log('X');
             prereqsNotMet.push(req);
         }
     });
@@ -261,41 +410,54 @@ function prereqsNotMet(prereqString, sem) {
 /** Check if course is a prereq for any courses occuring it after in the plan
  *  Useful for validation when wanting to remove a course
  */
-function isCoursePrereq(id) {
-    // only have to start checking at index after curSem
-    const startIndex = planner.findIndex(plan => plan.sem === currentSem) + 1;
-    const coursesWithPrereq = []; // courses that have id as a prereq
+function isCoursePrereq(courseCode) {
+    // only have to start checking at index same as curSem
+    const startIndex = planner.findIndex(plan => plan.sem.display === currentSem);
+    const coursesWithReq = []; // courses that have id as a prereq
     for (let i = startIndex; i < planner.length; i++) {
         for (const course of planner[i].courses) {
-            for (const req of course.prereqs.split(",")) {
-                if (!isNaN(parseInt(req[0]))) {  // how will know if have enough hours????
-                    const [hrs, dep] = req.split(" ");
-                    const creds = parseInt(hrs)/3;
-                    console.log(`need ${creds} courses in ${dep}. Dunno if will have enough if remove course -> ${id} might be a prereq for ${course.id}`);
-                }
-                // if there is a choice of courses eg. "COMP-1123 / COMP-1233"
-                else if (req.includes("/")) {
-                    const choiceReqs = req.split(" / ");
-                    if (choiceReqs.some(req => req == id)) { coursesWithPrereq.push(course.id); }
-                }
-                else if (req == id) { coursesWithPrereq.push(course.id); }
+            for (const req of course.reqs) {
+                req.and.forEach(andCourse => {
+                    if (andCourse.choiceCourses.length > 0) {
+                        for (const choiceCourse of andCourse.choiceCourses) {
+                            if (courseCode == choiceCourse) {
+                                coursesWithReq.push({courseId: course.id, courseCode: course.courseCode, reqId: req.id});
+                                break;
+                            }
+                        }
+                    }
+                    else if (andCourse.hourReq) {
+                        console.log(`might not have enough hours of ${andCourse.hourReq.subject} if remove this course`)
+                    }
+                });
             }
         }
     }
-    return coursesWithPrereq;
+    return coursesWithReq;
+}
+
+function reqsToString(reqs) {
+    return `${reqs.map(req => 
+        `${req.and.map(andCourse => {
+            if (andCourse.hourReq)
+                return `${andCourse.hourReq.hours}-hours from ${andCourse.hourReq.subject}`
+            return andCourse.choiceCourses.join(" or ");
+        })
+        .join(" and ")} (${req.completionOrder})`)
+    .join(", ")}`;
 }
 
 /** load courses based on sem */ 
 function loadSemCourses() {
-    const plan = planner.find(plan => plan.sem === currentSem);
+    const plan = planner.find(plan => plan.sem.display === currentSem);
     if (plan) {
         const courses = plan.courses;
         $('.course-list').first().html("");
         courses.forEach(course => {
             let [warning, message] = [false, ""];
-            if (course["missingPrereqs"] && course["missingPrereqs"].length > 0) {
+            if (course["missingReqs"] && course["missingReqs"].length > 0) {
                 warning = true;
-                message = `You do not meet the prerequisites: ${course["missingPrereqs"]}`;
+                message = `Missing requisites: ${reqsToString(course["missingReqs"])}`;
             }
             return formatCourseItem(course, warning, message).appendTo($('.course-list')[0]);
         });
@@ -305,7 +467,7 @@ function loadSemCourses() {
 function loadSems() {
     $("#semester").html("");
     sems.forEach(sem => {
-        const semItem = $(`<option value='${sem}'>${sem}</option>`);
+        const semItem = $(`<option value='${sem.display}'>${sem.display}</option>`);
         semItem.appendTo($('#semester'));
     });
     if(sems.length > 0) {
@@ -320,10 +482,11 @@ function loadSems() {
     }
 }
 
-function addSem(sem) {
+function addSem(termName, year) {
     // prevent adding duplicate sem
+    const sem = {id: Semesters[termName].id, year: year, display: `${termName} ${year}`};
     if (sems.includes(sem)) {
-        window.alert("Could not add " + sem + " because it already exists");
+        window.alert("Could not add " + sem.display + " because it already exists");
         return;
     }
     // update planner & list of sems
@@ -350,7 +513,7 @@ function clearCurrentSem() {
     // check with user first, in case it was an accident
     const confirmClear = window.confirm(`Are you sure you want to clear ${currentSem}?`);
     if (confirmClear) {
-        const plan = planner.find(plan => plan.sem === currentSem);
+        const plan = planner.find(plan => plan.sem.display === currentSem);
         if (plan) {
             plan.courses = [];
             loadSemCourses();
@@ -362,43 +525,53 @@ function clearCurrentSem() {
 
 /** add course to sem and save to cookies */
 async function addCourse(course, sem) {
-    const plan = planner.find(plan => plan.sem === sem);
+    const plan = planner.find(plan => plan.sem.display === sem);
+    if (!plan) {
+        window.alert("Error: please add a semester to start adding courses");
+        return;
+    }
     // prevent adding duplicate course in same sem
     if (plan.courses.some(curCourse => curCourse.id === course.id)) {
         window.alert("Could not add " + course.name + " because it is already in " + sem);
         return;
     }
     const courseInfo = await fetchCourseInfo(course);
-    console.log(courseInfo);
     // if course is not offered in current sem, don't add
     if (!isCourseOfferedInSem(courseInfo, sem)) {
-        window.alert(`Sorry. Could not add ${courseInfo.name} because it is not offered in ${sem}. It is offered in: ${getOfferedSems(courseInfo.sem)}`);
+        window.alert(`Sorry. Could not add ${courseInfo.name} because it is not offered in ${sem}. It is offered in: ${getOfferedSems(courseInfo.terms)}`);
         return;
     };
     if (plan.courses.length >= 8) {
         window.alert(`Maximum of 8 courses per semester allowed`);
         return;
     }
-    console.log(`checking course ${course.id} for ${sem}`);
-    const missingCourses = prereqsNotMet(courseInfo.prereqs, sem);
+    courseInfo.reqs = requisiteComprehension(courseInfo.reqs);
+    const missingCourses = prereqsNotMet(courseInfo.reqs, sem);
     let [warning, message] = [false, ""];
     if (missingCourses.length > 0) {
-        courseInfo['missingPrereqs'] = missingCourses;
+        courseInfo['missingReqs'] = missingCourses;
         warning = true;
-        message = `You do not meet the prerequisites: ${missingCourses}`;
+        message = `Missing requisites: ${reqsToString(missingCourses)}`;
     }
     plan.courses.push(courseInfo);
     // update UI if add on current sem
     if (sem == currentSem) {
         formatCourseItem(course, warning, message).appendTo($('.course-list')[0]);
     }
-    // remove warnings from other courses if this course is prereq for them
-    const coursesWithPrereq = isCoursePrereq(course.id);
+    //remove warnings from other courses if this course is prereq for them
+    const coursesWithPrereq = isCoursePrereq(courseInfo.courseCode);
     for (const course of coursesWithPrereq) {
-        const courseInfo = getCourseInfo(course);
-        courseInfo.missingPrereqs = courseInfo.missingPrereqs.filter(curCourse => curCourse.id !== course.id);
-        console.log("updated courseInfo:");
-        console.log(courseInfo);
+        const courseInfo = getCourseInfo(course.courseId);
+        const missingCourses = prereqsNotMet(courseInfo.reqs, sem);
+        courseInfo.missingReqs = missingCourses; 
+        // update UI for concurrent course so that colour change actually show up
+        [warning, message] = [false, ""];
+        if (missingCourses.length > 0) {
+            courseInfo['missingReqs'] = missingCourses;
+            warning = true;
+            message = `Missing requisites: ${reqsToString(missingCourses)}`;
+        }
+        updateCourseWarning(course, warning, message);
     }
 
     localStorage.setItem("planner", JSON.stringify(planner));
@@ -406,29 +579,40 @@ async function addCourse(course, sem) {
 
 /** remove course from sem and update cookies */
 function removeCourse(id) {
-    const coursesWithPrereq = isCoursePrereq(id);
+    console.log("removing course with id " + id);
+    const courseInfo = getCourseInfo(id);
+    const courseCode = courseInfo.courseCode;
+    const coursesWithPrereq = isCoursePrereq(courseCode);
     if (coursesWithPrereq.length > 0) {
-        const confirm = window.confirm(`Are you sure you want to remove ${id}? It is a prerequisite for ${coursesWithPrereq}`);
+        const confirm = window.confirm(`Are you sure you want to remove ${courseCode}? It is a prerequisite for ${coursesWithPrereq.map(course => course.courseCode)}`);
         if (!confirm) return;
-    }
-    // update coursesWithPrereq to have warning
-    for (const course of coursesWithPrereq) {
-        const courseInfo = getCourseInfo(course);
-        courseInfo.missingPrereqs ??= []; 
-        courseInfo.missingPrereqs.push(id);
-        console.log("updated courseInfo:");
-        console.log(courseInfo);
     }
     // hide tooltip so it doesn't linger after
     const el = $(`#${id}`);
     el.removeClass("bg-warning");
     const tooltip = bootstrap.Tooltip.getInstance(el);
     if (tooltip) tooltip.hide();
+    el.remove();
 
-    const plan = planner.find(plan => plan.sem === currentSem);
+    const plan = planner.find(plan => plan.sem.display === currentSem);
     plan.courses = plan.courses.filter(course => course.id != id);
+
+    // update coursesWithPrereq to have warning
+    for (const course of coursesWithPrereq) {
+        const courseInfo = getCourseInfo(course.courseId);
+        const missingCourses = prereqsNotMet(courseInfo.reqs, currentSem);
+        courseInfo.missingReqs = missingCourses;
+
+        let [warning, message] = [false, ""];
+        if (missingCourses.length > 0) {
+            courseInfo['missingReqs'] = missingCourses;
+            warning = true;
+            message = `Missing requisites: ${reqsToString(missingCourses)}`;
+        }
+        updateCourseWarning(course, warning, message);
+    }
+
     localStorage.setItem("planner", JSON.stringify(planner));
-    loadSemCourses();
 }
 
 // drag n drop
@@ -440,7 +624,6 @@ function initDraggables() {
         cursor: "grabbing",   
         helper: 'clone',
         start: function(event, ui) {
-            console.log("Drag started for: " + $(this).attr("id"));
             $(this).css("opacity", "0.5"); 
             // keep same width
             const originalWidth = $(this).outerWidth();
@@ -449,7 +632,6 @@ function initDraggables() {
             });
         },
         stop: function(event, ui) {
-            console.log("Drag stopped");
             $(this).css("opacity", "1");
         }
     });
@@ -467,8 +649,6 @@ function initDraggables() {
             $(this).css("background-color", "rgb(221, 227, 230)");
         },
         drop: function(event, ui) {
-            console.log("Dropped onto: " + $(this).attr("id"));
-            console.log("Dropped item ID: " + ui.draggable.data("courseid"));
             const course = { 
                 id: ui.draggable.data("courseid"),
                 name: ui.draggable.data("coursename")
@@ -496,39 +676,39 @@ if(isFirstAccess()) {
     // prepopulate required courses
     // but if no prefs set, should open survey page before go to planning page.
     console.log("first access");
-    if (prefs["comp-year"] == 1) {
-        console.log("first year");
-        // add sems for first year - programatically based on date join
-        const startSem = toTitleCase(prefs["start-semester"]);
-        let currentYear = prefs["start-year"];
-        let curSemIndex = Semesters.findIndex(sem => sem.name === startSem);
-        let curSem = `${startSem} ${currentYear}`;
+    // if (prefs["comp-year"] == 1) {
+    //     console.log("first year");
+    //     // add sems for first year - programatically based on date join
+    //     const startSem = toTitleCase(prefs["start-semester"]);
+    //     let currentYear = prefs["start-year"];
+    //     let curSemIndex = Semesters.findIndex(sem => sem.name === startSem);
+    //     let curSem = `${startSem} ${currentYear}`;
 
-        (async () => {
-            if (prefs["first-year-pref"] == "comp-programming") {
-                console.log("first year programming. adding:");
-                for (const course of progFirstYear) {
-                    addSem(curSem);
-                    await addCourse(course, curSem);
-                    console.log(course.id);
-                    curSem = findNextSem(curSemIndex++, prefs["start-year"]);
-                }
-            } // need to distinguish between winter / fall too
-            else {
-                console.log("first year cs. adding:");
-                //csFirstYear.forEach(course => {addCourse(course, currentSem); console.log(course.id);});
-                for (const course of csFirstYear) {
-                    addSem(curSem);
-                    console.log("adding first course: " + course.id);
-                    await addCourse(course, curSem);
-                    console.log(course.id);
-                    curSem = findNextSem(curSemIndex++, prefs["start-year"]);
-                }
-            }
-            currentSem = $("#semester").val();
-        })();
-        
-    }
+    //     (async () => {
+    //         if (prefs["first-year-pref"] == "comp-programming") {
+    //             console.log("first year programming. adding:");
+    //             for (const course of progFirstYear) {
+    //                 addSem(startSem, currentYear);
+    //                 await addCourse(course, curSem);
+    //                 console.log(course.id);
+    //                 curSem = findNextSem(curSemIndex++, prefs["start-year"]);
+    //             }
+    //         } // need to distinguish between winter / fall too
+    //         else {
+    //             console.log("first year cs. adding:");
+    //             //csFirstYear.forEach(course => {addCourse(course, currentSem); console.log(course.id);});
+    //             for (const course of csFirstYear) {
+    //                 addSem(startSem, currentYear);
+    //                 console.log("adding first course: " + course.id);
+    //                 await addCourse(course, curSem);
+    //                 console.log(course.id);
+    //                 curSem = findNextSem(curSemIndex++, prefs["start-year"]);
+    //             }
+    //         }
+    //         currentSem = $("#semester").val();
+    //     })();
+    //     currentSem = $("#semester").val();
+    // }
 }
 
 $(function() {
@@ -581,7 +761,7 @@ $("#add-course-btn").click(function (event) {
 });
 
 $("#add-sem-btn").click(function (event) {
-    addSem(`${$("#sem-add").val()} ${$("#year-add").val()}`);
+    addSem($("#sem-add").val(), $("#year-add").val());
     $("#collapseSemAdd").collapse('hide');
 });
 

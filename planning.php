@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
     include "dbConnection.php";
-    $sql_statement = "SELECT courseID, courseName FROM compsci UNION SELECT courseID, courseName FROM math";
+    $sql_statement = "SELECT id, title FROM courses WHERE `number` LIMIT 25";
     $result = mysqli_query($con, $sql_statement);
 ?>
 
@@ -41,7 +41,7 @@
                 <div class="list-group" id="planCourse">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
-                            echo "<li class='addCourse list-group-item list-group-item-action' data-courseid='" . $row['courseID'] . "' data-coursename='" . $row['courseName'] . "'>" . $row['courseName'] . "</li>";
+                            echo "<li class='addCourse list-group-item list-group-item-action' data-courseid='" . $row['id'] . "' data-coursename='" . $row['title'] . "'>" . $row['title'] . "</li>";
                         }
                         // Free result set
                         mysqli_free_result($result);
