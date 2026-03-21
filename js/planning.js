@@ -134,8 +134,8 @@ async function fetchCourseInfo(course) {
             return {
                 "courseCode": course.courseCode || "AAAA-0000",
                 "name": course.name || "Course Name",
-                "years": null,
-                "terms": null,
+                "years": 'NULL',
+                "terms": 'NULL',
                 "completionOrder": null,
                 "reqsText": null,
                 "reqsTextEx": null
@@ -145,7 +145,15 @@ async function fetchCourseInfo(course) {
 
     } catch(error) {
         console.error('Error:', error);
-        return null;
+        return { // returns this for custom course input since id is a string, not int
+            "courseCode": course.id || "AAAA-0000",
+            "name": course.name || "Course Name",
+            "years": 'NULL',
+            "terms": 'NULL',
+            "completionOrder": null,
+            "reqsText": null,
+            "reqsTextEx": null
+        };
     }
 }
 
@@ -323,8 +331,7 @@ function _splitFromKeywords(wordArray, keywords, i=0) {
 }
 
 function requisiteComprehension(reqs) {
-    console.log(reqs);
-    if (reqs.length == 0) {
+    if (reqs == null || reqs.length == 0) {
         console.log("no reqs");
         return;
     }
@@ -416,6 +423,7 @@ function isCoursePrereq(courseCode) {
     const coursesWithReq = []; // courses that have id as a prereq
     for (let i = startIndex; i < planner.length; i++) {
         for (const course of planner[i].courses) {
+            if (!course.reqs) continue; // if course reqs are null, skip
             for (const req of course.reqs) {
                 req.and.forEach(andCourse => {
                     if (andCourse.choiceCourses.length > 0) {
@@ -525,6 +533,7 @@ function clearCurrentSem() {
 
 /** add course to sem and save to cookies */
 async function addCourse(course, sem) {
+    console.log(course);
     const plan = planner.find(plan => plan.sem.display === sem);
     if (!plan) {
         window.alert("Error: please add a semester to start adding courses");
@@ -536,6 +545,7 @@ async function addCourse(course, sem) {
         return;
     }
     const courseInfo = await fetchCourseInfo(course);
+    console.log(courseInfo);
     // if course is not offered in current sem, don't add
     if (!isCourseOfferedInSem(courseInfo, sem)) {
         window.alert(`Sorry. Could not add ${courseInfo.name} because it is not offered in ${sem}. It is offered in: ${getOfferedSems(courseInfo.terms)}`);
@@ -764,7 +774,7 @@ $('#semester').change(function() {
 $('#myModal').on('show.bs.modal', function (event) {
     // const button = $(event.relatedTarget); // Button that triggered the modal
     // if (button.data('type') === 'new-course'){
-        selectedCourse = {name: $('#nCourseName').val(), id: $('#nCourseID').val()};
+    selectedCourse = {name: $('#nCourseName').val(), id: $('#nCourseID').val()};
     // } else{
     //     selectedCourse = {name: button.data('coursename'), id: button.data('courseid')};
     // }
