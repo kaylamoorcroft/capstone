@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 22, 2026 at 02:39 PM
--- Server version: 8.0.44
--- PHP Version: 8.2.29
+-- Generation Time: Mar 22, 2026 at 05:58 PM
+-- Server version: 8.0.39
+-- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `butnotcourses` (
   `id` int DEFAULT NULL,
-  `coursename` varchar(9) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `title` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `coursename` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `groupsid` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -99,8 +99,8 @@ INSERT INTO `butnotcourses` (`id`, `coursename`, `title`, `groupsid`) VALUES
 --
 
 CREATE TABLE `butnotsubjects` (
-  `code` varchar(4) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `description` varchar(26) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `code` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` varchar(26) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -131,17 +131,28 @@ INSERT INTO `butnotsubjects` (`code`, `description`, `id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `courserequisites`
+-- (See below for the actual view)
+--
+CREATE TABLE `courserequisites` (
+`courseId` int
+,`allRequirements` text
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `courses`
 --
 
 CREATE TABLE `courses` (
-  `Description` varchar(1000) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Description` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `MinimumCredits` tinyint DEFAULT NULL,
-  `Title` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `SubjectCode` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `Number` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `YearsOffered` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `TermsOffered` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `SubjectCode` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Number` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `YearsOffered` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `TermsOffered` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -375,8 +386,8 @@ INSERT INTO `EquatedCourses` (`EquatedCourseId`, `courseId`) VALUES
 
 CREATE TABLE `fromcourses` (
   `id` int DEFAULT NULL,
-  `coursename` varchar(9) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `title` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `coursename` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `groupsid` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -426,8 +437,8 @@ INSERT INTO `fromcourses` (`id`, `coursename`, `title`, `groupsid`) VALUES
 --
 
 CREATE TABLE `fromsubjects` (
-  `code` varchar(4) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `description` varchar(29) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `code` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` varchar(29) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -590,7 +601,7 @@ INSERT INTO `fromsubjects` (`code`, `description`, `id`) VALUES
 --
 
 CREATE TABLE `Locations` (
-  `LocationCodes` varchar(3) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `LocationCodes` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Locations_pk` int NOT NULL,
   `courseId` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -609,11 +620,11 @@ INSERT INTO `Locations` (`LocationCodes`, `Locations_pk`, `courseId`) VALUES
 --
 
 CREATE TABLE `meetings` (
-  `EndTime` text COLLATE utf8mb4_general_ci,
-  `Days` text COLLATE utf8mb4_general_ci,
-  `StartTime` text COLLATE utf8mb4_general_ci,
-  `Frequency` text COLLATE utf8mb4_general_ci,
-  `IsOnline` text COLLATE utf8mb4_general_ci,
+  `EndTime` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `Days` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `StartTime` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `Frequency` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `IsOnline` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `meetings_pk` int NOT NULL,
   `sectionId` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -734,13 +745,13 @@ INSERT INTO `meetings` (`EndTime`, `Days`, `StartTime`, `Frequency`, `IsOnline`,
 
 CREATE TABLE `programs` (
   `id` int NOT NULL,
-  `code` varchar(9) COLLATE utf8mb4_general_ci NOT NULL,
-  `academiclevelcode` varchar(2) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `code` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `academiclevelcode` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `minimumcredits` int DEFAULT NULL,
   `minimuminstitutionalcredits` int DEFAULT NULL,
-  `major` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `degree` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+  `major` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `degree` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -764,9 +775,9 @@ INSERT INTO `programs` (`id`, `code`, `academiclevelcode`, `title`, `minimumcred
 
 CREATE TABLE `requirements` (
   `id` int NOT NULL,
-  `description` varchar(43) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `minsubrequirements` varchar(4) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `directive` varchar(37) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `description` varchar(43) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `minsubrequirements` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `directive` varchar(37) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -798,10 +809,10 @@ INSERT INTO `requirements` (`id`, `description`, `minsubrequirements`, `directiv
 
 CREATE TABLE `requisites` (
   `requirementcode` int NOT NULL,
-  `isprotected` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `completionorder` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `displaytext` varchar(148) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `displaytextextension` varchar(67) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `isprotected` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `completionorder` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `displaytext` varchar(148) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `displaytextextension` varchar(67) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `courseId` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -958,7 +969,7 @@ INSERT INTO `requisites` (`requirementcode`, `isprotected`, `completionorder`, `
 
 CREATE TABLE `sections` (
   `CourseId` int DEFAULT NULL,
-  `Number` text COLLATE utf8mb4_general_ci,
+  `Number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `Id` int NOT NULL,
   `Term_fk` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1083,8 +1094,8 @@ INSERT INTO `sections` (`CourseId`, `Number`, `Id`, `Term_fk`) VALUES
 
 CREATE TABLE `subrequirementCourses` (
   `id` int DEFAULT NULL,
-  `coursename` varchar(9) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `title` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `coursename` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `groupsid` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -1223,8 +1234,8 @@ INSERT INTO `subrequirementCourses` (`id`, `coursename`, `title`, `groupsid`) VA
 
 CREATE TABLE `subrequirementgroups` (
   `id` int NOT NULL,
-  `code` varchar(7) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `searchtext` varchar(147) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `code` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `searchtext` varchar(147) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `mincredits` int DEFAULT NULL,
   `subrequirementid` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1322,11 +1333,11 @@ INSERT INTO `subrequirementgroups` (`id`, `code`, `searchtext`, `mincredits`, `s
 
 CREATE TABLE `subrequirements` (
   `id` int NOT NULL,
-  `mingroups` varchar(1) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `mininstitutionalcredits` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `code` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mingroups` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mininstitutionalcredits` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `displaytext` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `directive` varchar(37) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `directive` varchar(37) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `requirementsid` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -1409,9 +1420,9 @@ INSERT INTO `subrequirements` (`id`, `mingroups`, `mininstitutionalcredits`, `co
 --
 
 CREATE TABLE `Terms` (
-  `TermId` text COLLATE utf8mb4_general_ci,
-  `StartDate` text COLLATE utf8mb4_general_ci,
-  `EndDate` text COLLATE utf8mb4_general_ci,
+  `TermId` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `StartDate` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `EndDate` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `Term_pk` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -1538,6 +1549,15 @@ ALTER TABLE `Terms`
 --
 ALTER TABLE `programs`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `courserequisites`
+--
+DROP TABLE IF EXISTS `courserequisites`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `courserequisites`  AS SELECT `requisites`.`courseId` AS `courseId`, group_concat(concat('• ',`requisites`.`displaytext`,' ',`requisites`.`displaytextextension`) separator '\n') AS `allRequirements` FROM `requisites` GROUP BY `requisites`.`courseId` ;
 
 --
 -- Constraints for dumped tables

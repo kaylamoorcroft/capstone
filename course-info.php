@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <?php
     include "dbConnection.php";
-    $sql_statement = "SELECT id, title, `description`, subjectCode, `number` FROM courses WHERE MinimumCredits != 0 AND subjectCode = 'COMP'";
+    $sql_statement = "SELECT courses.id, courses.title, courses.description, courses.subjectCode, courses.number, courserequisites.allrequirements
+                        FROM courses JOIN courserequisites ON courses.Id = courserequisites.courseId
+                        WHERE MinimumCredits != 0 AND subjectCode = 'COMP'";
     $result = mysqli_query($con, $sql_statement);
 ?>
 <html lang="en">
@@ -101,7 +103,7 @@
         });
     </script>
 
-    <div class="container" style="width: 65%">
+    <div class="container" style="width: 75%">
         <input id="course_search" type="text" class="form-control" placeholder="Search for courses..." style="margin: 40px; margin-left: auto;">
     
         <div class="accordion" id="course-accordion">
@@ -118,11 +120,11 @@
                                             <h5 style='padding-left: 0'>Description</h5>
                                                 ".$row['description']."
                                                 <br><br>
-                                            <h5 style='padding-left: 0'>Requirements</h5>
-                                                ...
-                                                <br><br>
                                             <h5 style='padding-left: 0'>Course ID</h5>
                                                 ".$row['subjectCode']."-".$row['number']."
+                                                <br><br>
+                                            <h5 style='padding-left: 0'>Requirements</h5>
+                                                ".nl2br(htmlspecialchars($row['allrequirements']))."
                                         </div>
                                     </div>
                                 </div>";
