@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 21, 2026 at 04:25 PM
+-- Generation Time: Mar 22, 2026 at 02:39 PM
 -- Server version: 8.0.44
 -- PHP Version: 8.2.29
 
@@ -24,9 +24,114 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `courses`
+-- Table structure for table `butnotcourses`
 --
--- Creation: Mar 17, 2026 at 01:18 PM
+
+CREATE TABLE `butnotcourses` (
+  `id` int DEFAULT NULL,
+  `coursename` varchar(9) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `groupsid` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `butnotcourses`
+--
+
+INSERT INTO `butnotcourses` (`id`, `coursename`, `title`, `groupsid`) VALUES
+(7714, 'COMP-2853', 'Handling Data Concpts/Apps', 24211),
+(10192, 'MUSI-1663', 'Applied Study', 24112),
+(10193, 'MUSI-1666', 'Principal Applied Study', 24112),
+(10302, 'MUSI-26C3', 'Applied Study', 24112),
+(10303, 'MUSI-2666', 'Principal Applied Study', 24112),
+(10433, 'MUSI-3663', 'Applied Study', 24112),
+(10434, 'MUSI-3666', 'Principal Applied Study', 24112),
+(10531, 'MUSI-4663', 'Applied Study', 24112),
+(10532, 'MUSI-4666', 'Principal Applied Study', 24112),
+(8012, 'ECON-2613', 'Empirical Analy in Econ & Busi', 24115),
+(8013, 'ECON-2623', 'Introduction to Econometrics', 24115),
+(11758, 'SOCI-3103', 'Quantitative Data Analysis', 24115),
+(7714, 'COMP-2853', 'Handling Data Concpts/Apps', 24227),
+(10192, 'MUSI-1663', 'Applied Study', 9032),
+(10193, 'MUSI-1666', 'Principal Applied Study', 9032),
+(10205, 'MUSI-1733', 'Vocal Skills and Techniques', 9032),
+(10302, 'MUSI-26C3', 'Applied Study', 9032),
+(10303, 'MUSI-2666', 'Principal Applied Study', 9032),
+(10433, 'MUSI-3663', 'Applied Study', 9032),
+(10434, 'MUSI-3666', 'Principal Applied Study', 9032),
+(10531, 'MUSI-4663', 'Applied Study', 9032),
+(10532, 'MUSI-4666', 'Principal Applied Study', 9032),
+(8012, 'ECON-2613', 'Empirical Analy in Econ & Busi', 9036),
+(8013, 'ECON-2623', 'Introduction to Econometrics', 9036),
+(11758, 'SOCI-3103', 'Quantitative Data Analysis', 9036),
+(10148, 'MUSI-1353', 'Guitar Class', 24085),
+(10192, 'MUSI-1663', 'Applied Study', 24085),
+(10193, 'MUSI-1666', 'Principal Applied Study', 24085),
+(10302, 'MUSI-26C3', 'Applied Study', 24085),
+(10303, 'MUSI-2666', 'Principal Applied Study', 24085),
+(10433, 'MUSI-3663', 'Applied Study', 24085),
+(10434, 'MUSI-3666', 'Principal Applied Study', 24085),
+(10531, 'MUSI-4663', 'Applied Study', 24085),
+(10532, 'MUSI-4666', 'Principal Applied Study', 24085),
+(8012, 'ECON-2613', 'Empirical Analy in Econ & Busi', 24088),
+(8013, 'ECON-2623', 'Introduction to Econometrics', 24088),
+(11758, 'SOCI-3103', 'Quantitative Data Analysis', 24088),
+(7714, 'COMP-2853', 'Handling Data Concpts/Apps', 28793),
+(10192, 'MUSI-1663', 'Applied Study', 22831),
+(10193, 'MUSI-1666', 'Principal Applied Study', 22831),
+(10302, 'MUSI-26C3', 'Applied Study', 22831),
+(10303, 'MUSI-2666', 'Principal Applied Study', 22831),
+(10433, 'MUSI-3663', 'Applied Study', 22831),
+(10434, 'MUSI-3666', 'Principal Applied Study', 22831),
+(10531, 'MUSI-4663', 'Applied Study', 22831),
+(10532, 'MUSI-4666', 'Principal Applied Study', 22831),
+(8012, 'ECON-2613', 'Empirical Analy in Econ & Busi', 22834),
+(8013, 'ECON-2623', 'Introduction to Econometrics', 22834),
+(11758, 'SOCI-3103', 'Quantitative Data Analysis', 22834),
+(7714, 'COMP-2853', 'Handling Data Concpts/Apps', 16882),
+(7714, 'COMP-2853', 'Handling Data Concpts/Apps', 16885),
+(7714, 'COMP-2853', 'Handling Data Concpts/Apps', 24217);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `butnotsubjects`
+--
+
+CREATE TABLE `butnotsubjects` (
+  `code` varchar(4) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` varchar(26) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `butnotsubjects`
+--
+
+INSERT INTO `butnotsubjects` (`code`, `description`, `id`) VALUES
+('COMP', 'Computer Science', 27169),
+('COOP', 'Cooperative Education', 27169),
+('MATH', 'Mathematics and Statistics', 27169),
+('COMP', 'Computer Science', 17745),
+('COOP', 'Cooperative Education', 17745),
+('MATH', 'Mathematics and Statistics', 17745),
+('COMP', 'Computer Science', 27166),
+('COOP', 'Cooperative Education', 27166),
+('MATH', 'Mathematics and Statistics', 27166),
+('COMP', 'Computer Science', 22793),
+('COOP', 'Cooperative Education', 22793),
+('MATH', 'Mathematics and Statistics', 22793),
+('COMP', 'Computer Science', 16887),
+('COOP', 'Cooperative Education', 16887),
+('MATH', 'Mathematics and Statistics', 16887),
+('COMP', 'Computer Science', 15533),
+('COOP', 'Cooperative Education', 15533),
+('MATH', 'Mathematics and Statistics', 15533);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
 --
 
 CREATE TABLE `courses` (
@@ -248,8 +353,6 @@ INSERT INTO `courses` (`Description`, `MinimumCredits`, `Title`, `SubjectCode`, 
 --
 -- Table structure for table `EquatedCourses`
 --
--- Creation: Mar 14, 2026 at 08:19 PM
---
 
 CREATE TABLE `EquatedCourses` (
   `EquatedCourseId` int NOT NULL,
@@ -267,9 +370,223 @@ INSERT INTO `EquatedCourses` (`EquatedCourseId`, `courseId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Locations`
+-- Table structure for table `fromcourses`
 --
--- Creation: Mar 14, 2026 at 08:19 PM
+
+CREATE TABLE `fromcourses` (
+  `id` int DEFAULT NULL,
+  `coursename` varchar(9) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `groupsid` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fromcourses`
+--
+
+INSERT INTO `fromcourses` (`id`, `coursename`, `title`, `groupsid`) VALUES
+(9958, 'MATH-1413', 'Discrete Mathematics', 24229),
+(9954, 'MATH-1313', 'Foundations', 24229),
+(9955, 'MATH-1323', 'Matrix Algebra', 24231),
+(9956, 'MATH-1333', 'Introduction to Linear Algebra', 24231),
+(7699, 'COMP-2513', 'Web-Centric Programming', 22783),
+(7740, 'COMP-3513', 'Systems Analysis and Design', 22783),
+(7739, 'COMP-3503', 'Data Analytics', 22783),
+(7760, 'COMP-3923', 'Special Topics', 22783),
+(7774, 'COMP-4613', 'Artificial Intelligence 2', 22783),
+(7783, 'COMP-4923', 'Special Topics', 22783),
+(9986, 'MATH-2223', 'Applied Statistics for Science', 22787),
+(9990, 'MATH-2243', 'Statistics II for Life Science', 22787),
+(9992, 'MATH-2253', 'Statistics II for Science', 22787),
+(10018, 'MATH-3233', 'Regression', 22789),
+(10023, 'MATH-3283', 'Time Series', 22789),
+(10024, 'MATH-3293', 'Statistical Learning', 22789),
+(7714, 'COMP-2853', 'Handling Data Concpts/Apps', 22791),
+(7997, 'ECON-1013', 'Microeconomic Principles', 22791),
+(7998, 'ECON-1023', 'Macroeconomic Principles', 22791),
+(7114, 'BUSI-1013', 'Financial Accounting 1', 22791),
+(7127, 'BUSI-2013', 'Management Accounting', 22791),
+(7143, 'BUSI-2513', 'Operations Management', 22791),
+(7153, 'BUSI-2803', 'Business Technology Management', 22791),
+(7166, 'BUSI-3063', 'Business Analytics Modeling 1', 22791),
+(7786, 'COMP-4996', 'Thesis', 24239),
+(13385, 'COMP-407T', 'Honours Thesis 1', 24239),
+(13386, 'COMP-408T', 'Honours Thesis 2', 24239),
+(9958, 'MATH-1413', 'Discrete Mathematics', 24243),
+(9954, 'MATH-1313', 'Foundations', 24243),
+(9955, 'MATH-1323', 'Matrix Algebra', 24245),
+(9956, 'MATH-1333', 'Introduction to Linear Algebra', 24245),
+(13370, 'MATH-1253', 'Statistics 1', 24247),
+(9986, 'MATH-2223', 'Applied Statistics for Science', 24247);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fromsubjects`
+--
+
+CREATE TABLE `fromsubjects` (
+  `code` varchar(4) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` varchar(29) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fromsubjects`
+--
+
+INSERT INTO `fromsubjects` (`code`, `description`, `id`) VALUES
+('COMP', 'Computer Science', 24211),
+('ARAM', 'Aramaic', 24113),
+('FRAN', 'French', 24113),
+('GERM', 'German', 24113),
+('GREE', 'Greek', 24113),
+('HEBR', 'Hebrew', 24113),
+('LATI', 'Latin', 24113),
+('SPAN', 'Spanish', 24113),
+('ART', 'Art', 24115),
+('CLAS', 'Classics', 24115),
+('CREL', 'Comparative Religion', 24115),
+('ECON', 'Economics', 24115),
+('ENGL', 'English', 24115),
+('ESST', 'Environ. and Sustain. Studies', 24115),
+('FRAN', 'French', 24115),
+('GERM', 'German', 24115),
+('GREE', 'Greek', 24115),
+('HIST', 'History', 24115),
+('IDST', 'Interdisciplinary Studies', 24115),
+('LATI', 'Latin', 24115),
+('MUSI', 'Music', 24115),
+('PHIL', 'Philosophy', 24115),
+('POLS', 'Political Science', 24115),
+('SOCI', 'Sociology', 24115),
+('SPAN', 'Spanish', 24115),
+('THEA', 'Theatre', 24115),
+('WGST', 'Women\'s and Gender Studies', 24115),
+('APSC', 'Applied Science', 22837),
+('BIOL', 'Biology', 22837),
+('BUSI', 'Business Administration', 22837),
+('CHEM', 'Chemistry', 22837),
+('ELES', 'Elective Science', 22837),
+('ENVS', 'Environmental Science', 22837),
+('GEOL', 'Geology', 22837),
+('GEOM', 'Applied Geomatics', 22837),
+('NUTR', 'Nutrition', 22837),
+('PHYS', 'Physics', 22837),
+('PSYC', 'Psychology', 22837),
+('COMP', 'Computer Science', 24227),
+('ARAM', 'Aramaic', 9033),
+('FRAN', 'French', 9033),
+('FREN', 'French (retired Subject', 9033),
+('GERM', 'German', 9033),
+('GREE', 'Greek', 9033),
+('HEBR', 'Hebrew', 9033),
+('LATI', 'Latin', 9033),
+('SPAN', 'Spanish', 9033),
+('ART', 'Art', 9036),
+('CLAS', 'Classics', 9036),
+('CREL', 'Comparative Religion', 9036),
+('ECON', 'Economics', 9036),
+('ENGL', 'English', 9036),
+('ESST', 'Environ. and Sustain. Studies', 9036),
+('FRAN', 'French', 9036),
+('GERM', 'German', 9036),
+('GREE', 'Greek', 9036),
+('HIST', 'History', 9036),
+('IDST', 'Interdisciplinary Studies', 9036),
+('LATI', 'Latin', 9036),
+('MUSI', 'Music', 9036),
+('PHIL', 'Philosophy', 9036),
+('POLS', 'Political Science', 9036),
+('SOCI', 'Sociology', 9036),
+('SPAN', 'Spanish', 9036),
+('THEA', 'Theatre', 9036),
+('WGST', 'Women\'s and Gender Studies', 9036),
+('APSC', 'Applied Science', 9048),
+('BIOL', 'Biology', 9048),
+('BUSI', 'Business Administration', 9048),
+('CHEM', 'Chemistry', 9048),
+('ENVS', 'Environmental Science', 9048),
+('GEOL', 'Geology', 9048),
+('NUTR', 'Nutrition', 9048),
+('PHYS', 'Physics', 9048),
+('PSYC', 'Psychology', 9048),
+('APSC', 'Applied Science', 22805),
+('BIOL', 'Biology', 22805),
+('BUSI', 'Business Administration', 22805),
+('CHEM', 'Chemistry', 22805),
+('ELES', 'Elective Science', 22805),
+('ENVS', 'Environmental Science', 22805),
+('GEOL', 'Geology', 22805),
+('GEOM', 'Applied Geomatics', 22805),
+('NUTR', 'Nutrition', 22805),
+('PHYS', 'Physics', 22805),
+('PSYC', 'Psychology', 22805),
+('ARAM', 'Aramaic', 24086),
+('FRAN', 'French', 24086),
+('GERM', 'German', 24086),
+('GREE', 'Greek', 24086),
+('HEBR', 'Hebrew', 24086),
+('LATI', 'Latin', 24086),
+('SPAN', 'Spanish', 24086),
+('ART', 'Art', 24088),
+('CLAS', 'Classics', 24088),
+('CREL', 'Comparative Religion', 24088),
+('ECON', 'Economics', 24088),
+('ENGL', 'English', 24088),
+('ESST', 'Environ. and Sustain. Studies', 24088),
+('FRAN', 'French', 24088),
+('GERM', 'German', 24088),
+('GREE', 'Greek', 24088),
+('HIST', 'History', 24088),
+('IDST', 'Interdisciplinary Studies', 24088),
+('LATI', 'Latin', 24088),
+('MUSI', 'Music', 24088),
+('PHIL', 'Philosophy', 24088),
+('POLS', 'Political Science', 24088),
+('SOCI', 'Sociology', 24088),
+('SPAN', 'Spanish', 24088),
+('THEA', 'Theatre', 24088),
+('WGST', 'Women\'s and Gender Studies', 24088),
+('BUSI', 'Business Administration', 28791),
+('COMP', 'Computer Science', 28793),
+('ARAM', 'Aramaic', 22832),
+('FRAN', 'French', 22832),
+('GERM', 'German', 22832),
+('GREE', 'Greek', 22832),
+('HEBR', 'Hebrew', 22832),
+('LATI', 'Latin', 22832),
+('SPAN', 'Spanish', 22832),
+('ART', 'Art', 22834),
+('CLAS', 'Classics', 22834),
+('CREL', 'Comparative Religion', 22834),
+('ECON', 'Economics', 22834),
+('ENGL', 'English', 22834),
+('ESST', 'Environ. and Sustain. Studies', 22834),
+('FRAN', 'French', 22834),
+('GERM', 'German', 22834),
+('GREE', 'Greek', 22834),
+('HIST', 'History', 22834),
+('IDST', 'Interdisciplinary Studies', 22834),
+('LATI', 'Latin', 22834),
+('MUSI', 'Music', 22834),
+('PHIL', 'Philosophy', 22834),
+('POLS', 'Political Science', 22834),
+('SOCI', 'Sociology', 22834),
+('SPAN', 'Spanish', 22834),
+('THEA', 'Theatre', 22834),
+('WGST', 'Women\'s and Gender Studies', 22834),
+('COMP', 'Computer Science', 16882),
+('COMP', 'Computer Science', 16885),
+('MATH', 'Mathematics and Statistics', 16885),
+('COMP', 'Computer Science', 24217),
+('COMP', 'Computer Science', 24241),
+('MATH', 'Mathematics and Statistics', 24249);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Locations`
 --
 
 CREATE TABLE `Locations` (
@@ -289,8 +606,6 @@ INSERT INTO `Locations` (`LocationCodes`, `Locations_pk`, `courseId`) VALUES
 
 --
 -- Table structure for table `meetings`
---
--- Creation: Mar 17, 2026 at 01:06 AM
 --
 
 CREATE TABLE `meetings` (
@@ -414,9 +729,71 @@ INSERT INTO `meetings` (`EndTime`, `Days`, `StartTime`, `Frequency`, `IsOnline`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `requisites`
+-- Table structure for table `programs`
 --
--- Creation: Mar 17, 2026 at 12:36 PM
+
+CREATE TABLE `programs` (
+  `id` int NOT NULL,
+  `code` varchar(9) COLLATE utf8mb4_general_ci NOT NULL,
+  `academiclevelcode` varchar(2) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `minimumcredits` int DEFAULT NULL,
+  `minimuminstitutionalcredits` int DEFAULT NULL,
+  `major` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `degree` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `programs`
+--
+
+INSERT INTO `programs` (`id`, `code`, `academiclevelcode`, `title`, `minimumcredits`, `minimuminstitutionalcredits`, `major`, `degree`) VALUES
+(1, 'BACS.MOUB', 'UG', 'Bach. of Appl. Comp. Sci. Mobile and Ubiq. Computing', 120, 60, 'Mobile & Ubiquitous Computing', 'Bachelor Applied Computer Sci'),
+(2, 'BCS', 'UG', 'Bach. of Computer Science', 120, 60, '', 'Bachelor of Computer Science'),
+(3, 'BACS.GDEV', 'UG', 'Bach. of Applied Computer Science Game Development', 120, 60, 'Game Development', 'Bachelor Applied Computer Sci'),
+(4, 'BACS.SDEV', 'UG', 'Bach. of Applied Computer Science Software Development', 120, 60, 'Software Development', 'Bachelor Applied Computer Sci'),
+(5, 'BACS.DATA', 'UG', 'Bach. of Applied Computer Science Data Analytics', 120, 60, 'Data Analytics', 'Bachelor Applied Computer Sci'),
+(6, 'BACS.IDST', 'UG', 'Bach. of Applied Computer Science Interdisciplinary Study', 120, 60, 'Interdisciplinary Studies', 'Bachelor Applied Computer Sci'),
+(7, 'BCSH', 'UG', 'Bach. of Computer Science Hons.', 120, 60, '', 'Bachelor of Computer Sci (h)');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requirements`
+--
+
+CREATE TABLE `requirements` (
+  `id` int NOT NULL,
+  `description` varchar(43) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `minsubrequirements` varchar(4) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `directive` varchar(37) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `requirements`
+--
+
+INSERT INTO `requirements` (`id`, `description`, `minsubrequirements`, `directive`) VALUES
+(9028, 'BCS Common Requirements', 'null', 'Complete all of the following  items.'),
+(9039, '12h from Science (exc. CS) or from Business', 'null', 'Complete the following item.'),
+(15525, 'BCSH Electives', 'null', 'Complete all of the following  items.'),
+(16880, 'BACS Interdisciplinary Study', NULL, 'Complete all of the following  items.'),
+(17743, 'BCS Electives', 'null', 'Complete all of the following  items.'),
+(19657, 'BACS Mobile & Ubiq. Computing', 'null', 'Complete all of the following  items.'),
+(22796, 'BACS Game Development', 'null', 'Complete all of the following  items.'),
+(22820, 'BACS Core Courses', NULL, 'Complete all of the following  items.'),
+(24073, 'BACS Core Courses (SDEV only)', 'null', 'Complete all of the following  items.'),
+(24095, 'BACS Core Courses', 'null', 'Complete all of the following  items.'),
+(24206, 'Comp Sci Core: Intro COMP (Main) (BACS/BCS)', '1', 'Complete 1 of the following 2 items.'),
+(24212, 'Comp Sci Core: Intro COMP (Main) (BCSH)', '1', 'Complete 1 of the following 2 items.'),
+(24221, 'BCS Specific Requirements', 'null', 'Complete all of the following  items.'),
+(24235, 'BCSH Honours Requirements', 'null', 'Complete all of the following  items.'),
+(28787, 'BACS Software Development', 'null', 'Complete all of the following  items.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requisites`
 --
 
 CREATE TABLE `requisites` (
@@ -578,8 +955,6 @@ INSERT INTO `requisites` (`requirementcode`, `isprotected`, `completionorder`, `
 --
 -- Table structure for table `sections`
 --
--- Creation: Mar 17, 2026 at 01:02 AM
---
 
 CREATE TABLE `sections` (
   `CourseId` int DEFAULT NULL,
@@ -703,9 +1078,334 @@ INSERT INTO `sections` (`CourseId`, `Number`, `Id`, `Term_fk`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Terms`
+-- Table structure for table `subrequirementCourses`
 --
--- Creation: Mar 17, 2026 at 01:02 AM
+
+CREATE TABLE `subrequirementCourses` (
+  `id` int DEFAULT NULL,
+  `coursename` varchar(9) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `groupsid` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subrequirementCourses`
+--
+
+INSERT INTO `subrequirementCourses` (`id`, `coursename`, `title`, `groupsid`) VALUES
+(7654, 'COMP-1113', 'Computer Programming 1', 24208),
+(7656, 'COMP-1123', 'Computer Programming 2', 24208),
+(13571, 'COMP-1233', 'Introd to Computer Science', 24210),
+(7685, 'COMP-2103', 'Computer Programming 3', 24102),
+(7686, 'COMP-2113', 'Data Structures and Algorithms', 24102),
+(7691, 'COMP-2203', 'Comp Architect./Organization 1', 24102),
+(7692, 'COMP-2213', 'Comp Architect./Organization 2', 24102),
+(7707, 'COMP-2663', 'Software Engineering 1', 24102),
+(7718, 'COMP-2903', 'Computers and Society', 24102),
+(7732, 'COMP-3343', 'Data Comm & Comp Networks', 24102),
+(7747, 'COMP-3613', 'Artificial Intelligence 1', 24102),
+(7749, 'COMP-3663', 'Software Engineering 2', 24102),
+(7751, 'COMP-3713', 'Operating Systems', 24102),
+(7753, 'COMP-3753', 'Database Management Systems', 24102),
+(7785, 'COMP-4983', 'Capstone Project', 24104),
+(13370, 'MATH-1253', 'Statistics 1', 24106),
+(9984, 'MATH-2213', 'Appl Probability Sci/Engi', 24107),
+(9986, 'MATH-2223', 'Applied Statistics for Science', 24107),
+(9958, 'MATH-1413', 'Discrete Mathematics', 24109),
+(9955, 'MATH-1323', 'Matrix Algebra', 24109),
+(9954, 'MATH-1313', 'Foundations', 24110),
+(9956, 'MATH-1333', 'Introduction to Linear Algebra', 24110),
+(7699, 'COMP-2513', 'Web-Centric Programming', 19659),
+(7745, 'COMP-3583', 'Human Computer Interaction', 19659),
+(7764, 'COMP-4343', 'Comp Net & Distributed Systems', 19659),
+(7772, 'COMP-4583', 'Mobile/Ubiquitous Computing', 19659),
+(9943, 'MATH-1013', 'Introductory Calculus 1', 19659),
+(9945, 'MATH-1023', 'Introductory Calculus 2', 19659),
+(11315, 'PSYC-1013', 'Introductory Psychology 1', 19659),
+(11317, 'PSYC-1023', 'Introductory Psychology 2', 19659),
+(11339, 'PSYC-2143', 'Introduction to Cognition', 19659),
+(7685, 'COMP-2103', 'Computer Programming 3', 24223),
+(7686, 'COMP-2113', 'Data Structures and Algorithms', 24223),
+(7691, 'COMP-2203', 'Comp Architect./Organization 1', 24223),
+(7692, 'COMP-2213', 'Comp Architect./Organization 2', 24223),
+(7707, 'COMP-2663', 'Software Engineering 1', 24223),
+(7718, 'COMP-2903', 'Computers and Society', 24223),
+(7732, 'COMP-3343', 'Data Comm & Comp Networks', 24223),
+(7733, 'COMP-3403', 'Analysis of Algorithms', 24223),
+(7747, 'COMP-3613', 'Artificial Intelligence 1', 24223),
+(7750, 'COMP-3703', 'Translators', 24223),
+(7751, 'COMP-3713', 'Operating Systems', 24223),
+(7753, 'COMP-3753', 'Database Management Systems', 24223),
+(7785, 'COMP-4983', 'Capstone Project', 24225),
+(13370, 'MATH-1253', 'Statistics 1', 24233),
+(9984, 'MATH-2213', 'Appl Probability Sci/Engi', 24234),
+(9986, 'MATH-2223', 'Applied Statistics for Science', 24234),
+(9943, 'MATH-1013', 'Introductory Calculus 1', 9030),
+(9945, 'MATH-1023', 'Introductory Calculus 2', 9030),
+(7744, 'COMP-3553', 'Computer Graphics', 22798),
+(7745, 'COMP-3583', 'Human Computer Interaction', 22798),
+(7755, 'COMP-3773', 'Adv Obj Oriented App Dev C++', 22798),
+(7764, 'COMP-4343', 'Comp Net & Distributed Systems', 22798),
+(7771, 'COMP-4553', 'Game Development', 22798),
+(7774, 'COMP-4613', 'Artificial Intelligence 2', 22798),
+(9943, 'MATH-1013', 'Introductory Calculus 1', 22798),
+(9945, 'MATH-1023', 'Introductory Calculus 2', 22798),
+(9994, 'MATH-2313', 'Linear Algebra 2', 22798),
+(7685, 'COMP-2103', 'Computer Programming 3', 24075),
+(7686, 'COMP-2113', 'Data Structures and Algorithms', 24075),
+(7691, 'COMP-2203', 'Comp Architect./Organization 1', 24075),
+(7692, 'COMP-2213', 'Comp Architect./Organization 2', 24075),
+(7707, 'COMP-2663', 'Software Engineering 1', 24075),
+(7718, 'COMP-2903', 'Computers and Society', 24075),
+(7732, 'COMP-3343', 'Data Comm & Comp Networks', 24075),
+(7747, 'COMP-3613', 'Artificial Intelligence 1', 24075),
+(7749, 'COMP-3663', 'Software Engineering 2', 24075),
+(7751, 'COMP-3713', 'Operating Systems', 24075),
+(7753, 'COMP-3753', 'Database Management Systems', 24075),
+(7785, 'COMP-4983', 'Capstone Project', 24077),
+(13370, 'MATH-1253', 'Statistics 1', 24079),
+(9984, 'MATH-2213', 'Appl Probability Sci/Engi', 24080),
+(9986, 'MATH-2223', 'Applied Statistics for Science', 24080),
+(9958, 'MATH-1413', 'Discrete Mathematics', 24082),
+(9955, 'MATH-1323', 'Matrix Algebra', 24082),
+(9954, 'MATH-1313', 'Foundations', 24083),
+(9956, 'MATH-1333', 'Introduction to Linear Algebra', 24083),
+(13573, 'COMP-3033', 'Full-Stack Cloud Computing', 28796),
+(7740, 'COMP-3513', 'Systems Analysis and Design', 28796),
+(7745, 'COMP-3583', 'Human Computer Interaction', 28796),
+(7755, 'COMP-3773', 'Adv Obj Oriented App Dev C++', 28796),
+(7647, 'COMM-1213', 'Business Communication 1', 28796),
+(9943, 'MATH-1013', 'Introductory Calculus 1', 22785),
+(9945, 'MATH-1023', 'Introductory Calculus 2', 22785),
+(7656, 'COMP-1123', 'Computer Programming 2', 22822),
+(7685, 'COMP-2103', 'Computer Programming 3', 22822),
+(7686, 'COMP-2113', 'Data Structures and Algorithms', 22822),
+(7691, 'COMP-2203', 'Comp Architect./Organization 1', 22822),
+(7692, 'COMP-2213', 'Comp Architect./Organization 2', 22822),
+(7707, 'COMP-2663', 'Software Engineering 1', 22822),
+(7718, 'COMP-2903', 'Computers and Society', 22822),
+(7732, 'COMP-3343', 'Data Comm & Comp Networks', 22822),
+(7747, 'COMP-3613', 'Artificial Intelligence 1', 22822),
+(7749, 'COMP-3663', 'Software Engineering 2', 22822),
+(7751, 'COMP-3713', 'Operating Systems', 22822),
+(7753, 'COMP-3753', 'Database Management Systems', 22822),
+(7785, 'COMP-4983', 'Capstone Project', 22824),
+(13370, 'MATH-1253', 'Statistics 1', 22835),
+(9984, 'MATH-2213', 'Appl Probability Sci/Engi', 22836),
+(9986, 'MATH-2223', 'Applied Statistics for Science', 22836),
+(9958, 'MATH-1413', 'Discrete Mathematics', 22828),
+(9955, 'MATH-1323', 'Matrix Algebra', 22828),
+(9954, 'MATH-1313', 'Foundations', 22829),
+(9956, 'MATH-1333', 'Introduction to Linear Algebra', 22829),
+(7654, 'COMP-1113', 'Computer Programming 1', 24214),
+(7656, 'COMP-1123', 'Computer Programming 2', 24214),
+(13571, 'COMP-1233', 'Introd to Computer Science', 24216),
+(7685, 'COMP-2103', 'Computer Programming 3', 24237),
+(7686, 'COMP-2113', 'Data Structures and Algorithms', 24237),
+(7691, 'COMP-2203', 'Comp Architect./Organization 1', 24237),
+(7692, 'COMP-2213', 'Comp Architect./Organization 2', 24237),
+(7707, 'COMP-2663', 'Software Engineering 1', 24237),
+(7718, 'COMP-2903', 'Computers and Society', 24237),
+(7732, 'COMP-3343', 'Data Comm & Comp Networks', 24237),
+(7733, 'COMP-3403', 'Analysis of Algorithms', 24237),
+(7734, 'COMP-3413', 'Automata/Formal Lang/Comput', 24237),
+(7747, 'COMP-3613', 'Artificial Intelligence 1', 24237),
+(7750, 'COMP-3703', 'Translators', 24237),
+(7751, 'COMP-3713', 'Operating Systems', 24237),
+(7753, 'COMP-3753', 'Database Management Systems', 24237),
+(6625, 'APSC-1413', 'Comp Programming for APSC 1', 22822);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subrequirementgroups`
+--
+
+CREATE TABLE `subrequirementgroups` (
+  `id` int NOT NULL,
+  `code` varchar(7) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `searchtext` varchar(147) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mincredits` int DEFAULT NULL,
+  `subrequirementid` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subrequirementgroups`
+--
+
+INSERT INTO `subrequirementgroups` (`id`, `code`, `searchtext`, `mincredits`, `subrequirementid`) VALUES
+(9030, 'Group 1', 'Take course(s) MATH-1013, MATH-1023. ', NULL, 9029),
+(9032, 'Group 1', '6h Writing Intensive', 6, 9031),
+(9033, 'Group 2', '6h in one language', 6, 9031),
+(9036, 'Group 1', '9h from the Faculty of Arts (not ECON 2613, 2623, or SOCI 3103)', 9, 9034),
+(9048, 'Group 1', '12h from science (not MATH/COMP) or Business', 12, 9045),
+(15533, 'Group 1', '3h electives, except from COMP, MATH, and COOP.', 3, 15531),
+(15535, 'Group 1', '9h any elective', 9, 15534),
+(16882, 'Group 1', '6h computer science, with a minimum of C-', 6, 16881),
+(16885, 'Group 1', '6h computer science or mathematics and statistics, with a minimum of C-', 6, 16884),
+(16887, 'Group 1', '15h with permission of school, except COMP, MATH,  and COOP. This block, together with the next block  for 27h are expected to encompass courses fo', 15, 16886),
+(16890, 'Group 1', 'Complete 27 credit(s). ', 27, 16888),
+(17745, 'Group 1', '6h Electives (not from Computer Science, Math, or Co-op)', 6, 17744),
+(17747, 'Group 1', '15h any electives', 15, 17746),
+(19659, 'Group 1', 'Take course(s) COMP-2513, COMP-3583, COMP-4343, COMP-4583, MATH-1013, MATH-1023, PSYC-1013, PSYC-1023, PSYC-2143.', NULL, 19658),
+(22783, 'Group 1', '12h, selected from:  COMP-2513 COMP-3513 COMP-3503 COMP-3923 COMP-4613 COMP-4923 (Machine Learning)', 12, 22782),
+(22785, 'Group 1', 'Take course(s) MATH-1013, MATH-1023. ', NULL, 22784),
+(22787, 'Group 1', 'MATH 2223, MATH 2243, or MATH 2253', 3, 22786),
+(22789, 'Group 1', '6h, selected from: MATH-3233 MATH-3283 MATH-3293', 6, 22788),
+(22791, 'Group 1', '12h, selected from: COMP-2853 ECON-1013 ECON-1023 BUSI-1013 BUSI-2013   BUSI-2513 BUSI-2803 BUSI-3063', 12, 22790),
+(22793, 'Group 1', '3h electives, except from COMP, MATH, and COOP.', 3, 22792),
+(22795, 'Group 1', 'Note: If COMP-2853 was taken above, then 3h of these electives must be not in COMP, MATH, or COOP.', 12, 22794),
+(22798, 'Group 1', 'Take course(s) COMP-3553, COMP-3583, COMP-3773, COMP-4343, COMP-4553, COMP-4613, MATH-1013, MATH-1023, MATH-2313. ', NULL, 22797),
+(22805, 'Group 1', '12h from the Faculty of Pure and Applied Science (excluding MATH, COMP and COOP) or the School of Business Administration', 12, 22801),
+(22822, 'Group 1', 'Take course(s) COMP-1123, COMP-2103, COMP-2113, COMP-2203, COMP-2213, COMP-2663, COMP-2903, COMP-3343, COMP-3613, COMP-3663, COMP-3713, COMP-3753, ', NULL, 22821),
+(22824, 'Group 1', 'Take course(s) COMP-4983. ', NULL, 22823),
+(22828, 'Group 1', 'MATH 1413, 1323', NULL, 22827),
+(22829, 'Group 2', 'MATH 1313, 1333', NULL, 22827),
+(22831, 'Group 1', '6h Writing Intensive', 6, 22830),
+(22832, 'Group 2', '6h in one language', 6, 22830),
+(22834, 'Group 1', '9h from the Faculty of Arts (not ECON 2613, 2623, or SOCI 3103)', 9, 22833),
+(22835, 'Group 1', 'Take course(s) MATH-1253. ', NULL, 22825),
+(22836, 'Group 2', 'Take course(s) MATH-2213, MATH-2223. ', NULL, 22825),
+(22837, 'Group 1', '3h from the Faculty of Pure and Applied Science (excluding COMP, MATH and COOP) or the School of Business Administration', 3, 19662),
+(24075, 'Group 1', 'Take course(s) COMP-2103, COMP-2113, COMP-2203, COMP-2213, COMP-2663, COMP-2903, COMP-3343, COMP-3613, COMP-3663, COMP-3713, COMP-3753. ', NULL, 24074),
+(24077, 'Group 1', 'Take course(s) COMP-4983. ', NULL, 24076),
+(24079, 'Group 1', 'Take course(s) MATH-1253. ', NULL, 24078),
+(24080, 'Group 2', 'Take course(s) MATH-2213, MATH-2223. ', NULL, 24078),
+(24082, 'Group 1', 'MATH 1413, 1323', NULL, 24081),
+(24083, 'Group 2', 'MATH 1313, 1333', NULL, 24081),
+(24085, 'Group 1', '6h Writing Intensive', 6, 24084),
+(24086, 'Group 2', '6h in one language', 6, 24084),
+(24088, 'Group 1', '9h from the Faculty of Arts (not ECON 2613, 2623, or SOCI 3103)', 9, 24087),
+(24102, 'Group 1', 'Take COMP-2103 COMP-2113 COMP-2203 COMP-2213 COMP-2663     COMP-2903 COMP-3343 COMP-3613 COMP-3663 COMP-3713     COMP-3753;     Minimum grade C-,P;', NULL, 24101),
+(24104, 'Group 1', 'Take course(s) COMP-4983. ', NULL, 24103),
+(24106, 'Group 1', 'Take course(s) MATH-1253. ', NULL, 24105),
+(24107, 'Group 2', 'Take course(s) MATH-2213, MATH-2223. ', NULL, 24105),
+(24109, 'Group 1', 'MATH 1413, 1323', NULL, 24108),
+(24110, 'Group 2', 'MATH 1313, 1333', NULL, 24108),
+(24112, 'Group 1', '6h Writing Intensive', 6, 24111),
+(24113, 'Group 2', '6h in one language', 6, 24111),
+(24115, 'Group 1', '9h from the Faculty of Arts (not ECON 2613, 2623, or SOCI 3103)', 9, 24114),
+(24208, 'Group 1', 'Take COMP 1113 and 1123 if you\'ve had no prior Computer Science studies.', NULL, 24207),
+(24210, 'Group 1', 'Take course(s) COMP-1233. ', NULL, 24209),
+(24211, 'Group 2', 'Complete 3 credit(s). Choose from the subject(s) of Computer Science. Excluding the course(s) COMP-2853. ', 3, 24209),
+(24214, 'Group 1', 'Take COMP 1113 and 1123 if you\'ve had no prior Computer Science studies.', NULL, 24213),
+(24216, 'Group 1', 'Take course(s) COMP-1233. ', NULL, 24215),
+(24217, 'Group 2', 'Complete 3 credit(s). Choose from the subject(s) of Computer Science. Excluding the course(s) COMP-2853. ', 3, 24215),
+(24223, 'Group 1', 'Take COMP-2103 COMP-2113 COMP-2203 COMP-2213 COMP-2663     COMP-2903 COMP-3343 COMP-3403 COMP-3613 COMP-3703     COMP-3713 COMP-3753;', NULL, 24222),
+(24225, 'Group 1', 'Take course(s) COMP-4983. ', NULL, 24224),
+(24227, 'Group 1', 'Complete 12 credit(s). Choose from the subject(s) of Computer Science. Excluding the course(s) COMP-2853. ', 12, 24226),
+(24229, 'Group 1', 'MATH-1413 or MATH-1313', 3, 24228),
+(24231, 'Group 1', 'MATH-1323 or MATH-1333', 3, 24230),
+(24233, 'Group 1', 'Take course(s) MATH-1253. ', NULL, 24232),
+(24234, 'Group 2', 'Take course(s) MATH-2213, MATH-2223. ', NULL, 24232),
+(24237, 'Group 1', 'Take course(s) COMP-2103, COMP-2113, COMP-2203, COMP-2213, COMP-2663, COMP-2903, COMP-3343, COMP-3403, COMP-3413, COMP-3613, COMP-3703, COMP-3713, ', NULL, 24236),
+(24239, 'Group 1', 'Honours thesis (COMP-4996 or COMP-407T and COMP-408T)', 6, 24238),
+(24241, 'Group 1', 'Complete 12 credit(s). Choose from the subject(s) of Computer Science. Choose from the level(s) of 3000, 4000. ', 12, 24240),
+(24243, 'Group 1', 'MATH-1413 or MATH-1313', 3, 24242),
+(24245, 'Group 1', 'MATH-1323 or MATH-1333', 3, 24244),
+(24247, 'Group 1', 'Either MATH 1253 or MATH 2223', 3, 24246),
+(24249, 'Group 1', 'MATH-2213 (necessary for MATH-2223), or 3h MATH at the 2000 level or higher', 3, 24248),
+(27166, 'Group 1', '3h electives, except from COMP, MATH, and COOP.', 3, 22803),
+(27168, 'Group 1', '12h electives from any subject.', 12, 27167),
+(27169, 'Group 1', '3h from courses not including COMP, MATH and COOP', 3, 22838),
+(27170, 'Group 1', '21h electives from any subject.', 21, 19664),
+(28791, 'Group 1', '12h Business', 12, 28790),
+(28793, 'Group 1', '3h COMP at 2000+ level', 3, 28792),
+(28795, 'Group 1', '24h electives from any subject', 24, 28794),
+(28796, 'Group 1', 'COMP-3033 COMP-3513 COMP-3583 COMP-3773 and COMM-1213', NULL, 28788);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subrequirements`
+--
+
+CREATE TABLE `subrequirements` (
+  `id` int NOT NULL,
+  `mingroups` varchar(1) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mininstitutionalcredits` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `code` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `displaytext` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `directive` varchar(37) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `requirementsid` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subrequirements`
+--
+
+INSERT INTO `subrequirements` (`id`, `mingroups`, `mininstitutionalcredits`, `code`, `displaytext`, `directive`, `requirementsid`) VALUES
+(9029, NULL, NULL, 'Intro Calculus', '', 'Complete all of the following  items.', 9028),
+(9031, '1', NULL, '6h Sci Breadth Req', '6h selected from English, Art at the 1000-level, Classics, Comparative Religion, a single language other than English, History, Music (not applied, vocal or instrumental methods, or practical studies), Philosophy, Theology (THEO 3013/23, BIBL 2013/23, GREE 3013/23), or Women\'s and Gender Studies, or COMM-1213 or COMM-1223.', 'Complete 1 of the following 2 items.', 9028),
+(9034, NULL, NULL, '9h Faculty of Arts', '9h from the Faculty of Arts (not ECON 2613, 2623, or SOCI 3103)', 'Complete all of the following  items.', 9028),
+(9045, NULL, NULL, '12h Science/Business', '12h from science (not MATH/COMP) or Business', 'Complete all of the following  items.', 9039),
+(15531, NULL, NULL, '3h non-COMP/MATH', '3h electives, except from COMP, MATH, and COOP.', 'Complete all of the following  items.', 15525),
+(15534, NULL, NULL, '9h Electives', '9h any elective', 'Complete all of the following  items.', 15525),
+(16881, NULL, NULL, '6h COMP', '6h computer science, with a minimum of C-', 'Complete all of the following  items.', 16880),
+(16884, NULL, NULL, '6h COMP/MATH', '6h computer science or mathematics and statistics, with a minimum of C-', 'Complete all of the following  items.', 16880),
+(16886, NULL, NULL, '15h non-COMP/MATH', '15h with permission of school, except COMP, MATH, and COOP. This block, together with the next block  for 27h are expected to encompass courses for an  18h minor (in one subject or a multidisciplinary  minor). Your advisor should have your chosen  minor added to your program.  If you take more than 120h, you may see courses in your minor not appear inside this block, but will be checked in a specialized block for your chosen minor.', 'Complete all of the following  items.', 16880),
+(16888, NULL, NULL, '27h Addnl Courses', '', 'Complete all of the following  items.', 16880),
+(17744, NULL, NULL, '6h non-COMP/MATH', '6h Electives (not from Computer Science, Math, or Co-op)', 'Complete all of the following  items.', 17743),
+(17746, NULL, NULL, '15h Electives', '15h any electives', 'Complete all of the following  items.', 17743),
+(19658, '', '', 'MOUB Mandatory', '', 'Complete all of the following  items.', 19657),
+(19662, '', '', '3h Sci/Busi non-COMP', '3h from the Faculty of Pure and Applied Science (excluding COMP, MATH and COOP) or the School of Business Administration', 'Complete all of the following  items.', 19657),
+(19664, '', '', '21h Electives', '21h electives from any subject.', 'Complete all of the following  items.', 19657),
+(22782, NULL, NULL, '12h Data Sci.', '12h, selected from:  COMP-2513 COMP-3513 COMP-3503 COMP-3923 COMP-4613 COMP-4923 (Machine Learning)', 'Complete all of the following  items.', 22781),
+(22784, NULL, NULL, 'Intro Calculus', '', 'Complete all of the following  items.', 22781),
+(22786, NULL, NULL, 'Statistics', 'MATH 2223, MATH 2243, or MATH 2253', 'Complete all of the following  items.', 22781),
+(22788, NULL, NULL, '6h Selected MATH', '6h, selected from: MATH-3233 MATH-3283 MATH-3293', 'Complete all of the following  items.', 22781),
+(22790, NULL, NULL, '12h ECON/BUSI', '12h, selected from: COMP-2853 ECON-1013 ECON-1023 BUSI-1013 BUSI-2013   BUSI-2513 BUSI-2803 BUSI-3063', 'Complete all of the following  items.', 22781),
+(22792, NULL, NULL, '3h non-COMP/MATH', '3h electives, except from COMP, MATH, and COOP.', 'Complete all of the following  items.', 22781),
+(22794, NULL, NULL, '12h Electives', 'Note: If COMP-2853 was taken above, then 3h of these electives must be not in COMP, MATH, or COOP.', 'Complete all of the following  items.', 22781),
+(22797, NULL, NULL, 'Game Dev. Mandatory', '', 'Complete all of the following  items.', 22796),
+(22801, NULL, NULL, '12h Sci/Bus non-COMP', '12h from the Faculty of Pure and Applied Science (excluding MATH, COMP and COOP) or the School of Business Administration', 'Complete all of the following items.', 22796),
+(22803, NULL, NULL, '3h non-COMP/MATH', '3h electives, except from COMP, MATH, and COOP.', 'Complete all of the following items.', 22796),
+(22821, NULL, NULL, 'Specified COMP', '', 'Complete all of the following items.', 22820),
+(22823, NULL, NULL, 'Project', '', 'Complete all of the following items.', 22820),
+(22825, '1', NULL, 'Statistics', 'Either MATH 1253, or MATH 2213 and 2223', 'Complete 1 of the following 2 items.', 22820),
+(22827, '1', NULL, 'Discrete Math', 'Either MATH 1413 and 1323, or MATH 1313 and 1333.', 'Complete 1 of the following 2 items.', 22820),
+(22830, '1', NULL, '6h Sci Breadth Req', '6h selected from English, Art at the 1000-level, Classics, Comparative Religion, a single language other than English, History, Music (not applied, vocal or instrumental methods, or practical studies), Philosophy, Theology (THEO 3013/23, BIBL 2013/23, GREE 3013/23), or Women\'s and Gender Studies, or COMM-1213 or COMM-1223.', 'Complete 1 of the following 2 items.', 22820),
+(22833, NULL, NULL, '9h Faculty of Arts', '9h from the Faculty of Arts (not ECON 2613, 2623, or SOCI 3103)', 'Complete all of the following  items.', 22820),
+(22838, '', '', '3h non-COMP/MATH', '3h from courses not including COMP, MATH and COOP', 'Complete all of the following  items.', 19657),
+(24074, NULL, NULL, 'Specified COMP', '', 'Complete all of the following  items.', 24073),
+(24076, NULL, NULL, 'Project', '', 'Complete all of the following  items.', 24073),
+(24078, '1', NULL, 'Statistics', 'Either MATH 1253, or MATH 2213 and 2223', 'Complete 1 of the following 2 items.', 24073),
+(24081, '1', NULL, 'Discrete Math', 'Either MATH 1413 and 1323, or MATH 1313 and 1333.', 'Complete 1 of the following 2 items.', 24073),
+(24084, '1', NULL, '6h Sci Breadth Req', '6h selected from English, Art at the 1000-level, Classics, Comparative Religion, a single language other than English, History, Music (not applied, vocal or instrumental methods, or practical studies), Philosophy, Theology (THEO 3013/23, BIBL 2013/23, GREE 3013/23), or Women\'s and Gender Studies, or COMM-1213 or COMM-1223.', 'Complete 1 of the following 2 items.', 24073),
+(24087, NULL, NULL, '9h Faculty of Arts', '9h from the Faculty of Arts (not ECON 2613, 2623, or SOCI 3103)', 'Complete all of the following  items.', 24073),
+(24101, '', '', 'Specified COMP', 'Take COMP-2103 COMP-2113 COMP-2203 COMP-2213 COMP-2663     COMP-2903 COMP-3343 COMP-3613 COMP-3663 COMP-3713     COMP-3753;     Minimum grade C-,P;', 'Complete all of the following  items.', 24095),
+(24103, '', '', 'Project', '', 'Complete all of the following  items.', 24095),
+(24105, '1', '', 'Statistics', 'Either MATH 1253, or MATH 2213 and 2223', 'Complete 1 of the following 2 items.', 24095),
+(24108, '1', '', 'Discrete Math', 'Either MATH 1413 and 1323, or MATH 1313 and 1333.', 'Complete 1 of the following 2 items.', 24095),
+(24111, '1', '', '6h Sci Breadth Req', '6h selected from English, Art at the 1000-level, Classics, Comparative Religion, a single language other than English, History, Music (not applied, vocal or instrumental methods, or practical studies), Philosophy, Theology (THEO 3013/23, BIBL 2013/23, GREE 3013/23), or Women\'s and Gender Studies, or COMM-1213 or COMM-1223.', 'Complete 1 of the following 2 items.', 24095),
+(24114, '', '', '9h Faculty of Arts', '9h from the Faculty of Arts (not ECON 2613, 2623, or SOCI 3103)', 'Complete all of the following  items.', 24095),
+(24207, '', '', 'COMP 1113 and 1123', 'Take COMP 1113 and 1123 if you\'ve had no prior Computer Science studies.', 'Complete all of the following  items.', 24206),
+(24209, '', '', 'COMP 1233 plus 3h', 'Take COMP 1233 and 3h additional COMP if you\'ve had prior Computer Science studies in high school.', 'Complete all of the following  items.', 24206),
+(24213, NULL, NULL, 'COMP 1113 and 1123', 'Take COMP 1113 and 1123 if you\'ve had no prior Computer Science studies.', 'Complete all of the following  items.', 24212),
+(24215, NULL, NULL, 'COMP 1233 plus 3h', 'Take COMP 1233 and 3h additional COMP if you\'ve had prior Computer Science studies in high school.', 'Complete all of the following  items.', 24212),
+(24222, NULL, NULL, 'Specified COMP', 'Take COMP-2103 COMP-2113 COMP-2203 COMP-2213 COMP-2663     COMP-2903 COMP-3343 COMP-3403 COMP-3613 COMP-3703     COMP-3713 COMP-3753;', 'Complete all of the following  items.', 24221),
+(24224, NULL, NULL, 'Project', '', 'Complete all of the following  items.', 24221),
+(24226, NULL, NULL, '12h Additional COMP', '', 'Complete all of the following  items.', 24221),
+(24228, NULL, NULL, 'Discrete Math', 'MATH-1413 or MATH-1313', 'Complete all of the following  items.', 24221),
+(24230, NULL, NULL, 'Linear/Matrix', 'MATH-1323 or MATH-1333', 'Complete all of the following  items.', 24221),
+(24232, '1', NULL, 'Statistics', 'Either MATH 1253, or MATH 2213 and 2223', 'Complete 1 of the following 2 items.', 24221),
+(24236, NULL, NULL, 'Specified COMP', '', 'Complete all of the following  items.', 24235),
+(24238, NULL, NULL, 'Honours Thesis', 'Honours thesis (COMP-4996 or COMP-407T and COMP-408T)', 'Complete all of the following  items.', 24235),
+(24240, NULL, NULL, '12h COMP 3xxx/4xxx', '', 'Complete all of the following  items.', 24235),
+(24242, NULL, NULL, 'Discrete Math', 'MATH-1413 or MATH-1313', 'Complete all of the following  items.', 24235),
+(24244, NULL, NULL, 'Linear/Matrix', 'MATH-1323 or MATH-1333', 'Complete all of the following  items.', 24235),
+(24246, NULL, NULL, 'Prob./Statistics', 'Either MATH 1253 or MATH 2223', 'Complete all of the following  items.', 24235),
+(24248, NULL, NULL, 'MATH 2213/2xxx', 'MATH-2213 (necessary for MATH-2223), or 3h MATH at the 2000 level or higher', 'Complete all of the following  items.', 24235),
+(27167, NULL, NULL, '12h Electives', '12h electives from any subject.', 'Complete all of the following items.', 22796),
+(28788, NULL, NULL, 'Soft. Dev. Mandatory', '  COMP-3033 COMP-3513 COMP-3583 COMP-3773 and COMM-1213', 'Complete all of the following  items.', 28787),
+(28790, NULL, NULL, '12h Business', '12h Business', 'Complete all of the following  items.', 28787),
+(28792, NULL, NULL, '3h COMP 2000+', '3h COMP at 2000+ level', 'Complete all of the following  items.', 28787),
+(28794, NULL, NULL, '24h Electives', '24h electives from any subject', 'Complete all of the following  items.', 28787);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Terms`
 --
 
 CREATE TABLE `Terms` (
@@ -731,6 +1431,18 @@ INSERT INTO `Terms` (`TermId`, `StartDate`, `EndDate`, `Term_pk`) VALUES
 --
 
 --
+-- Indexes for table `butnotcourses`
+--
+ALTER TABLE `butnotcourses`
+  ADD UNIQUE KEY `id` (`id`,`groupsid`);
+
+--
+-- Indexes for table `butnotsubjects`
+--
+ALTER TABLE `butnotsubjects`
+  ADD UNIQUE KEY `code` (`code`,`id`);
+
+--
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
@@ -742,6 +1454,18 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `EquatedCourses`
   ADD PRIMARY KEY (`EquatedCourseId`);
+
+--
+-- Indexes for table `fromcourses`
+--
+ALTER TABLE `fromcourses`
+  ADD UNIQUE KEY `id` (`id`,`groupsid`);
+
+--
+-- Indexes for table `fromsubjects`
+--
+ALTER TABLE `fromsubjects`
+  ADD UNIQUE KEY `code` (`code`,`id`);
 
 --
 -- Indexes for table `Locations`
@@ -757,6 +1481,18 @@ ALTER TABLE `meetings`
   ADD KEY `sectionId` (`sectionId`);
 
 --
+-- Indexes for table `programs`
+--
+ALTER TABLE `programs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `requirements`
+--
+ALTER TABLE `requirements`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `requisites`
 --
 ALTER TABLE `requisites`
@@ -770,10 +1506,38 @@ ALTER TABLE `sections`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `subrequirementCourses`
+--
+ALTER TABLE `subrequirementCourses`
+  ADD UNIQUE KEY `id` (`id`,`groupsid`);
+
+--
+-- Indexes for table `subrequirementgroups`
+--
+ALTER TABLE `subrequirementgroups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subrequirements`
+--
+ALTER TABLE `subrequirements`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `Terms`
 --
 ALTER TABLE `Terms`
   ADD PRIMARY KEY (`Term_pk`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `programs`
+--
+ALTER TABLE `programs`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
