@@ -97,6 +97,7 @@ a {
 .error{
   color: red;
 }
+
 /* planner-collection.html: sidebar*/
 .pc-navbar{
   background-color: white;
@@ -270,4 +271,10 @@ nav.open ~ .pc-openMenu{
 
 .addCourse:active {
     cursor: grabbing;
+}
+
+/*profile.html*/
+.profile_div{
+  padding-top: 20px;
+  padding-bottom: 5px;
 }
