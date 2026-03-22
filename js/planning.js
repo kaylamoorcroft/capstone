@@ -787,6 +787,7 @@ $("#add-course-btn").click(function (event) {
     // brief delay for modal to disappear before exeuting code in case of alert
     //setTimeout(() => addCourse(selectedCourse), 10);
     addCourse(selectedCourse, currentSem);
+    $('#newCourse').trigger('reset');
 });
 
 $("#add-sem-btn").click(function (event) {
