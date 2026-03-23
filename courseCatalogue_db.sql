@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 23, 2026 at 01:05 AM
+-- Generation Time: Mar 23, 2026 at 01:25 AM
 -- Server version: 8.0.44
 -- PHP Version: 8.2.29
 
@@ -800,13 +800,13 @@ CREATE TABLE `programs` (
 --
 
 INSERT INTO `programs` (`id`, `code`, `academiclevelcode`, `title`, `minimumcredits`, `minimuminstitutionalcredits`, `major`, `degree`) VALUES
-(1, 'BACS.MOUB', 'UG', 'Bach. of Appl. Comp. Sci. Mobile and Ubiq. Computing', 120, 60, 'Mobile & Ubiquitous Computing', 'Bachelor Applied Computer Sci'),
-(2, 'BCS', 'UG', 'Bach. of Computer Science', 120, 60, '', 'Bachelor of Computer Science'),
-(3, 'BACS.GDEV', 'UG', 'Bach. of Applied Computer Science Game Development', 120, 60, 'Game Development', 'Bachelor Applied Computer Sci'),
-(4, 'BACS.SDEV', 'UG', 'Bach. of Applied Computer Science Software Development', 120, 60, 'Software Development', 'Bachelor Applied Computer Sci'),
-(5, 'BACS.DATA', 'UG', 'Bach. of Applied Computer Science Data Analytics', 120, 60, 'Data Analytics', 'Bachelor Applied Computer Sci'),
-(6, 'BACS.IDST', 'UG', 'Bach. of Applied Computer Science Interdisciplinary Study', 120, 60, 'Interdisciplinary Studies', 'Bachelor Applied Computer Sci'),
-(7, 'BCSH', 'UG', 'Bach. of Computer Science Hons.', 120, 60, '', 'Bachelor of Computer Sci (h)');
+(1, 'BCS', 'UG', 'Bach. of Computer Science', 120, 60, '', 'Bachelor of Computer Science'),
+(2, 'BCSH', 'UG', 'Bach. of Computer Science Hons.', 120, 60, '', 'Bachelor of Computer Sci (h)'),
+(3, 'BACS.MOUB', 'UG', 'Bach. of Appl. Comp. Sci. Mobile and Ubiq. Computing', 120, 60, 'Mobile & Ubiquitous Computing', 'Bachelor Applied Computer Sci'),
+(4, 'BACS.GDEV', 'UG', 'Bach. of Applied Computer Science Game Development', 120, 60, 'Game Development', 'Bachelor Applied Computer Sci'),
+(5, 'BACS.SDEV', 'UG', 'Bach. of Applied Computer Science Software Development', 120, 60, 'Software Development', 'Bachelor Applied Computer Sci'),
+(6, 'BACS.DATA', 'UG', 'Bach. of Applied Computer Science Data Analytics', 120, 60, 'Data Analytics', 'Bachelor Applied Computer Sci'),
+(7, 'BACS.IDST', 'UG', 'Bach. of Applied Computer Science Interdisciplinary Study', 120, 60, 'Interdisciplinary Studies', 'Bachelor Applied Computer Sci');
 
 -- --------------------------------------------------------
 
