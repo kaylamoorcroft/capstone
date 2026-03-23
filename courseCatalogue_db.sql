@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 22, 2026 at 05:58 PM
--- Server version: 8.0.39
--- PHP Version: 8.2.27
+-- Generation Time: Mar 23, 2026 at 01:05 AM
+-- Server version: 8.0.44
+-- PHP Version: 8.2.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -736,6 +736,47 @@ INSERT INTO `meetings` (`EndTime`, `Days`, `StartTime`, `Frequency`, `IsOnline`,
 ('2026-03-16T19:00:00+00:00', '1,2,3,4,5', '2026-03-16T16:00:00+00:00', 'W', 'false', 204, 22569),
 ('2026-03-16T15:00:00+00:00', '1,2,3,4,5', '2026-03-16T12:00:00+00:00', 'W', 'false', 206, 22570),
 ('2026-03-16T19:00:00+00:00', '1,2,3,4,5', '2026-03-16T12:00:00+00:00', 'W', 'false', 208, 22571);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `programRequirements`
+--
+
+CREATE TABLE `programRequirements` (
+  `programId` int NOT NULL,
+  `requirementId` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `programRequirements`
+--
+
+INSERT INTO `programRequirements` (`programId`, `requirementId`) VALUES
+(1, 9028),
+(1, 9039),
+(1, 17743),
+(1, 24206),
+(1, 24221),
+(2, 9028),
+(2, 9039),
+(2, 15525),
+(2, 24212),
+(2, 24235),
+(3, 19657),
+(3, 24095),
+(3, 24206),
+(4, 22796),
+(4, 24095),
+(4, 24206),
+(5, 24073),
+(5, 24206),
+(5, 28787),
+(6, 22781),
+(6, 24095),
+(6, 24206),
+(7, 16880),
+(7, 22820);
 
 -- --------------------------------------------------------
 
@@ -1490,6 +1531,12 @@ ALTER TABLE `Locations`
 ALTER TABLE `meetings`
   ADD PRIMARY KEY (`meetings_pk`),
   ADD KEY `sectionId` (`sectionId`);
+
+--
+-- Indexes for table `programRequirements`
+--
+ALTER TABLE `programRequirements`
+  ADD UNIQUE KEY `programId` (`programId`,`requirementId`);
 
 --
 -- Indexes for table `programs`
