@@ -104,7 +104,7 @@
     </script>
 
     <div class="container" style="width: 75%">
-        <input id="course_search" type="text" class="form-control" placeholder="Search for courses..." style="margin: 40px; margin-left: auto;">
+        <input id="info_search" type="text" class="form-control" placeholder="Search for courses..." style="margin: 40px; margin-left: auto;">
     
         <div class="accordion" id="course-accordion">
                     <?php
@@ -136,7 +136,7 @@
         </div>
 
     </div>
-
+    <script type="module" src="js/course-info.js"></script>
 </body>
 </html>
 
