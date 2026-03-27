@@ -124,13 +124,13 @@
                                                 ".$row['subjectCode']."-".$row['number']."
                                                 <br><br>
                                             <h5 style='padding-left: 0'>Requirements</h5>
-                                            "// htmlspecialchars deprecated on null: use null coalescing (??) to make 'None' default val for courses without requisites
-                                            "
                                                 ".nl2br(htmlspecialchars($row['allrequirements'] ?? 'None'))."
                                         </div>
                                     </div>
                                 </div>";
                         }
+                        // Note: htmlspecialchars deprecated on null: use null coalescing (??) to make 'None' default val for courses without requisites
+
                         // Free result set
                         mysqli_free_result($result);
                         mysqli_close($con);

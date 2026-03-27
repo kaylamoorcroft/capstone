@@ -48,8 +48,6 @@
                                                 ".$Result['subjectCode']."-".$Result['number']."
                                                 <br><br>
                                             <h5 style='padding-left: 0'>Requirements</h5>
-                                            "// htmlspecialchars deprecated on null: use null coalescing (??) to make 'None' default val for courses without requisites
-                                            "
                                                 ".nl2br(htmlspecialchars($Result['allrequirements'] ?? 'None'))."
                                         </div>
                                     </div>
