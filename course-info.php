@@ -2,7 +2,7 @@
 <?php
     include "dbConnection.php";
     $sql_statement = "SELECT courses.id, courses.title, courses.description, courses.subjectCode, courses.number, courserequisites.allrequirements
-                        FROM courses JOIN courserequisites ON courses.Id = courserequisites.courseId
+                        FROM courses LEFT JOIN courserequisites ON courses.Id = courserequisites.courseId
                         WHERE MinimumCredits != 0 AND subjectCode = 'COMP'";
     $result = mysqli_query($con, $sql_statement);
 ?>
@@ -124,7 +124,9 @@
                                                 ".$row['subjectCode']."-".$row['number']."
                                                 <br><br>
                                             <h5 style='padding-left: 0'>Requirements</h5>
-                                                ".nl2br(htmlspecialchars($row['allrequirements']))."
+                                            "// htmlspecialchars deprecated on null: use null coalescing (??) to make 'None' default val for courses without requisites
+                                            "
+                                                ".nl2br(htmlspecialchars($row['allrequirements'] ?? 'None'))."
                                         </div>
                                     </div>
                                 </div>";

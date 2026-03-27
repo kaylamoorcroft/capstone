@@ -24,7 +24,7 @@
     if (isset($_POST['info_search'])) {
         $infoRequest = $_POST['info_search'];
         $infoQuery = "SELECT courses.id, courses.title, courses.description, courses.subjectCode, courses.number, courserequisites.allrequirements
-                        FROM courses JOIN courserequisites ON courses.Id = courserequisites.courseId
+                        FROM courses LEFT JOIN courserequisites ON courses.Id = courserequisites.courseId
                         WHERE MinimumCredits != 0 AND title LIKE '%$infoRequest%' OR `number` LIKE '%$infoRequest%' LIMIT 25"
                         ;
                         
@@ -48,7 +48,9 @@
                                                 ".$Result['subjectCode']."-".$Result['number']."
                                                 <br><br>
                                             <h5 style='padding-left: 0'>Requirements</h5>
-                                                ".nl2br(htmlspecialchars($Result['allrequirements']))."
+                                            "// htmlspecialchars deprecated on null: use null coalescing (??) to make 'None' default val for courses without requisites
+                                            "
+                                                ".nl2br(htmlspecialchars($Result['allrequirements'] ?? 'None'))."
                                         </div>
                                     </div>
                         </div>";
