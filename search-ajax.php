@@ -6,7 +6,7 @@
         $searchRequest = $_POST['course_search'];
         
     //show course name results which match value in search bar
-        $Query = "SELECT id, title FROM courses WHERE title LIKE '%$searchRequest%' LIMIT 25";
+        $Query = "SELECT id, title FROM courses WHERE title LIKE '%$searchRequest%' OR `number` LIKE '%$searchRequest%' LIMIT 25";
 
     //Query execution
         $ExecQuery = MySQLi_query($con, $Query);
