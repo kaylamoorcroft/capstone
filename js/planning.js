@@ -132,13 +132,12 @@ async function fetchCourseInfo(course) {
         if (data.error) {
             console.log('Error: ' + data.error);
             return {
-                "courseCode": course.courseCode || "AAAA-0000",
+                "id": course.id || "AAAA-0000",
+                "courseCode": course.id || "AAAA-0000",
                 "name": course.name || "Course Name",
                 "years": 'NULL',
                 "terms": 'NULL',
-                "completionOrder": null,
-                "reqsText": null,
-                "reqsTextEx": null
+                "reqs": []
             };
         } 
         return data;
@@ -146,13 +145,12 @@ async function fetchCourseInfo(course) {
     } catch(error) {
         console.error('Error:', error);
         return { // returns this for custom course input since id is a string, not int
+            "id": course.id || "AAAA-0000",
             "courseCode": course.id || "AAAA-0000",
             "name": course.name || "Course Name",
             "years": 'NULL',
             "terms": 'NULL',
-            "completionOrder": null,
-            "reqsText": null,
-            "reqsTextEx": null
+            "reqs": []
         };
     }
 }
