@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <?php
     include "dbConnection.php";
-    $sql_statement = "SELECT courses.id, courses.title, courses.description, courses.subjectCode, courses.number, courserequisites.allrequirements
+    $sql_statement = "SELECT courses.id, courses.title, courses.description, courses.subjectCode, courses.number, courses.termsoffered, courserequisites.allrequirements
                         FROM courses LEFT JOIN courserequisites ON courses.Id = courserequisites.courseId
-                        WHERE MinimumCredits != 0 AND subjectCode = 'COMP'";
+                        WHERE MinimumCredits != 0 AND subjectCode = 'COMP' ORDER BY `number`";
     $result = mysqli_query($con, $sql_statement);
 ?>
 <html lang="en">
@@ -101,6 +101,18 @@
         overlay.addEventListener("click", () =>{
                 navBar.classList.remove("open");
         });
+
+        const Semesters = [
+            { id: "FA", name: "Fall" },
+            { id: "WI", name: "Winter" },
+            { id: "SU", name: "Summer" },
+            { id: "COI", name: "Continuous Intake" }
+        ];
+        Semesters.forEach((sem, i) => {
+            Semesters[sem.id] = { ...sem, index: i };
+            Semesters[sem.name] = { ...sem, index: i };
+        });
+        // Semesters[sem.id].name
     </script>
 
     <div class="container" style="width: 75%">
@@ -125,6 +137,9 @@
                                                 <br><br>
                                             <h5 style='padding-left: 0'>Requirements</h5>
                                                 ".nl2br(htmlspecialchars($row['allrequirements'] ?? 'None'))."
+                                                <br><br>
+                                            <h5 style='padding-left: 0'>Available</h5>
+                                                ".$row['termsoffered']."
                                         </div>
                                     </div>
                                 </div>";
@@ -141,5 +156,3 @@
     <script type="module" src="js/course-info.js"></script>
 </body>
 </html>
-
-        

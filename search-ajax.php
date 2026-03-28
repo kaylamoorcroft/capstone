@@ -23,10 +23,9 @@
     <?php
     if (isset($_POST['info_search'])) {
         $infoRequest = $_POST['info_search'];
-        $infoQuery = "SELECT courses.id, courses.title, courses.description, courses.subjectCode, courses.number, courserequisites.allrequirements
+        $infoQuery = "SELECT courses.id, courses.title, courses.description, courses.subjectCode, courses.number, courses.termsoffered, courserequisites.allrequirements
                         FROM courses LEFT JOIN courserequisites ON courses.Id = courserequisites.courseId
-                        WHERE MinimumCredits != 0 AND title LIKE '%$infoRequest%' OR `number` LIKE '%$infoRequest%' LIMIT 25"
-                        ;
+                        WHERE MinimumCredits != 0 AND title LIKE '%$infoRequest%' OR `number` LIKE '%$infoRequest%' ORDER BY title LIMIT 25";
                         
         $ExecInfoQuery = MySQLi_query($con, $infoQuery);
 
@@ -49,6 +48,9 @@
                                                 <br><br>
                                             <h5 style='padding-left: 0'>Requirements</h5>
                                                 ".nl2br(htmlspecialchars($Result['allrequirements'] ?? 'None'))."
+                                                <br><br>
+                                            <h5 style='padding-left: 0'>Available</h5>
+                                                ".$Result['termsoffered']."
                                         </div>
                                     </div>
                         </div>";
