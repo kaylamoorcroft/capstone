@@ -101,18 +101,6 @@
         overlay.addEventListener("click", () =>{
                 navBar.classList.remove("open");
         });
-
-        const Semesters = [
-            { id: "FA", name: "Fall" },
-            { id: "WI", name: "Winter" },
-            { id: "SU", name: "Summer" },
-            { id: "COI", name: "Continuous Intake" }
-        ];
-        Semesters.forEach((sem, i) => {
-            Semesters[sem.id] = { ...sem, index: i };
-            Semesters[sem.name] = { ...sem, index: i };
-        });
-        // Semesters[sem.id].name
     </script>
 
     <div class="container" style="width: 75%">
@@ -138,9 +126,12 @@
                                     $term = "• Summer\n";
                                     $termsList .= $term;
                                 }
-                                else{
+                                elseif($term == "COI"){
                                     $term = "• Continuous Intake";
                                     $termsList .= $term;
+                                }
+                                else{
+                                    $termsList = "N/A";
                                 }
                             }
 
