@@ -121,29 +121,53 @@
         <div class="accordion" id="course-accordion">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
+                            //turn semesters string from db into array of strings
+                            $termsArray = explode(',', $row['termsoffered']);
+                            $termsList = '';
+                            //loop over array and turn semester initialisms into full semester names
+                            foreach($termsArray as $term){
+                                if($term == "FA"){
+                                    $term = "• Fall\n";
+                                    $termsList .= $term;
+                                }
+                                elseif($term == "WI"){
+                                    $term = "• Winter\n";
+                                    $termsList .= $term;
+                                }
+                                elseif($term == "SU"){
+                                    $term = "• Summer\n";
+                                    $termsList .= $term;
+                                }
+                                else{
+                                    $term = "• Continuous Intake";
+                                    $termsList .= $term;
+                                }
+                            }
+
                             echo "<div class='accordion-item'>
                                     <h2 class='accordion-header'>
-                                        <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#panels".$row['id']."' aria-expanded='false' aria-controls='panels".$row['id']."'>
-                                            ".$row['title']."
-                                        </button>
+                                        <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#panels".$row['id']."' aria-expanded='false' aria-controls='panels".$row['id']."'>"
+                                        .$row['title'].
+                                        "</button>
                                     </h2>
                                     <div id='panels".$row['id']."' class='accordion-collapse collapse' data-bs-parent='#course-accordion'>
                                         <div class='accordion-body row'>
-                                            <h5 style='padding-left: 0'>Description</h5>
-                                                ".$row['description']."
-                                                <br><br>
-                                            <h5 style='padding-left: 0'>Course ID</h5>
-                                                ".$row['subjectCode']."-".$row['number']."
-                                                <br><br>
-                                            <h5 style='padding-left: 0'>Requirements</h5>
-                                                ".nl2br(htmlspecialchars($row['allrequirements'] ?? 'None'))."
-                                                <br><br>
-                                            <h5 style='padding-left: 0'>Available</h5>
-                                                ".$row['termsoffered']."
-                                        </div>
+                                            <h5 style='padding-left: 0'>Description</h5>"
+                                                .$row['description'].
+                                                "<br><br>
+                                            <h5 style='padding-left: 0'>Course ID</h5>"
+                                                .$row['subjectCode']."-".$row['number'].
+                                                "<br><br>
+                                            <h5 style='padding-left: 0'>Requirements</h5>"
+                                                .nl2br(htmlspecialchars($row['allrequirements'] ?? 'None')).
+                                                "<br><br>
+                                            <h5 style='padding-left: 0'>Available</h5>"
+                                                .nl2br(htmlspecialchars($termsList)).
+                                        "</div>
                                     </div>
                                 </div>";
                         }
+
                         // Note: htmlspecialchars deprecated on null: use null coalescing (??) to make 'None' default val for courses without requisites
 
                         // Free result set
