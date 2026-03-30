@@ -270,4 +270,60 @@ nav.open ~ .pc-openMenu {
 .profile_div {
   padding-top: 20px;
   padding-bottom: 5px;
+}
+
+/*Styling for intake-survey.html*/
+.intake-survey {
+  padding: 1.5rem;
+  border: 1px solid;
+  border-radius: 12px;
+  border-color: rgb(197, 197, 197);
+  max-inline-size: 840px;
+  margin-inline: auto;
+  margin-block: auto;
+}
+
+#survey {
+  display: grid;
+  gap: 1.3rem 1rem;
+}
+@media (width > 840px) {
+  #survey {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.span-across {
+  grid-column: 1/-1;
+}
+
+#survey-page {
+  background-color: rgb(220, 239, 248);
+  display: grid;
+  min-height: 100vh;
+}
+#survey-page select {
+  border-color: rgb(155, 188, 204);
+  padding: 0.5em;
+  border-width: 0.1em;
+}
+#survey-page select:hover {
+  border-color: rgb(38, 134, 134);
+}
+#survey-page label {
+  font-size: 15px;
+}
+#survey-page h1 {
+  color: rgb(0, 97, 97);
+  padding-bottom: 0.75em;
+}
+#survey-page button {
+  background-color: rgb(38, 134, 134);
+  color: white;
+  padding: 0.4em 1em;
+  border: 0;
+  border-radius: 6px;
+}
+#survey-page button:hover {
+  background-color: rgb(0, 92, 92);
 }/*# sourceMappingURL=styles.css.map */

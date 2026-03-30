@@ -9,14 +9,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Course Map</title>
 </head>
-<body>
-        <a href="index.html" class="btn btn-primary">Back</a>
-        <h1>Welcome to C-map!</h1>
-        <br>
-        <div class="container form_border">
-            <form id="survey"> <!--class="col-md-6"-->
-                <div class="row">
-                    <div class="col-md-6">
+<body id="survey-page" style="background-color: rgb(219, 237, 242)">
+
+        <!-- <a href="index.html" class="btn btn-primary">Back</a> -->
+
+        <main class="intake-survey" style="background-color: white;">
+            <h1>Welcome to C-Map!</h1>
+
+            <form id="survey">
                         <div class="form-group">
                             <label for="degree-level">Are you an Undergraduate or Postgraduate student?</label>
                             <select name="degree-level" id="degree-level" class="form-control" required>
@@ -25,7 +25,7 @@
                                 <option value="postgrad">Postgraduate Student</option>
                             </select>
                         </div>
-                        <div id="postgrad-group" class="form-group d-none">
+                        <div id="postgrad-group" class="form-group d-none span-across">
                             <label for="postgrad-option">Select a Postgraduate Degree:</label>
                             <select name="postgrad-option" id="postgrad-option" class="form-control">
                                 <option value="">--Select an option--</option>
@@ -33,8 +33,6 @@
                                 <option value="doctoral">Doctoral Degree</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="comp-year">Which year are you in?</label>
                             <select name="comp-year" id="comp-year" class="form-control" required>
@@ -46,7 +44,7 @@
                                 <option value="5+">5+</option>
                             </select>
                         </div>
-                        <div id="first-year-group" class="form-group d-none">
+                        <div id="first-year-group" class="form-group d-none span-across">
                             <label for="first-year-pref">Choose a first year course preference:</label>
                             <select name="first-year-pref" id="first-year-pref" class="form-control">
                                 <option value="">--Select an option--</option>
@@ -54,12 +52,7 @@
                                 <option value="intro-cs">Intro to Computer Science</option>
                             </select>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group span-across">
                             <label for="start-semester">When did you begin at Acadia?</label>
                             <select name="start-semester" id="start-semester" class="form-control">
                                 <option value="">--Select an option--</option>
@@ -78,8 +71,6 @@
                                 <option value="2027">2027</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="comp-type">Which stream of Computer Science are you taking?</label>
                             <select name="comp-type" id="comp-type" class="form-control" required>
@@ -89,7 +80,7 @@
                                 <option value="BACS">BACS</option>
                             </select>
                         </div>
-                        <div id="applied-option-group" class="form-group d-none">
+                        <div id="applied-option-group" class="form-group d-none span-across">
                             <label for="applied-option">Select a specialization for Applied Computer Science:</label>
                             <select name="applied-option" id="applied-option" class="form-control">
                                 <option value="">--Select an option--</option>
@@ -100,10 +91,6 @@
                                 <option value="interdisciplinary-studies">BACS with Interdisciplinary Study</option>
                             </select>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6" style="padding-bottom: 20px">
                         <div class="form-group">
                             <label for="student-type">Are you a Full-Time or Part-Time Student?</label>
                             <select name="student-type" id="student-type" class="form-control" required>
@@ -112,13 +99,10 @@
                                 <option value="part-time">Part-Time</option>
                             </select>
                         </div>
-                    </div>
-                </div>
-                <div style="text-align: right">
-                    <input type="submit" value="Submit" id="submit" style="text-align: right">
-                </div>
+                        <!-- automatically recognize "button" element as submit when inside form tag -->
+                    <button class="span-across">Submit</button>
             </form>
-        </div>
+        </main>
     <script src="js/survey.js"></script>
 </body>
 </html>

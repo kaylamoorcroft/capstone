@@ -1,5 +1,7 @@
 //variables for colors (SASS)
 $dark-grey: rgb(100, 100, 100);
+$light-blue: rgb(220, 239, 248);
+$dark-teal: rgb(38, 134, 134);
 
 .background-div {
   /* background-image: url('images/library-background.jpg'); */
@@ -285,4 +287,72 @@ nav {
 .profile_div{
   padding-top: 20px;
   padding-bottom: 5px;
+}
+
+/*Styling for intake-survey.html*/
+
+.intake-survey{
+  padding: 1.5rem;
+  border: 1px solid;
+  border-radius: 12px;
+  border-color: rgb(197, 197, 197);
+  max-inline-size: 840px;
+  margin-inline: auto; // horizontal centering; inline = x-axis
+  margin-block: auto;
+}
+
+#survey{
+  display: grid;
+  gap: 1.3rem 1rem;
+  
+    //https://www.w3schools.com/cssref/atrule_media.php
+  @media (width > 840px){
+    grid-template-columns: repeat(2, 1fr); //form will have two columns on larger screen sizes
+  }
+}
+
+//tell form question (in div) to span the length of the div: 1 / -1 = from left to right of grid
+.span-across{
+  grid-column: 1 / -1;
+}
+
+
+#survey-page {
+  background-color: $light-blue;
+
+  //CENTER FORM VERTICALLY
+  display: grid;
+  min-height: 100vh;
+  
+    select{
+    border-color: rgb(155, 188, 204);
+    padding: 0.5em;
+    border-width: 0.1em;
+
+    &:hover{
+      border-color: $dark-teal;
+    }
+  }
+
+    label{
+    font-size: 15px;
+  }
+
+    h1 {
+    // text-align: center;
+    color: rgb(0, 97, 97);
+    padding-bottom: 0.75em;
+  }
+
+    button{
+      background-color: $dark-teal;
+      color: white;
+      padding: 0.4em 1em;
+      border: 0;
+      border-radius: 6px;
+
+      &:hover{
+        background-color: rgb(0, 92, 92);
+      }
+    }
 }
