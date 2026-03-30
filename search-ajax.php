@@ -30,6 +30,31 @@
         $ExecInfoQuery = MySQLi_query($con, $infoQuery);
 
         while ($Result = MySQLi_fetch_array($ExecInfoQuery)){
+            //turn semesters string from db into array of strings
+            $termsArray = explode(',', $Result['termsoffered']);
+            $termsList = '';
+            //loop over array and turn semester initialisms into full semester names
+            foreach($termsArray as $term){
+                if($term == "FA"){
+                    $term = "• Fall\n";
+                    $termsList .= $term;
+                }
+                elseif($term == "WI"){
+                    $term = "• Winter\n";
+                    $termsList .= $term;
+                }
+                elseif($term == "SU"){
+                    $term = "• Summer\n";
+                    $termsList .= $term;
+                }
+                elseif($term == "COI"){
+                    $term = "• Continuous Intake";
+                    $termsList .= $term;
+                }
+                else{
+                    $termsList = "N/A";
+                }
+            }
         ?>
     <!-- show search results as accordion buttons -->
                 <?php echo "<div class='accordion-item'>
@@ -49,9 +74,9 @@
                                             <h5 style='padding-left: 0'>Requirements</h5>
                                                 ".nl2br(htmlspecialchars($Result['allrequirements'] ?? 'None'))."
                                                 <br><br>
-                                            <h5 style='padding-left: 0'>Available</h5>
-                                                ".$Result['termsoffered']."
-                                        </div>
+                                            <h5 style='padding-left: 0'>Available</h5>"
+                                                .nl2br(htmlspecialchars($termsList)).
+                                        "</div>
                                     </div>
                         </div>";
                 ?>
