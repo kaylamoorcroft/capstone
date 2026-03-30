@@ -116,24 +116,25 @@
                             $termsList = '';
                             //loop over array and turn semester initialisms into full semester names
                             foreach($termsArray as $term){
-                                if($term == "FA"){
-                                    $term = "• Fall\n";
-                                    $termsList .= $term;
-                                }
-                                elseif($term == "WI"){
-                                    $term = "• Winter\n";
-                                    $termsList .= $term;
-                                }
-                                elseif($term == "SU"){
-                                    $term = "• Summer\n";
-                                    $termsList .= $term;
-                                }
-                                elseif($term == "COI"){
-                                    $term = "• Continuous Intake";
-                                    $termsList .= $term;
-                                }
-                                else{
-                                    $termsList = "N/A";
+                                switch($term){
+                                    case "FA":
+                                        $term = "• Fall\n";
+                                        $termsList .= $term;
+                                        break;
+                                    case "WI":
+                                        $term = "• Winter\n";
+                                        $termsList .= $term;
+                                        break;
+                                    case "SU":
+                                        $term = "• Summer\n";
+                                        $termsList .= $term;
+                                        break;
+                                    case "COI":
+                                        $term = "• Continuous Intake";
+                                        $termsList .= $term;
+                                        break;
+                                    default:
+                                    $termsList = "Not Available";
                                 }
                             }
 
