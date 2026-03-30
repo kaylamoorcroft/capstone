@@ -103,9 +103,11 @@
         });
     </script>
 
-    <div class="container" style="width: 65%">
-        <input id="info_search" type="text" class="form-control" placeholder="Search for courses..." style="margin: 40px; margin-left: auto; border-radius: 15px;  border-color:rgb(173, 173, 173);">
-
+    <div style="width: 65%; margin-inline: auto">
+        <div style="position: relative; display: grid; align-items: center">
+            <input id="info_search" type="text" class="form-control" placeholder="Search for courses..." style="margin: 40px; margin-left: auto; border-radius: 15px;  border-color:rgb(173, 173, 173); padding-left: 40px">
+            <span class="material-icons" style="font-size: 25px; position: absolute; left: 10px; cursor: pointer">search</span>
+        </div>
         <div class="accordion" id="course-accordion">
                     <?php
                         while($row = mysqli_fetch_array($result)) {

@@ -36,7 +36,10 @@
                 <h3>Add courses to Planner</h3>
 
                 <!-- search bar feature -->
-                <input id="course_search" type="text" class="form-control" placeholder="Search...">
+                <div style="position: relative; display: grid; align-items: center">
+                    <input id="course_search" type="text" class="form-control" placeholder="Search..." style="padding-left: 40px">
+                    <span class="material-icons" style="font-size: 25px; position: absolute; left: 10px; cursor: pointer">search</span>
+                </div>
 
                 <div class="list-group" id="planCourse">
                     <?php
