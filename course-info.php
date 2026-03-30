@@ -134,7 +134,7 @@
                                         $termsList .= $term;
                                         break;
                                     default:
-                                    $termsList = "Not Available";
+                                    $termsList = "N/A";
                                 }
                             }
 
