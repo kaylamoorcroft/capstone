@@ -1,20 +1,23 @@
+//variables for colors (SASS)
+$dark-grey: rgb(100, 100, 100);
+
 .background-div {
   /* background-image: url('images/library-background.jpg'); */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: max(50vh, 300px);
-  background-color: cornflowerblue;
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  height: max(50vh, 300px); 
+  background-color: cornflowerblue; 
   color: white;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; 
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
   /* grid-template-columns: auto auto auto auto; */
   padding: 10px 30px;
   gap: 20px;
@@ -25,7 +28,7 @@
   justify-content: flex-end;
 }
 
-#logo {
+#logo{
   margin-right: auto;
 }
 
@@ -43,16 +46,17 @@
 .remove {
   font-size: 1.5em;
   color: rgb(0, 0, 0);
-}
-.remove:hover {
-  color: rgb(213, 53, 53);
-  cursor: pointer;
+
+  &:hover {
+    color: rgb(213, 53, 53);
+    cursor: pointer;
+  }
 }
 
 .course-list {
   list-style-type: none;
-  padding: 0;
-  margin: 0;
+  padding: 0; 
+  margin: 0; 
   margin-top: 10px;
 }
 
@@ -60,7 +64,7 @@
   margin-bottom: 10px;
 }
 
-.blue-input {
+.blue-input{
   background-color: rgb(172, 214, 227);
 }
 
@@ -72,7 +76,7 @@ select {
   margin-top: 1.5em;
 }
 
-#recommendations {
+#recommendations{
   margin-top: 80px;
 }
 
@@ -80,72 +84,77 @@ a {
   text-decoration: none;
 }
 
-.form_border {
+.form_border{
   padding: 14px;
   border: 1px solid;
   border-radius: 12px;
   border-color: rgb(197, 197, 197);
 }
 
-.course-warning {
+.course-warning{
   background-color: rgb(255, 251, 153);
   /* background-color: rgb(255, 134, 94); */
 }
 
 /* invalid input error message (manual course) */
-.error {
+.error{
   color: red;
 }
 
 /* planner-collection.html: sidebar*/
-.pc-navbar {
+.pc-navbar{
   background-color: white;
   height: 70px;
   align-items: center;
   display: flex;
 }
 
-.pc-menu {
+.pc-menu{
   display: flex;
   align-items: center;
   margin: 0px 20px;
 }
 
-.pc-bars {
+.pc-bars{
   cursor: pointer;
   margin-right: 20px;
-  color: rgb(100, 100, 100);
+  color: $dark-grey;
   font-size: 30px;
 }
 
-nav .pc-sidebar {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  background-color: white;
-  height: 100%;
-  width: 235px;
-  padding: 20px 0px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s ease;
-  z-index: 9999;
-}
-nav.open .pc-sidebar {
-  left: 0;
-}
-nav.open ~ .pc-openMenu {
-  opacity: 1;
-  left: 235px;
-  pointer-events: auto;
+nav {
+  .pc-sidebar{
+    position: fixed;
+    top: 0;
+    left: -100%;
+    background-color: white;
+    height: 100%;
+    width: 235px;
+    padding: 20px 0px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease;
+    z-index: 9999;
+  }
+
+  &.open{
+    .pc-sidebar{
+      left: 0;
+    }
+    ~ .pc-openMenu{
+      opacity: 1;
+      left: 235px;
+      pointer-events: auto;
+    }
+  }
 }
 
-.pc-logo {
+.pc-logo{
   font-size: large;
-  color: rgb(100, 100, 100);
+  color: $dark-grey;
   padding: 0px 20px;
 }
 
-.pc-sidebar-content {
+.pc-sidebar-content{
   padding: 30px 16px;
   height: 100%;
   display: flex;
@@ -153,44 +162,45 @@ nav.open ~ .pc-openMenu {
   justify-content: space-between;
 }
 
-.pc-list {
+.pc-list{
   list-style: none;
-  color: rgb(100, 100, 100);
+  color: $dark-grey;
   font-size: 23px;
   padding: 0px;
 }
 
-.pc-listItem {
+.pc-listItem{
   padding: 0px 0px 8px 0px;
 }
 
-.pc-link {
+.pc-link{
   display: flex;
   align-items: center;
-  color: rgb(100, 100, 100);
-  background-color: white;
+  color: $dark-grey;
+  background-color:white;
   border-radius: 8px;
   padding: 10px;
   text-decoration: none;
-}
-.pc-link:hover {
-  background-color: rgb(218, 239, 246);
-  text-decoration: none;
+
+  &:hover{
+    background-color: rgb(218, 239, 246);
+    text-decoration: none;
+  }
 }
 
-.pc-iconTitle {
+.pc-iconTitle{
   font-size: 16px;
   margin-left: 10px;
 }
 
-.pc-bottom-links {
+.pc-bottom-links{
   font-size: 16px;
   list-style: none;
   font-size: 23px;
   padding: 12px 0px;
 }
 
-.pc-openMenu {
+.pc-openMenu{
   position: fixed;
   top: 0;
   left: -100%;
@@ -203,27 +213,29 @@ nav.open ~ .pc-openMenu {
   z-index: 9888;
 }
 
-.material-symbols-outlined {
+.material-symbols-outlined{
   font-size: 30px;
-  font-variation-settings: "FILL" 0;
+  font-variation-settings:
+  'FILL' 0;
   /* 'wght' 600,
   'GRAD' 0,
   'opsz' 48; */
 }
 
 /* planner-collection.html: created plans */
-.pc-plans {
+.pc-plans{
   border-style: solid;
   border-width: 2px;
   border-radius: 8px;
   height: 220px;
   text-align: center;
   padding: 6px 0px;
-}
-.pc-plans ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .pc-plan-header {
@@ -251,23 +263,26 @@ nav.open ~ .pc-openMenu {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-}
-#dragZone::after {
-  content: "";
-  display: block;
-  min-height: 40px;
-  flex-shrink: 0;
+
+  &::after {
+    content: "";
+    display: block;
+    min-height: 40px;
+    flex-shrink: 0;
+  }
 }
 
-.addCourse:hover {
-  cursor: grab;
-}
-.addCourse:active {
-  cursor: grabbing;
+.addCourse{
+  &:hover {
+    cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 /*profile.html*/
-.profile_div {
+.profile_div{
   padding-top: 20px;
   padding-bottom: 5px;
-}/*# sourceMappingURL=styles.css.map */
+}
