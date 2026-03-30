@@ -58,10 +58,10 @@
                         </a>
                     </li>
                     <li class="pc-listItem">
-                        <a class="pc-link" href="course-info.php">
+                        <a class="pc-link" href="planner-collection.html">
                         <!-- <i class="fa-regular fa-circle-info"></i> -->
-                            <span class="material-icons material-symbols-outlined" style="font-size: 30px;">info</span>
-                            <span class="pc-iconTitle">View Course Info</span>
+                            <span class="material-icons" style="font-size: 30px;">library_books</span>
+                            <span class="pc-iconTitle">View all Plans</span>
                         </a>
                     </li>
                 </ul>
