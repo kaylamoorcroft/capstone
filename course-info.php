@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <title>Course Map</title>
 </head>
-<body>
+<body style="background-color: rgb(220, 239, 248)">
 <!-- <a href="planner-collection.html" class="btn btn-primary">Back</a> -->
 <nav class="pc-navbar">
         <div class="pc-menu">
@@ -103,9 +103,9 @@
         });
     </script>
 
-    <div class="container" style="width: 75%">
-        <input id="info_search" type="text" class="form-control" placeholder="Search for courses..." style="margin: 40px; margin-left: auto;">
-    
+    <div class="container" style="width: 65%">
+        <input id="info_search" type="text" class="form-control" placeholder="Search for courses..." style="margin: 40px; margin-left: auto; border-radius: 15px;  border-color:rgb(173, 173, 173);">
+
         <div class="accordion" id="course-accordion">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
@@ -135,7 +135,7 @@
                                 }
                             }
 
-                            echo "<div class='accordion-item'>
+                            echo "<div class='accordion-item' style='border-width: 0.1em'>
                                     <h2 class='accordion-header'>
                                         <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#panels".$row['id']."' aria-expanded='false' aria-controls='panels".$row['id']."'>"
                                         .$row['title'].

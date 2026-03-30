@@ -103,6 +103,7 @@ a {
   height: 70px;
   align-items: center;
   display: flex;
+  box-shadow: 0px 2px 3px rgb(100, 100, 100);
 }
 
 .pc-menu {
@@ -213,8 +214,9 @@ nav.open ~ .pc-openMenu {
 
 /* planner-collection.html: created plans */
 .pc-plans {
+  background-color: white;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1.5px;
   border-radius: 8px;
   height: 220px;
   text-align: center;
