@@ -1,0 +1,11 @@
+.schedule {
+  table-layout: fixed;
+}
+
+.schedule th:nth-child(1) {
+  width: 10%;
+}
+
+.schedule tr {
+    height: 0.7em;
+}
