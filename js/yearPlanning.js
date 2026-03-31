@@ -6,7 +6,7 @@ let sems = JSON.parse(localStorage.getItem("sems")) || [];
 console.log("initial planner:");
 console.log(planner);
 let currentSem = {index: -1};
-let schedule = JSON.parse(localStorage.getItem("schedule")) || {}; 
+let schedule = JSON.parse(localStorage.getItem("schedule")) || []; 
 console.log("schedule:");
 console.log(schedule);
 
@@ -34,13 +34,28 @@ for (let i = 0; i < sems.length; i++) {
 }
 
 async function loadSem(semIndex) {
+    $('#cur-sem').text(currentSem.index != -1 ? currentSem.display : "No semesters to display");
+    console.log("Current sem: " + currentSem.display);
+    console.log(planner[currentSem.index]);
+    drawLines();
+
     const curSem = planner[semIndex].sem;
     const termId = curSem.year + curSem.id;
     console.log(termId);
     $('#sections-div').html("");
+    if (planner[semIndex].courses.length == 0) {
+        $('#sections-div').append(`<p>No courses added to planner for ${currentSem.display}</p>`);
+    }
     for (const course of planner[semIndex].courses) {
-        const sectionInfo = await fetchSections(course.id, termId);
-        sections.push({courseId: course.id, termId: termId, sectionInfo: sectionInfo});
+        const sectionsFetched = sections.find(section => section.courseId == course.id && section.termId == termId);
+        let sectionInfo = [];
+        if (sectionsFetched) { 
+            sectionInfo = sectionsFetched.sectionInfo;
+        }
+        else {
+            sectionInfo = await fetchSections(course.id, termId);
+            sections.push({courseId: course.id, termId: termId, sectionInfo: sectionInfo});
+        }
         let sectionsHtml = '';
         if (sectionInfo) {
             sectionsHtml = `<div class="list-group" data-course=${course.courseCode}>`;
@@ -61,11 +76,7 @@ async function loadSem(semIndex) {
         else {
             sectionsHtml = '<p>No sections available</p>';
         }
-        /* <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Section 1</a></li>
-                            <li><a class="dropdown-item" href="#">Section 2</a></li>
-                            <li><a class="dropdown-item" href="#">Section 3</a></li>
-                        </ul>*/
+
         const courseCard = `
             <div class="card">
                 <div class="card-body">
@@ -75,8 +86,9 @@ async function loadSem(semIndex) {
             </div>`;
         $('#sections-div').append(courseCard);
     }
-    if (semIndex in schedule) {
-        for (const {className, sectionId, days, startTime, endTime} of schedule[semIndex]) {
+    const semSchedule = schedule.find(s => s.sem == sems[semIndex].display);
+    if (semSchedule) {
+        for (const {className, sectionId, days, startTime, endTime} of semSchedule.meetingInfo) {
             setActiveSection(className, sectionId);
             insertClass(className, days, startTime, endTime);
         }
@@ -102,7 +114,6 @@ function setActiveSection(className, sectionId) {
 
 function setAndLoadActiveSection(className, sectionId) {
     const section = $(`#${className}_${sectionId}`);
-    setActiveSection(className, sectionId);
 
     const days = section.data('days');
     const start = section.data('start');
@@ -112,6 +123,7 @@ function setAndLoadActiveSection(className, sectionId) {
         window.alert(`Sorry. Could not set ${className} to ${sectionId}. There is a conflict with another class in the schedule at the same time.`);
         return;
     }
+    setActiveSection(className, sectionId);
     removeClass(className);
     addClassToSchedule(className,sectionId,days,start,end);
 }
@@ -132,8 +144,42 @@ function updateActiveSem(semIndex) {
     else {
         $('#next-sem').removeClass('disabled');
     }
+}
 
-  }
+function drawLines() {
+    // clear table
+    $('#time-rows').empty();
+
+    for (let h = 8; h < 22; h++) { // hours
+        let hourSlot = $(`<tr id='t${h}-0'></tr>`);
+        hourSlot.append(`<th scope="row" rowspan="3" class="border time" style="border-top-width: 2px !important;">${h}:00</th>`);
+        for (let d = 1; d < 6; d++) { // days of week
+            hourSlot.append(`<td class="border border-bottom-0" id="d${d}-${h}-0" style="border-top-width: 2px !important;"></td>`);
+        }
+        $('#time-rows').append(hourSlot);
+        // <th scope="row" rowspan="3" class="border">8:00</th>
+        for (let m = 10; m < 60; m += 10) { // mins
+            let hourSlot = $(`<tr id='t${h}-${m}'></tr>`);
+            if (m == 30) {
+                hourSlot.append(`<th scope="row" rowspan="3" class="border time"></th>`);
+                for (let d = 1; d < 6; d++) { // days of week
+                    hourSlot.append(`<td class="border border-bottom-0" id="d${d}-${h}-${m}"></td>`);
+                }
+            }
+            else if (m == 50 && h == 21) {
+                for (let d = 1; d < 6; d++) { // days of week
+                    hourSlot.append(`<td class="border border-top-0" id="d${d}-${h}-${m}"></td>`);
+                }
+            }
+            else {
+                for (let d = 1; d < 6; d++) { // days of week
+                    hourSlot.append(`<td class="border-start border-end" id="d${d}-${h}-${m}"></td>`);
+                } 
+            }
+            $('#time-rows').append(hourSlot);
+        }
+    }
+}
 
 // Handle pagination link clicks
 $('#sem-nav').on('click', '.page-item a', function(e) {
@@ -161,48 +207,17 @@ if (planner.length > 0) {
     currentSem = planner[0].sem;
     currentSem.index = 0;
 }
-$('#cur-sem').text(currentSem.index != -1 ? currentSem.display : "No semesters to display");
-console.log("Current sem: " + currentSem.display);
-console.log(planner[currentSem.index]);
 
 loadSem(currentSem.index);
 updateActiveSem(currentSem.index);
 
-for (let h = 8; h < 17; h++) { // hours
-    let hourSlot = $(`<tr id='t${h}-0'></tr>`);
-    hourSlot.append(`<th scope="row" rowspan="3" class="border time" style="border-top-width: 2px !important;">${h}:00</th>`);
-    for (let d = 1; d < 6; d++) { // days of week
-        hourSlot.append(`<td class="border border-bottom-0" id="d${d}-${h}-0" style="border-top-width: 2px !important;"></td>`);
-    }
-    $('#time-rows').append(hourSlot);
-    // <th scope="row" rowspan="3" class="border">8:00</th>
-    for (let m = 10; m < 60; m += 10) { // mins
-        let hourSlot = $(`<tr id='t${h}-${m}'></tr>`);
-        if (m == 30) {
-            hourSlot.append(`<th scope="row" rowspan="3" class="border time"></th>`);
-            for (let d = 1; d < 6; d++) { // days of week
-                hourSlot.append(`<td class="border border-bottom-0" id="d${d}-${h}-${m}"></td>`);
-            }
-        }
-        else if (m == 50 && h == 16) {
-            for (let d = 1; d < 6; d++) { // days of week
-                hourSlot.append(`<td class="border border-top-0" id="d${d}-${h}-${m}"></td>`);
-            }
-        }
-        else {
-            for (let d = 1; d < 6; d++) { // days of week
-                hourSlot.append(`<td class="border-start border-end" id="d${d}-${h}-${m}"></td>`);
-            } 
-        }
-        $('#time-rows').append(hourSlot);
-    }
-}
-
 function hasOverlap(daysString,startTime,endTime) {
+    console.log('current schedule:');
+    const curSchedule = schedule.find(s => s.sem == currentSem.display);
+    console.log(curSchedule);
+    if (!curSchedule) return false;
     for (const day of daysString.toString().split(',')) {
-        console.log('current schedule:');
-        console.log(schedule[currentSem.index]);
-        const hasOverlap = schedule[currentSem.index].some(course => {
+        const hasOverlap = curSchedule.meetingInfo.some(course => {
             const cDays = course.days.toString().split(',');
             if (!(cDays.includes(day))) return false; // won't overlap, cuz not on same day
             console.log(`compare to: ${course.className}`);
@@ -241,9 +256,13 @@ function insertIntoTable(cell, day, hour, min) {
 
 function addClassToSchedule(className, sectionId, daysString, startTime, endTime) {
     console.log(`--add ${className} to schedule--`);
-    if (!(currentSem.index in schedule)) {schedule[currentSem.index] = []};
-    
-    schedule[currentSem.index].push({className: className, sectionId: sectionId, days: daysString, startTime: startTime, endTime: endTime});
+    let curSchedule = schedule.find(s => s.sem == currentSem.display);
+    if (!(curSchedule)) {
+        schedule.push({sem: currentSem.display});
+        curSchedule = schedule.find(s => s.sem == currentSem.display);
+    };
+    curSchedule.meetingInfo = curSchedule.meetingInfo ?? [];
+    curSchedule.meetingInfo.push({className: className, sectionId: sectionId, days: daysString, startTime: startTime, endTime: endTime});
     localStorage.setItem('schedule', JSON.stringify(schedule));
 
     insertClass(className, daysString, startTime, endTime);
@@ -294,18 +313,19 @@ function removeClass(className) {
                 else if (m == 30) {
                     cell = `<td class="border border-bottom-0" id="d${day}-${h}-${m}"></td>`;
                 }
-                else if (m == 50 && h == 16) { // bottom of table
+                else if (m == 50 && h == 21) { // bottom of table
                     cell = `<td class="border border-top-0" id="d${day}-${h}-${m}"></td>`;
                 }
                 insertIntoTable(cell,day,h,m);
             }
         }
         $(c).remove();
-        schedule[currentSem.index] = schedule[currentSem.index].filter(meeting => meeting.className != className);
-        console.log(`removed ${className}:`);
-        console.log(schedule[currentSem.index]);
-        localStorage.setItem('schedule', JSON.stringify(schedule));
     }
+    const curSchedule = schedule.find(s => s.sem == currentSem.display);
+    curSchedule.meetingInfo = curSchedule.meetingInfo.filter(meeting => meeting.className != className);
+    console.log(`removed ${className}:`);
+    console.log(curSchedule);
+    localStorage.setItem('schedule', JSON.stringify(schedule));
     //window.alert(`removed ${className}`);
 }
 

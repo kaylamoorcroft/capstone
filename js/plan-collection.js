@@ -4,6 +4,9 @@ console.log(planner);
 let sems = JSON.parse(localStorage.getItem("sems")) || []; 
 console.log("sems:")
 console.log(sems);
+let schedule = JSON.parse(localStorage.getItem("schedule")) || []; 
+console.log("schedule:");
+console.log(schedule);
 
 /** display sem plans in planner-collection.html */
 function displaySemPlans() {
@@ -39,10 +42,13 @@ function removeSem(sem) {
             sems.splice(i, 1);
             planner.splice(i,1);
         }
+        schedule = schedule.filter(s => s.sem != sem);
+
         displaySemPlans();
         // save to cookies
         localStorage.setItem("sems", JSON.stringify(sems));
         localStorage.setItem("planner", JSON.stringify(planner));
+        localStorage.setItem("schedule", JSON.stringify(planner));
     }
 }
 

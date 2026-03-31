@@ -78,6 +78,9 @@ const findNextSem = (i, year, summer=false) => {
 console.log("sems:")
 console.log(sems);
 let currentSem = "";
+let schedule = JSON.parse(localStorage.getItem("schedule")) || []; 
+console.log("schedule:");
+console.log(schedule);
 
 /** comparator to determine how to sort sems in order
  *  ie., Fall 2026, Winter 2027, Summer 2027, Fall 2027
@@ -619,8 +622,12 @@ function removeCourse(id) {
         }
         updateCourseWarning(course, warning, message);
     }
+    // remove from schedule if in there
+    const curSchedule = schedule.find(s => s.sem == currentSem);
+    curSchedule.meetingInfo = curSchedule.meetingInfo.filter(m => m.className != courseCode);
 
     localStorage.setItem("planner", JSON.stringify(planner));
+    localStorage.setItem("schedule", JSON.stringify(schedule));
 }
 
 // drag n drop
