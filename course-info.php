@@ -63,6 +63,13 @@
                             <span class="pc-iconTitle">View all Plans</span>
                         </a>
                     </li>
+                    <li class="pc-listItem">
+                        <a class="pc-link" href="course-info.php">
+                        <!-- <i class="fa-regular fa-circle-info"></i> -->
+                            <span class="material-icons material-symbols-outlined" style="font-size: 30px;">info</span>
+                            <span class="pc-iconTitle">View Course Info</span>
+                        </a>
+                    </li>
                 </ul>
                     <div class="pc-bottom-links">
                         <ul class="pc-list">
