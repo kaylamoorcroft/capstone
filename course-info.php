@@ -50,13 +50,12 @@
                             <span class="pc-iconTitle">Plan by Year</span>
                         </a>
                     </li>
-                    <li class="pc-listItem">
+                    <!-- <li class="pc-listItem">
                         <a class="pc-link" href="intake-survey.html">
-                            <!-- <i class="fa-solid fa-pen-to-square"></i> -->
                             <span class="material-icons material-symbols-outlined">edit_square</span>
                             <span class="pc-iconTitle">Edit Survey Responses</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="pc-listItem">
                         <a class="pc-link" href="planner-collection.html">
                         <!-- <i class="fa-regular fa-circle-info"></i> -->

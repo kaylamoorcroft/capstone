@@ -9,56 +9,51 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Course Map</title>
 </head>
-<body>
-<a href="index.html" class="btn btn-primary">Back</a>
-
-<div class="form_border container" style="width: 70%;">
-    <h3 style="text-align: center">User Profile</h3>
-
-    <div class="row profile_div">
-        <div class="col-md-6">
-            <h6>Degree Level</h6>
-            <span></span>
-        </div>
-        <div class="col-md-6">
-            <h6>Postgraduate Option</h6>
-            <span></span>
-        </div>
+<body id="profile-page">
+<!-- <a href="index.html" class="btn btn-primary">Back</a> -->
+    <div class="container" style="margin: 0;">
+        <nav class="navbar navbar-expand-lg my-2">
+            <a id="logo" class="navbar-brand" href="index.html">
+                <img src="images/logo.png" width="60" height="50">
+            </a>
+        </nav>
     </div>
 
-    <div class="row profile_div">
-        <div class="col-md-6">
-            <h6>Year of Study</h6>
-            <span></span>
-        </div>
-        <div class="col-md-6">
-            <h6>First Year Course Preference</h6>
-            <span></span>
-        </div>
-    </div>
+    <main class="form_border container" style="width: 65%; margin-inline: auto; background-color: white;">
+        <h2 style="text-align: center; padding-bottom: 1em;">User Profile</h2>
 
-    <div class="row profile_div">
-        <div class="col-md-6">
-            <h6>Start Date</h6>
-            <span></span>
+        <div id="profile" class="container">
+            <div>
+                <h5>Degree Level</h5>
+                <span id="degree-level"></span>
+            </div>
+            <div>
+                <h5>Postgraduate Option</h5>
+                    <span id="postgrad-option"></span>
+            </div>
+            <div>
+                <h5>Year of Study</h5>
+                    <span id="comp-year"></span>
+            </div>
+            <div>
+                <h5>First Year Course Preference</h5>
+                    <span id="first-year-pref"></span>
+            </div>
+            <div>
+                <h5>Start Date</h5>
+                    <span id="start-date"></span>
+            </div>
+            <div>
+                <h5>Degree Type</h5>
+                    <span id="comp-type"></span>
+            </div>
+            <div>
+                <h5>Enrollment Status</h5>
+                    <span id="student-type"></span>
+            </div>
         </div>
-        <div class="col-md-6">
-            <h6>Degree Type</h6>
-            <span></span>
-        </div>
-    </div>
-    
-    <div>
-        <h6>Enrollment Status</h6>
-        <span></span>
-    </div>
-
-    <p id="display-area"> </p>
-</div>
-
-
-    <button id="display-button" type="button" class="btn btn-outline-primary" style="margin-left: 20px">Load Saved Data</button>
-    
+        <div id="link-button"><a href="intake-survey.html">Edit Survey Responses</a></div>
+    </main>
 
 <script src="js/profile.js"></script>
 </body>

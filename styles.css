@@ -4,8 +4,8 @@
   background-position: center;
   background-repeat: no-repeat;
   height: max(50vh, 300px);
-  background-color: cornflowerblue;
-  color: white;
+  background-color: rgb(172, 214, 227);
+  color: black;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -268,12 +268,6 @@ nav.open ~ .pc-openMenu {
   cursor: grabbing;
 }
 
-/*profile.html*/
-.profile_div {
-  padding-top: 20px;
-  padding-bottom: 5px;
-}
-
 /*Styling for intake-survey.html*/
 .intake-survey {
   padding: 1.5rem;
@@ -282,7 +276,6 @@ nav.open ~ .pc-openMenu {
   border-color: rgb(197, 197, 197);
   max-inline-size: 840px;
   margin-inline: auto;
-  margin-block: auto;
 }
 
 #survey {
@@ -301,8 +294,6 @@ nav.open ~ .pc-openMenu {
 
 #survey-page {
   background-color: rgb(220, 239, 248);
-  display: grid;
-  min-height: 100vh;
 }
 #survey-page select {
   border-color: rgb(155, 188, 204);
@@ -327,5 +318,38 @@ nav.open ~ .pc-openMenu {
   border-radius: 6px;
 }
 #survey-page button:hover {
+  background-color: rgb(0, 92, 92);
+}
+
+/*profile.html*/
+#profile {
+  display: grid;
+  gap: 1.3rem 1rem;
+  margin: 1em 2em;
+}
+@media (width > 840px) {
+  #profile {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+#profile-page {
+  background-color: rgb(220, 239, 248);
+}
+
+#link-button {
+  display: flex;
+}
+#link-button a {
+  background-color: rgb(38, 134, 134);
+  color: white;
+  padding: 0.4em 1em;
+  border: 0;
+  border-radius: 6px;
+  margin-left: auto;
+  display: grid;
+  justify-content: center;
+}
+#link-button a:hover {
   background-color: rgb(0, 92, 92);
 }/*# sourceMappingURL=styles.css.map */
