@@ -624,8 +624,9 @@ function removeCourse(id) {
     }
     // remove from schedule if in there
     const curSchedule = schedule.find(s => s.sem == currentSem);
-    curSchedule.meetingInfo = curSchedule.meetingInfo.filter(m => m.className != courseCode);
-
+    if (curSchedule) {
+        curSchedule.meetingInfo = curSchedule.meetingInfo.filter(m => m.className != courseCode);
+    }
     localStorage.setItem("planner", JSON.stringify(planner));
     localStorage.setItem("schedule", JSON.stringify(schedule));
 }

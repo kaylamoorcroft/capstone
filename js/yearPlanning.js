@@ -322,10 +322,12 @@ function removeClass(className) {
         $(c).remove();
     }
     const curSchedule = schedule.find(s => s.sem == currentSem.display);
-    curSchedule.meetingInfo = curSchedule.meetingInfo.filter(meeting => meeting.className != className);
-    console.log(`removed ${className}:`);
-    console.log(curSchedule);
-    localStorage.setItem('schedule', JSON.stringify(schedule));
+    if (curSchedule) {
+        curSchedule.meetingInfo = curSchedule.meetingInfo.filter(meeting => meeting.className != className);
+        console.log(`removed ${className}:`);
+        console.log(curSchedule);
+        localStorage.setItem('schedule', JSON.stringify(schedule));
+    }
     //window.alert(`removed ${className}`);
 }
 
