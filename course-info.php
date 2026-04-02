@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li class="pc-listItem">
-                        <a class="pc-link" href="#">
+                        <a class="pc-link" href="yearplanning.html">
                             <!-- <i class="fa-regular fa-calendar"></i> -->
                             <i class="material-icons" style="font-size: 30px;">calendar_today</i>
                             <span class="pc-iconTitle">Plan by Year</span>
