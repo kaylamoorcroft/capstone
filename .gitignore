@@ -1,1 +1,4 @@
 .DS_Store
+
+# Ignore sass to css map files
+*css.map
