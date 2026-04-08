@@ -20,19 +20,17 @@
     <title>Course Map</title>
 </head>
 <body style="background-color: rgb(220, 239, 248)">
-<!-- <a href="planner-collection.html" class="btn btn-primary">Back</a> -->
 <nav class="pc-navbar">
         <div class="pc-menu">
-            <!-- <i class="fa fa-bars pc-bars" aria-hidden="true"></i> -->
             <span class="material-icons pc-bars" style="font-size: 30px;">dehaze</span>
-            <span class="pc-logo"><img src="images/logo.png" width="80" height="65"></span>
+            <a id="logo" class="navbar-brand" href="index.html"><img src="images/logo.png" width="60" height="50"></a>
         </div>
 
         <div class="pc-sidebar">
             <div class="pc-menu">
                 <!-- <i class="fa fa-bars pc-bars" aria-hidden="true"></i> -->
                 <span class="material-icons pc-bars" style="font-size: 30px;">dehaze</span>
-                <span class="pc-logo"><img src="images/logo.png" width="80" height="65"></span>
+                <span class="pc-logo"><a class="navbar-brand" href="index.html"><img src="images/logo.png" width="80" height="65"></a></span>
             </div>
             <div class="pc-sidebar-content">
                 <ul class="pc-list">
