@@ -285,6 +285,12 @@ nav.open ~ .pc-openMenu {
   box-sizing: border-box;
   margin-bottom: 10px;
 }
+.course:hover {
+  background-color: #f8f9fa;
+}
+.course:active {
+  background-color: #e9ecef;
+}
 
 #recommendations {
   margin-top: 80px;

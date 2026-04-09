@@ -46,6 +46,12 @@
   padding: 10px;
   box-sizing: border-box;
   margin-bottom: 10px;
+  &:hover {
+    background-color: #f8f9fa;
+  }
+  &:active {
+    background-color: #e9ecef;
+  }
 }
 
 #recommendations{
