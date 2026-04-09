@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=disabled_by_default" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sass/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <p class="empty-msg d-none">There are no semesters in the planner yet... click "Add new semester" to add a semester.</p>
-                <select name="semester" id="semester" class="form-control blue-input" required>
+                <select name="semester" id="semester" class="form-control" style="background-color: rgb(172, 214, 227)" required>
                 </select>
                 <ul class="course-list" id="dragZone">
                 </ul>

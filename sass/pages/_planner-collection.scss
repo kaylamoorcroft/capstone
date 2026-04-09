@@ -1,0 +1,26 @@
+/* planner-collection.html: created plans */
+.pc-plans{
+  background-color: white;
+  border-style: solid;
+  border-width: 1.5px;
+  border-radius: 8px;
+  height: 220px;
+  text-align: center;
+  padding: 6px 0px;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.pc-plan-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+#reset-planner {
+  font-size: 1.5em;
+}

@@ -1,0 +1,21 @@
+//tags and other common elements
+a {
+  text-decoration: none;
+}
+
+select {
+  margin: 5px 0;
+}
+
+.empty-msg {
+  padding: 10px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+  /* grid-template-columns: auto auto auto auto; */
+  padding: 10px 30px;
+  gap: 20px;
+}

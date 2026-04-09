@@ -1,15 +1,14 @@
-.background-div {
-  /* background-image: url('images/library-background.jpg'); */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: max(50vh, 300px);
-  background-color: rgb(172, 214, 227);
-  color: black;
+a {
+  text-decoration: none;
+}
+
+select {
+  margin: 5px 0;
+}
+
+.empty-msg {
+  padding: 10px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .grid {
@@ -20,66 +19,6 @@
   gap: 20px;
 }
 
-#home-navbar {
-  display: flex;
-  justify-content: flex-end;
-}
-
-#logo {
-  margin-right: auto;
-}
-
-.course {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-}
-
-.remove {
-  font-size: 1.5em;
-  color: rgb(0, 0, 0);
-}
-.remove:hover {
-  color: rgb(213, 53, 53);
-  cursor: pointer;
-}
-
-.course-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  margin-top: 10px;
-}
-
-#course-search {
-  margin-bottom: 10px;
-}
-
-.blue-input {
-  background-color: rgb(172, 214, 227);
-}
-
-select {
-  margin: 5px 0;
-}
-
-#planCourse {
-  margin-top: 1.5em;
-}
-
-#recommendations {
-  margin-top: 80px;
-}
-
-a {
-  text-decoration: none;
-}
-
 .form_border {
   padding: 14px;
   border: 1px solid;
@@ -87,17 +26,6 @@ a {
   border-color: rgb(197, 197, 197);
 }
 
-.course-warning {
-  background-color: rgb(255, 251, 153);
-  /* background-color: rgb(255, 134, 94); */
-}
-
-/* invalid input error message (manual course) */
-.error {
-  color: red;
-}
-
-/* planner-collection.html: sidebar*/
 .pc-navbar {
   background-color: white;
   height: 70px;
@@ -210,60 +138,27 @@ nav.open ~ .pc-openMenu {
   'opsz' 48; */
 }
 
-/* planner-collection.html: created plans */
-.pc-plans {
-  background-color: white;
-  border-style: solid;
-  border-width: 1.5px;
-  border-radius: 8px;
-  height: 220px;
+.background-div {
+  /* background-image: url('images/library-background.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: max(50vh, 300px);
+  background-color: rgb(172, 214, 227);
+  color: black;
   text-align: center;
-  padding: 6px 0px;
-}
-.pc-plans ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.pc-plan-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 10px;
-}
-
-#reset-planner {
-  font-size: 1.5em;
-}
-
-.empty-msg {
-  padding: 10px;
-  text-align: center;
-}
-
-#dragZone {
-  height: fit-content(450px);
-  max-height: 450px;
-  width: 100%;
-  background-color: rgb(221, 227, 230);
-  border-radius: 5px;
-  padding: 10px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-}
-#dragZone::after {
-  content: "";
-  display: block;
-  min-height: 40px;
-  flex-shrink: 0;
+  justify-content: center;
 }
 
-.addCourse:hover {
-  cursor: grab;
+#home-navbar {
+  display: flex;
+  justify-content: flex-end;
 }
-.addCourse:active {
-  cursor: grabbing;
+
+#logo {
+  margin-right: auto;
 }
 
 /*Styling for intake-survey.html*/
@@ -319,6 +214,106 @@ nav.open ~ .pc-openMenu {
   background-color: rgb(0, 92, 92);
 }
 
+/* planner-collection.html: created plans */
+.pc-plans {
+  background-color: white;
+  border-style: solid;
+  border-width: 1.5px;
+  border-radius: 8px;
+  height: 220px;
+  text-align: center;
+  padding: 6px 0px;
+}
+.pc-plans ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pc-plan-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+#reset-planner {
+  font-size: 1.5em;
+}
+
+#dragZone {
+  height: fit-content(450px);
+  max-height: 450px;
+  width: 100%;
+  background-color: rgb(221, 227, 230);
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+#dragZone::after {
+  content: "";
+  display: block;
+  min-height: 40px;
+  flex-shrink: 0;
+}
+
+.addCourse:hover {
+  cursor: grab;
+}
+.addCourse:active {
+  cursor: grabbing;
+}
+
+/* invalid input error message (manual course) */
+.error {
+  color: red;
+}
+
+.course-warning {
+  background-color: rgb(255, 251, 153);
+  /* background-color: rgb(255, 134, 94); */
+}
+
+.course {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#recommendations {
+  margin-top: 80px;
+}
+
+.remove {
+  font-size: 1.5em;
+  color: rgb(0, 0, 0);
+}
+.remove:hover {
+  color: rgb(213, 53, 53);
+  cursor: pointer;
+}
+
+.course-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+}
+
+#course_search {
+  margin-bottom: 10px;
+}
+
+#planCourse {
+  margin-top: 1.5em;
+}
+
 /*profile.html*/
 #profile {
   display: grid;
@@ -350,4 +345,16 @@ nav.open ~ .pc-openMenu {
 }
 #link-button a:hover {
   background-color: rgb(0, 92, 92);
+}
+
+.schedule {
+  table-layout: fixed;
+}
+
+.schedule th:nth-child(1) {
+  width: 10%;
+}
+
+.schedule tr {
+  height: 0.7em;
 }/*# sourceMappingURL=styles.css.map */

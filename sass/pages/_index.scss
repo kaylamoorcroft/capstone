@@ -1,0 +1,22 @@
+.background-div {
+  /* background-image: url('images/library-background.jpg'); */
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  height: max(50vh, 300px); 
+  background-color: rgb(172, 214, 227); 
+  color: black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+
+#home-navbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#logo{
+  margin-right: auto;
+}
