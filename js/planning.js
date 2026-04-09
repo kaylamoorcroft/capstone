@@ -1,4 +1,4 @@
-import { insertSorted } from './utils.js';
+import { insertSorted, toTitleCase } from './utils.js';
 
 // redirect to survey if prefs not set
 if (localStorage.getItem('survey') === null) {
@@ -108,6 +108,17 @@ const progFirstYear = [
 	{id: "COMP-1123", name: "Computer Programming 2"}
 ];
 const csFirstYear = [{id: "COMP-1233", name: "Intro to Computer Science"}];
+
+function findCurrentYear() {
+    const [semName, year] = currentSem.split(" ");
+    // do math with sems and year to figure out year
+    const yearDif = parseInt(year) - parseInt(prefs['start-year']);
+    const semDif = Semesters[semName].index - Semesters[toTitleCase(prefs['start-semester'])].index;
+    console.log(`year dif ${yearDif}`);
+    console.log(`sem dif ${semDif}`);
+    if (semDif == 0) return yearDif + 1;
+    else return yearDif;
+}
 
 /** Determine if it's the user's first time accessing this page or not */
 function isFirstAccess() {
@@ -457,7 +468,7 @@ function reqsToString(reqs) {
 }
 
 /** load courses based on sem */ 
-function loadSemCourses() {
+async function loadSemCourses() {
     const plan = planner.find(plan => plan.sem.display === currentSem);
     if (plan) {
         const courses = plan.courses;
@@ -471,9 +482,16 @@ function loadSemCourses() {
             return formatCourseItem(course, warning, message).appendTo($('.course-list')[0]);
         });
     }
+    await populateRecs(); 
 }
 /** load sems into dropdown */
 function loadSems() {
+    // place year options in add sem dialog based on start year in survey
+    const startYear = parseInt(prefs["start-year"]);
+    for (let year = startYear; year <= startYear + 4; year++) {
+        const yearOption = $(`<option value='${year}'>${year}</option>`);
+        yearOption.appendTo($('#year-add'));
+    }
     $("#semester").html("");
     sems.forEach(sem => {
         const semItem = $(`<option value='${sem.display}'>${sem.display}</option>`);
@@ -491,7 +509,7 @@ function loadSems() {
     }
 }
 
-function addSem(termName, year) {
+async function addSem(termName, year) {
     // prevent adding duplicate sem
     const sem = {id: Semesters[termName].id, year: year, display: `${termName} ${year}`};
     if (sems.includes(sem)) {
@@ -510,7 +528,7 @@ function addSem(termName, year) {
     loadSems();
     // if value of current sem changed during add, load new sem's courses
     if (currentSem != oldSem) { 
-        loadSemCourses(); 
+        await loadSemCourses(); 
     }
     // update cookies
     localStorage.setItem("planner", JSON.stringify(planner));
@@ -518,14 +536,14 @@ function addSem(termName, year) {
 }
 
 /** remove courses from current semester */
-function clearCurrentSem() {
+async function clearCurrentSem() {
     // check with user first, in case it was an accident
     const confirmClear = window.confirm(`Are you sure you want to clear ${currentSem}?`);
     if (confirmClear) {
         const plan = planner.find(plan => plan.sem.display === currentSem);
         if (plan) {
             plan.courses = [];
-            loadSemCourses();
+            await loadSemCourses();
             // save to cookies
             localStorage.setItem("planner", JSON.stringify(planner));
         }
@@ -647,7 +665,6 @@ async function fetchRecs(progId) {
             console.log('Error: ' + data.error);
             return null;
         } 
-        console.log(data);
         return data;
 
     } catch(error) {
@@ -673,12 +690,26 @@ function getProgramIdFromPrefs() {
 }
 
 async function populateRecs() {
+    const recsBlock = $('#recommendations').find('ul');
+    recsBlock.html("");
     const progId = getProgramIdFromPrefs();
     console.log(prefs);
     console.log(`prog id: ${progId}`);
     const recs = await fetchRecs(progId);
-    const recsBlock = $('#recommendations').find('ul');
+    const curYear = findCurrentYear();
+    console.log(`current year: ${curYear}`);
+    const thisYearRecs = [];
     for (const rec of recs) {
+        const [dep, num] = rec.courseCode.split('-');
+        if (num[0] == curYear) {
+            const courseInfo = await fetchCourseInfo({id: rec.courseId, name: rec.courseTitle});
+            console.log(`${courseInfo.courseCode}: ${courseInfo.terms}`)
+            if (isCourseOfferedInSem(courseInfo, currentSem)) {
+                thisYearRecs.push(rec);
+            }
+        }
+    }
+    for (const rec of thisYearRecs) {
         //console.log(rec);
         $(recsBlock).append(`<li class='course addCourse' data-courseid='${rec.courseId}' data-coursename='${rec.courseTitle}'>${rec.courseTitle}</li>`);
     }
@@ -729,19 +760,6 @@ function initDraggables() {
     });
 }
 
-// UI upon page load
-
-let selectedCourse = "";
-loadSems();
-loadSemCourses();
-
-// place year options in add sem dialog based on start year in survey
-const startYear = parseInt(prefs["start-year"]);
-for (let year = startYear; year <= startYear + 4; year++) {
-    const yearOption = $(`<option value='${year}'>${year}</option>`);
-    yearOption.appendTo($('#year-add'));
-}
-
 if(isFirstAccess()) {
     // prepopulate required courses
     // but if no prefs set, should open survey page before go to planning page.
@@ -784,9 +802,10 @@ if(isFirstAccess()) {
 // could use this block to init everything
 (async () => {
     try {
-        await populateRecs(); 
-        
-        // Ensure DOM is ready before manipulating elements
+        let selectedCourse = "";
+        loadSems();
+        await loadSemCourses();
+        // UI upon page load
         $(() => {
             initDraggables();
         });
@@ -836,9 +855,9 @@ $(function(){
 // EVENT LISTENERS
 
 // update courses when change sem
-$('#semester').change(function() {
+$('#semester').change(async function() {
     currentSem = $(this).val(); // Get the value
-    loadSemCourses();
+    await loadSemCourses();
 });
 
 $('#myModal').on('show.bs.modal', function (event) {
@@ -860,13 +879,13 @@ $("#add-course-btn").click(function (event) {
     $('#newCourse').trigger('reset');
 });
 
-$("#add-sem-btn").click(function (event) {
-    addSem($("#sem-add").val(), $("#year-add").val());
+$("#add-sem-btn").click(async function (event) {
+    await addSem($("#sem-add").val(), $("#year-add").val());
     $("#collapseSemAdd").collapse('hide');
 });
 
-$("#clear-sem-btn").click(function (event) {
-    clearCurrentSem();
+$("#clear-sem-btn").click(async function (event) {
+    await clearCurrentSem();
 });
 
 // tooltips
