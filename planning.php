@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
     include "dbConnection.php";
-    $sql_statement = "SELECT id, title FROM courses WHERE `number` LIMIT 25";
+    $sql_statement = "SELECT id, title, subjectCode, `number` FROM courses WHERE `number` LIMIT 25";
     $result = mysqli_query($con, $sql_statement);
 ?>
 
@@ -37,14 +37,14 @@
 
                 <!-- search bar feature -->
                 <div style="position: relative; display: grid; align-items: center">
-                    <input id="course_search" type="text" class="form-control" placeholder="Search..." style="padding-left: 40px">
-                    <span class="material-icons" style="font-size: 25px; position: absolute; left: 10px; cursor: pointer">search</span>
+                    <input id="course_search" type="text" class="form-control" placeholder="Search..." style="margin-top: 8px; margin-left: auto; border-radius: 15px; padding-left: 40px;">
+                    <span class="material-icons" style="font-size: 25px; position: absolute; left: 10px; cursor: pointer;">search</span>
                 </div>
 
                 <div class="list-group" id="planCourse">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
-                            echo "<li class='addCourse list-group-item list-group-item-action' data-courseid='" . $row['id'] . "' data-coursename='" . $row['title'] . "'>" . $row['title'] . "</li>";
+                            echo "<li class='addCourse list-group-item list-group-item-action' data-bs-toggle='tooltip' title='" . $row['subjectCode'] . ' ' . $row['number'] . "' data-courseid='" . $row['id'] . "' data-coursename='" . $row['title'] . "'>" . $row['title'] . "</li>";
                         }
                         // Free result set
                         mysqli_free_result($result);
