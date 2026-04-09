@@ -87,9 +87,6 @@
                 <div id="recommendations">
                 <h3>Recommended courses</h3>
                 <ul class="course-list">
-                    <li class="course">Course 1</li>
-                    <li class="course">Course 2</li>
-                    <li class="course">Course 3</li>
                 </ul>
             </div>
             </div>

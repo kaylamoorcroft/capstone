@@ -631,6 +631,60 @@ function removeCourse(id) {
     localStorage.setItem("schedule", JSON.stringify(schedule));
 }
 
+/** fetch rec info from db to display in UI */
+async function fetchRecs(progId) {
+    console.log('fetching recs for prog id ' + progId); 
+    try {
+        const response = await fetch('recommendations.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ progId: progId }) // Send data as form data
+        });
+        const data = await response.json(); // Parse the JSON response from the PHP script
+        if (data.error) {
+            console.log('Error: ' + data.error);
+            return null;
+        } 
+        console.log(data);
+        return data;
+
+    } catch(error) {
+        console.error('Error:',  error);
+        return null;
+    }
+}
+
+function getProgramIdFromPrefs() {
+    switch (prefs['comp-type']) {
+        case 'BCS': return 1;
+        case 'BCS with Honours': return 2;
+        case 'BACS': switch(prefs['applied-option']) {
+            case 'muc': return 3;
+            case 'game-dev': return 4;
+            case 'software-dev': return 5;
+            case 'data-analytics': return 6;
+            case 'interdisciplinary-studies': return 7;
+            default: return -1;
+        }
+        default: return -1;
+    }
+}
+
+async function populateRecs() {
+    const progId = getProgramIdFromPrefs();
+    console.log(prefs);
+    console.log(`prog id: ${progId}`);
+    const recs = await fetchRecs(progId);
+    const recsBlock = $('#recommendations').find('ul');
+    for (const rec of recs) {
+        //console.log(rec);
+        $(recsBlock).append(`<li class='course addCourse' data-courseid='${rec.courseId}' data-coursename='${rec.courseTitle}'>${rec.courseTitle}</li>`);
+    }
+} 
+// can then further filter courses by year - use the course code. eg. "1113" is first year
+
 // drag n drop
 
 function initDraggables() {
@@ -727,9 +781,19 @@ if(isFirstAccess()) {
     // }
 }
 
-$(function() {
-    initDraggables();
-});
+// could use this block to init everything
+(async () => {
+    try {
+        await populateRecs(); 
+        
+        // Ensure DOM is ready before manipulating elements
+        $(() => {
+            initDraggables();
+        });
+    } catch (error) {
+        console.error("Failed to load:", error);
+    }
+})();
 
 //validate course ID input
 jQuery.validator.addMethod("courseID", function(value, element){
