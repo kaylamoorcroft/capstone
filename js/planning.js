@@ -256,7 +256,7 @@ function getOfferedSems(terms) {
 }
 
 function isCourseOfferedInSem(course, currentSem) {
-    if (course.terms == 'NULL') {
+    if (course.terms == 'NULL' || course.terms == null) {
         return true;
     }
     const courseSems = course.terms.split(",");
@@ -486,12 +486,6 @@ async function loadSemCourses() {
 }
 /** load sems into dropdown */
 function loadSems() {
-    // place year options in add sem dialog based on start year in survey
-    const startYear = parseInt(prefs["start-year"]);
-    for (let year = startYear; year <= startYear + 4; year++) {
-        const yearOption = $(`<option value='${year}'>${year}</option>`);
-        yearOption.appendTo($('#year-add'));
-    }
     $("#semester").html("");
     sems.forEach(sem => {
         const semItem = $(`<option value='${sem.display}'>${sem.display}</option>`);
@@ -703,7 +697,7 @@ async function populateRecs() {
         const [dep, num] = rec.courseCode.split('-');
         if (num[0] == curYear) {
             const courseInfo = await fetchCourseInfo({id: rec.courseId, name: rec.courseTitle});
-            console.log(`${courseInfo.courseCode}: ${courseInfo.terms}`)
+            //console.log(`${courseInfo.courseCode}: ${courseInfo.terms}`)
             if (isCourseOfferedInSem(courseInfo, currentSem)) {
                 thisYearRecs.push(rec);
             }
@@ -803,6 +797,12 @@ if(isFirstAccess()) {
 (async () => {
     try {
         let selectedCourse = "";
+        // place year options in add sem dialog based on start year in survey
+        const startYear = parseInt(prefs["start-year"]);
+        for (let year = startYear; year <= startYear + 4; year++) {
+            const yearOption = $(`<option value='${year}'>${year}</option>`);
+            yearOption.appendTo($('#year-add'));
+        }
         loadSems();
         await loadSemCourses();
         // UI upon page load
