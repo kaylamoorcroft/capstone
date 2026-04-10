@@ -175,6 +175,6 @@
         </div>
 
     </div>
-    <script type="module" src="js/course-info.js"></script>
+    <script type="module" src='js/pages/course-info.js'></script>
 </body>
 </html>

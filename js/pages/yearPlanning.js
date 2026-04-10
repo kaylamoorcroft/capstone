@@ -1,14 +1,13 @@
-import { dateToLocalTimeString, getDayText } from './utils.js';
+import { fetchSections } from "../services/sectionService.js";
+import { getDayText, getSems, saveSchedule, getPlanner, getSchedule } from "../utils/index.js";
 
-let planner = JSON.parse(localStorage.getItem("planner")) || []; 
+let planner = getPlanner(); 
 let sections = [];
-let sems = JSON.parse(localStorage.getItem("sems")) || []; 
+let sems = getSems(); 
 console.log("initial planner:");
 console.log(planner);
 let currentSem = {index: -1};
-let schedule = JSON.parse(localStorage.getItem("schedule")) || []; 
-console.log("schedule:");
-console.log(schedule);
+let schedule = getSchedule(); 
 
 for (let i = 0; i < sems.length; i++) {
     if (i == 0) {
@@ -326,39 +325,9 @@ function removeClass(className) {
         curSchedule.meetingInfo = curSchedule.meetingInfo.filter(meeting => meeting.className != className);
         console.log(`removed ${className}:`);
         console.log(curSchedule);
-        localStorage.setItem('schedule', JSON.stringify(schedule));
+        saveSchedule(schedule)
     }
     //window.alert(`removed ${className}`);
-}
-
-/** fetch req info from db to display in UI */
-async function fetchSections(courseId, termId='') {
-    try {
-        const response = await fetch('sections.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({ courseId: courseId, termId: termId }) // Send data as form data
-        });
-        const data = await response.json(); // Parse the JSON response from the PHP script
-        
-        if (data.error) {
-            console.log('Error: ' + data.error);
-            return null;
-        } 
-        // transform time & bool values
-        for (const section of data) {
-            section.startTime = dateToLocalTimeString(section.startTime);
-            section.endTime = dateToLocalTimeString(section.endTime);
-            section.isOnline = section.isOnline == 'true'? true: false;
-        }
-        return data;
-
-    } catch(error) {
-        console.error('Error:',  error);
-        return null;
-    }
 }
 
 // insertClass('COMP-1113','1,3,5','9:30','10:20');

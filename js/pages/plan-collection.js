@@ -1,6 +1,6 @@
-let planner = JSON.parse(localStorage.getItem("planner")) || []; 
-console.log("initial planner:");
-console.log(planner);
+import { deleteSem } from "../components/sems.js";
+import { getPlanner, savePlanner, saveSems } from "../utils/index.js";
+
 let sems = JSON.parse(localStorage.getItem("sems")) || []; 
 console.log("sems:")
 console.log(sems);
@@ -10,10 +10,11 @@ console.log(schedule);
 
 /** display sem plans in planner-collection.html */
 function displaySemPlans() {
+    const planner = getPlanner();
     $("#plan-collection").html("");
     planner.forEach(plan => {
         let planItem = `<div class="pc-plans"><span class="pc-plan-header"><span><!--empty span for spacing--></span><h4>${plan.sem.display}</h4>`;
-        planItem += `<button type="button" class="btn-close delete-plan" onclick="removeSem('${plan.sem.display}')" aria-label="Close"></button></span><ul>`;
+        planItem += `<button type="button" class="btn-close delete-plan" data-sem='${plan.sem.display}' aria-label="Close"></button></span><ul>`;
         plan.courses.forEach(course => planItem += `<li data-bs-toggle="tooltip" data-bs-placement="top" title="${course.name}">${course.courseCode}</li>`);
         planItem += `</ul></div>`
         $(planItem).appendTo($("#plan-collection"));
@@ -37,18 +38,8 @@ function removeSem(sem) {
     // check with user first, in case it was an accident
     const confirmDelete = window.confirm(`Are you sure you want to delete ${sem}?`);
     if (confirmDelete) {
-        const i = sems.find(curSem => curSem.display == sem);
-        if (i !== -1) {
-            sems.splice(i, 1);
-            planner.splice(i,1);
-        }
-        schedule = schedule.filter(s => s.sem != sem);
-
+        deleteSem(sem);
         displaySemPlans();
-        // save to cookies
-        localStorage.setItem("sems", JSON.stringify(sems));
-        localStorage.setItem("planner", JSON.stringify(planner));
-        localStorage.setItem("schedule", JSON.stringify(planner));
     }
 }
 
@@ -56,20 +47,22 @@ function removeSem(sem) {
 function clearPlanner() {
     // check with user first, in case it was an accident
     const confirmClear = window.confirm(`Are you sure you want to clear the entire planner? You cannot undo this.`);
-        if (confirmClear) {
+    if (confirmClear) {
         console.log("Clearing entire planner");
-        planner = [];
-        sems = [];
+        savePlanner([]);
+        saveSems([]);
         displaySemPlans();
-        localStorage.setItem("sems", JSON.stringify(sems));
-        localStorage.setItem("planner", JSON.stringify(planner));
     }
 }
 
-displaySemPlans();
+$(function() {
+    displaySemPlans();
 
-// Event Listeners
-
-$("#reset-planner").click(function (event) {
-    clearPlanner();
+    $("#reset-planner").click(function (event) {
+        clearPlanner();
+    });
+    $(".delete-plan").click(function (event) {
+        removeSem($(this).data('sem'));
+    });
 });
+
