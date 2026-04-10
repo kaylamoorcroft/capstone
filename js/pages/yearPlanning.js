@@ -6,7 +6,7 @@ let sections = [];
 let sems = getSems(); 
 console.log("initial planner:");
 console.log(planner);
-let currentSem = {index: -1};
+let currentSemIndex = -1;
 let schedule = getSchedule(); 
 
 for (let i = 0; i < sems.length; i++) {
@@ -33,17 +33,18 @@ for (let i = 0; i < sems.length; i++) {
 }
 
 async function loadSem(semIndex) {
-    $('#cur-sem').text(currentSem.index != -1 ? currentSem.display : "No semesters to display");
-    console.log("Current sem: " + currentSem.display);
-    console.log(planner[currentSem.index]);
+    const curSem = sems[semIndex];
+    console.log(curSem);
+    console.log('loading sem index ' + semIndex);
+    $('#cur-sem').text(semIndex != -1 ? curSem.display : "No semesters to display");
+    console.log(planner[semIndex]);
     drawLines();
 
-    const curSem = planner[semIndex].sem;
     const termId = curSem.year + curSem.id;
     console.log(termId);
     $('#sections-div').html("");
     if (planner[semIndex].courses.length == 0) {
-        $('#sections-div').append(`<p>No courses added to planner for ${currentSem.display}</p>`);
+        $('#sections-div').append(`<p>No courses added to planner for ${curSem.display}</p>`);
     }
     for (const course of planner[semIndex].courses) {
         const sectionsFetched = sections.find(section => section.courseId == course.id && section.termId == termId);
@@ -184,35 +185,35 @@ function drawLines() {
 $('#sem-nav').on('click', '.page-item a', function(e) {
     e.preventDefault(); 
 
-    let newSem = -1;
+    let newSemIndex = -1;
     if ($(this).parent('.page-item').attr('id') == 'prev-sem') {
-        newSem = currentSem.index - 1;
-        newSem = newSem < 0 ? 0 : newSem; // limit to lowest val 0 
+        newSemIndex = currentSemIndex - 1;
+        newSemIndex = newSemIndex < 0 ? 0 : newSemIndex; // limit to lowest val 0 
     }
     else if ($(this).parent('.page-item').attr('id') == 'next-sem') {
-        newSem = currentSem.index + 1;
-        newSem = newSem > sems.length - 1 ? sems.length - 1 : newSem;
+        newSemIndex = currentSemIndex + 1;
+        newSemIndex = newSemIndex > sems.length - 1 ? sems.length - 1 : newSemIndex;
     }
     else {
-        newSem = $(this).parent('.page-item').data('sem');
+        newSemIndex = $(this).parent('.page-item').data('sem');
     }
+    currentSemIndex = newSemIndex;
 
     // Call a function to handle the page change and content update
-    loadSem(newSem);
-    updateActiveSem(newSem);
+    loadSem(newSemIndex);
+    updateActiveSem(newSemIndex);
 });
 
 if (planner.length > 0) {
-    currentSem = planner[0].sem;
-    currentSem.index = 0;
+    currentSemIndex = 0;
 }
 
-loadSem(currentSem.index);
-updateActiveSem(currentSem.index);
+loadSem(currentSemIndex);
+updateActiveSem(currentSemIndex);
 
 function hasOverlap(daysString,startTime,endTime) {
     console.log('current schedule:');
-    const curSchedule = schedule.find(s => s.sem == currentSem.display);
+    const curSchedule = schedule.find(s => s.sem == sems[currentSemIndex].display);
     console.log(curSchedule);
     if (!curSchedule) return false;
     for (const day of daysString.toString().split(',')) {
@@ -255,6 +256,7 @@ function insertIntoTable(cell, day, hour, min) {
 
 function addClassToSchedule(className, sectionId, daysString, startTime, endTime) {
     console.log(`--add ${className} to schedule--`);
+    const currentSem = sems[currentSemIndex];
     let curSchedule = schedule.find(s => s.sem == currentSem.display);
     if (!(curSchedule)) {
         schedule.push({sem: currentSem.display});
@@ -262,7 +264,7 @@ function addClassToSchedule(className, sectionId, daysString, startTime, endTime
     };
     curSchedule.meetingInfo = curSchedule.meetingInfo ?? [];
     curSchedule.meetingInfo.push({className: className, sectionId: sectionId, days: daysString, startTime: startTime, endTime: endTime});
-    localStorage.setItem('schedule', JSON.stringify(schedule));
+    saveSchedule(schedule);
 
     insertClass(className, daysString, startTime, endTime);
 }
@@ -320,22 +322,11 @@ function removeClass(className) {
         }
         $(c).remove();
     }
-    const curSchedule = schedule.find(s => s.sem == currentSem.display);
+    const curSchedule = schedule.find(s => s.sem == sems[currentSemIndex].display);
     if (curSchedule) {
         curSchedule.meetingInfo = curSchedule.meetingInfo.filter(meeting => meeting.className != className);
         console.log(`removed ${className}:`);
         console.log(curSchedule);
         saveSchedule(schedule)
     }
-    //window.alert(`removed ${className}`);
 }
-
-// insertClass('COMP-1113','1,3,5','9:30','10:20');
-// insertClass('COMP-1110L','5','13:00','13:50');
-//addClassToSchedule('COMP-1234','WI01','1,3','12:30','13:20');
-// if (currentSem.index in schedule) {
-//     for (const {className, sectionId, days, startTime, endTime} of schedule[currentSem.index]) {
-//         //insertClass(className, days, startTime, endTime);
-//         setActiveSection(className, sectionId);
-//     }
-// }
