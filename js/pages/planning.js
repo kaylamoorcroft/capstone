@@ -91,3 +91,10 @@ $(document).on('mouseenter', '[data-bs-toggle="tooltip"]', function () {
         new bootstrap.Tooltip(this).show();
     }
 });
+
+// tooltips with jQuery for course ID's
+$(".jQuery-tooltip").tooltip({
+    classes: {
+        "ui-tooltip": "" //remove default styling for tooltip box
+    }
+});
