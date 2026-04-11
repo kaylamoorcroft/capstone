@@ -1,6 +1,7 @@
 import { loadPlanner, loadSemCourses, clearCurrentSem, addCourse } from "../components/planner.js";
 import { getCurrentSem, addSem } from "../components/sems.js";
-import { courseSearch, initDraggables } from "../services/courseService.js";
+import { courseSearch } from "../services/courseService.js";
+import { initDraggables } from "../components/courses.js";
 
 console.log('here');
 // redirect to survey if prefs not set

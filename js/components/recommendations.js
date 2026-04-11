@@ -1,4 +1,4 @@
-import { initDraggables } from "../services/courseService.js";
+import { initDraggables } from "./courses";
 import { filterRecsBySem } from "../services/recommendationService.js";
 export async function populateRecs(currentSem) {
     const recsBlock = $('#recommendations').find('ul');
