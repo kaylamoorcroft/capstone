@@ -82,7 +82,7 @@ $("#add-sem-btn").click(async function (event) {
 });
 
 $("#clear-sem-btn").click(async function (event) {
-    await clearCurrentSem();
+    await clearCurrentSem(getCurrentSem());
 });
 
 // tooltips

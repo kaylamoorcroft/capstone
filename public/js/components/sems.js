@@ -48,8 +48,8 @@ function deleteSem(sem) {
         savePlanner(planner);
         // add warnings if remove prereqs
         for (const course of removedCourses) {
-            // check if course is prereq for any other sem - check from start (index 0)
-            const coursesWithPrereq = isCoursePrereq(course.courseCode, planner, sems[0].display);
+            const curSem = sems[i - 1 < 0 ? 0 : i - 1]; // set to prev sem, but prevent negative index
+            const coursesWithPrereq = isCoursePrereq(course.courseCode, planner, curSem.display);
             updateMissingCourses(coursesWithPrereq);
         }
     }

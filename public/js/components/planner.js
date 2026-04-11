@@ -1,5 +1,5 @@
 import { fetchCourseInfo, updateMissingCourses } from "../services/courseService.js";
-import {semComparator, isCourseOfferedInSem} from '../services/semService.js';
+import {semComparator, isCourseOfferedInSem, getCoursesInSem} from '../services/semService.js';
 import { populateRecs } from "./recommendations.js";
 import {reqsToString, requisiteComprehension, isCoursePrereq, prereqsNotMet} from '../services/requisiteService.js';
 import { formatCourseItem } from "./courses.js";
@@ -48,10 +48,16 @@ async function clearCurrentSem(currentSem) {
     if (confirmClear) {
         const plan = planner.find(plan => plan.sem.display === currentSem);
         if (plan) {
+            const removedCourses = getCoursesInSem(currentSem);
             plan.courses = [];
+            savePlanner(planner);
             await loadSemCourses(currentSem);
-            // save to cookies
-            localStorage.setItem("planner", JSON.stringify(planner));
+            // add warnings if remove prereqs
+            for (const course of removedCourses) {
+                // check if course is prereq for any other sem - check from start (index 0)
+                const coursesWithPrereq = isCoursePrereq(course.courseCode, planner, currentSem);
+                updateMissingCourses(coursesWithPrereq);
+            }
         }
     }
 }
