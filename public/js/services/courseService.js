@@ -1,5 +1,6 @@
-import { getPlanner } from "../utils/index.js";
+import { getPlanner, savePlanner } from "../utils/index.js";
 import { initDraggables } from "../components/courses.js";
+import { prereqsNotMet } from "./requisiteService.js";
 
 function courseSearch() {
     var request = $('#course_search').val();
@@ -74,4 +75,33 @@ function getCourseInfo(id) {
     return courseInfo;
 }
 
-export {courseSearch, fetchCourseInfo, getCourseInfo};
+/** update missing courses for coursesToUpdate */  
+function updateMissingCourses(coursesToUpdate) {
+    const planner = getPlanner();
+    console.log('courses to update:');
+    console.log(coursesToUpdate);
+    for (const course of coursesToUpdate) {
+        let courseToMod;
+        let semester;
+        for (const plan of planner) {
+            for (const curCourse of plan.courses) {
+                if (curCourse.id == course.courseId) {
+                    courseToMod = curCourse;
+                    semester = plan.sem;
+                    break;
+                }
+            }
+            if (semester) break;
+        }
+        if (courseToMod) {
+            const missingCourses = prereqsNotMet(courseToMod.reqs, semester, planner);
+            console.log('missing courses:');
+            console.log(missingCourses);
+            courseToMod.missingReqs = missingCourses;
+            console.log(courseToMod);
+        }
+    }
+    savePlanner(planner);
+}
+
+export {courseSearch, fetchCourseInfo, getCourseInfo, updateMissingCourses};

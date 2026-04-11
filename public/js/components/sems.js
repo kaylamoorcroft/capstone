@@ -1,7 +1,9 @@
 import { Semesters } from "../constants.js";
 import { loadSemCourses, planComparator } from "./planner.js";
-import { semComparator } from "../services/semService.js";
+import { getCoursesInSem, semComparator } from "../services/semService.js";
 import { getSems, saveSems, getPlanner, savePlanner, insertSorted, getSchedule, saveSchedule } from '../utils/index.js'
+import { updateMissingCourses } from "../services/courseService.js";
+import { isCoursePrereq } from "../services/requisiteService.js";
 
 async function addSem(termName, year) {
     let sems = getSems();
@@ -35,19 +37,26 @@ function deleteSem(sem) {
     let schedule = getSchedule();
     const i = sems.findIndex(curSem => curSem.display == sem);
     if (i !== -1) {
+        const removedCourses = getCoursesInSem(sem);
+        // remove sem from sems, planner & schedule
         sems.splice(i, 1);
         planner.splice(i,1);
+        schedule = schedule.filter(s => s.sem != sem);
+        // save to local storage
+        saveSems(sems);
+        saveSchedule(schedule);
+        savePlanner(planner);
+        // add warnings if remove prereqs
+        for (const course of removedCourses) {
+            // check if course is prereq for any other sem - check from start (index 0)
+            const coursesWithPrereq = isCoursePrereq(course.courseCode, planner, sems[0].display);
+            updateMissingCourses(coursesWithPrereq);
+        }
     }
     else {
         console.log('Could not find ' + sem);
         return;
     }
-    schedule = schedule.filter(s => s.sem != sem);
-
-    // save to local storage
-    saveSems(sems);
-    savePlanner(planner);
-    saveSchedule(schedule);
 }
 
 function getCurrentSem() {

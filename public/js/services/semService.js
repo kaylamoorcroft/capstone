@@ -1,6 +1,6 @@
 import {Semesters} from '../constants.js'
 import { toTitleCase } from '../utils/format.js';
-import { getPrefs } from '../utils/storage.js';
+import { getPlanner, getPrefs } from '../utils/storage.js';
 
 function getOfferedSems(terms) {
     const courseSems = terms.split(",");
@@ -73,4 +73,11 @@ function findCurrentYear(currentSem) {
     else return yearDif;
 }
 
-export {getOfferedSems, isCourseOfferedInSem, findNextSem, semComparator, findCurrentYear};
+function getCoursesInSem(sem) {
+    const planner = getPlanner();
+    console.log(planner);
+    const plan = planner.find(plan => plan.sem.display === sem);
+    return plan.courses;
+}
+
+export {getOfferedSems, isCourseOfferedInSem, findNextSem, semComparator, findCurrentYear, getCoursesInSem};

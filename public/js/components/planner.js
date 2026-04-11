@@ -1,8 +1,8 @@
-import { fetchCourseInfo } from "../services/courseService.js";
+import { fetchCourseInfo, updateMissingCourses } from "../services/courseService.js";
 import {semComparator, isCourseOfferedInSem} from '../services/semService.js';
 import { populateRecs } from "./recommendations.js";
 import {reqsToString, requisiteComprehension, isCoursePrereq, prereqsNotMet} from '../services/requisiteService.js';
-import { formatCourseItem, updateCourseWarning } from "./courses.js";
+import { formatCourseItem } from "./courses.js";
 import { loadSems, getCurrentSem } from "./sems.js";
 import { getCourseInfo } from "../services/courseService.js";
 import { getPlanner, savePlanner, saveSchedule, getSchedule, getPrefs } from "../utils/storage.js";
@@ -90,33 +90,14 @@ async function addCourse(course, sem) {
         message = `Missing requisites: ${reqsToString(missingCourses)}`;
     }
     plan.courses.push(courseInfo);
+    savePlanner(planner);
     // update UI if add on current sem
     if (sem == getCurrentSem()) {
         formatCourseItem(course, warning, message).appendTo($('.course-list')[0]);
     }
     //remove warnings from other courses if this course is prereq for them
     const coursesWithPrereq = isCoursePrereq(courseInfo.courseCode, planner, sem);
-    console.log(`courses with ${courseInfo.courseCode} as a prereq: `);
-    console.log(coursesWithPrereq);
-    for (const course of coursesWithPrereq) {
-        let courseToMod;
-        let semester;
-        for (const plan of planner) {
-            for (const curCourse of plan.courses) {
-                if (curCourse.id == course.courseId) {
-                    courseToMod = curCourse;
-                    semester = plan.sem;
-                    break;
-                }
-            }
-            if (semester) break;
-        }
-        //const courseInfo = getCourseInfo(course.courseId);
-        const missingCourses = prereqsNotMet(courseToMod.reqs, semester, planner);
-        courseToMod.missingReqs = missingCourses; 
-    }
-    savePlanner(planner);
-    console.log(planner);
+    updateMissingCourses(coursesWithPrereq);
     loadSemCourses(getCurrentSem());
 }
 
@@ -141,34 +122,18 @@ function removeCourse(id) {
 
     const plan = planner.find(plan => plan.sem.display === currentSem);
     plan.courses = plan.courses.filter(course => course.id != id);
+    savePlanner(planner);
 
-    // update coursesWithPrereq to have warning
-    for (const course of coursesWithPrereq) {
-        let courseToMod;
-        let semester;
-        for (const plan of planner) {
-            for (const curCourse of plan.courses) {
-                if (curCourse.id == course.courseId) {
-                    courseToMod = curCourse;
-                    semester = plan.sem;
-                    break;
-                }
-            }
-            if (semester) break;
-        }
-        const missingCourses = prereqsNotMet(courseToMod.reqs, semester, planner);
-        courseToMod.missingReqs = missingCourses;
-    }
-    // remove from schedule if in there
+    // add warnings if removed a prereq course
+    updateMissingCourses(coursesWithPrereq);
+    loadSemCourses(currentSem);
+
     const schedule = getSchedule();
     const curSchedule = schedule.find(s => s.sem == currentSem);
     if (curSchedule) {
         curSchedule.meetingInfo = curSchedule.meetingInfo.filter(m => m.className != courseCode);
     }
-    savePlanner(planner);
     saveSchedule(schedule);
-    console.log(planner);
-    loadSemCourses(currentSem);
 }
 
 async function loadPlanner() {
