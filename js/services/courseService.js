@@ -40,6 +40,9 @@ function initDraggables() {
                 'width': originalWidth
             });
         },
+        drag: function (event, ui) {
+            $('.tooltip').remove();
+        },
         stop: function(event, ui) {
             $(this).css("opacity", "1");
         }
@@ -64,6 +67,7 @@ function initDraggables() {
             }
             $(this).css("background-color", "rgb(221, 227, 230)");
             addCourse(course, getCurrentSem());
+            $('.tooltip').remove();
         }
     });
 }

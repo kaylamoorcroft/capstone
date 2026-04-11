@@ -44,7 +44,7 @@
                 <div class="list-group" id="planCourse">
                     <?php
                         while($row = mysqli_fetch_array($result)) {
-                            echo "<li class='addCourse list-group-item list-group-item-action jQuery-tooltip' title='" . $row['subjectCode'] . '-' . $row['number'] . "' data-courseid='" . $row['id'] . "' data-coursename='" . $row['title'] . "'>" . $row['title'] . "</li>";
+                            echo "<li class='addCourse list-group-item list-group-item-action' id='addCourse-".$row['id']."' data-bs-toggle='tooltip' title='" . $row['subjectCode'] . '-' . $row['number'] . "' data-courseid='" . $row['id'] . "' data-coursename='" . $row['title'] . "'>" . $row['title'] . "</li>";
                         }
                         // Free result set
                         mysqli_free_result($result);

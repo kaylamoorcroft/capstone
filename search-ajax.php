@@ -1,15 +1,6 @@
 <?php
     include "dbConnection.php";
 ?>
-
-<script>
-    $(".jQuery-tooltip").tooltip({
-    classes: {
-        "ui-tooltip": ""
-    }
-    });
-</script>
-
     <?php
     if (isset($_POST['course_search'])) {
         $searchRequest = $_POST['course_search'];
@@ -22,7 +13,7 @@
         while ($Result = MySQLi_fetch_array($ExecQuery)) {
         ?>
     <!-- Assigning searched result in "Search box" in "planning.php" file. -->
-                <?php echo "<li class='addCourse list-group-item list-group-item-action jQuery-tooltip' title='" . $Result['subjectCode'] . '-' . $Result['number'] . "'data-courseid='" . $Result['id'] . "' data-coursename='" . $Result['title'] . "'>" . $Result['title'] . "</li>";
+                <?php echo "<li class='addCourse list-group-item list-group-item-action' id='addCourse-".$Result['id']."' data-bs-toggle='tooltip' title='" . $Result['subjectCode'] . ' ' . $Result['number'] . "'data-courseid='" . $Result['id'] . "' data-coursename='" . $Result['title'] . "'>" . $Result['title'] . "</li>";
                 ?>
         <?php
             }}
