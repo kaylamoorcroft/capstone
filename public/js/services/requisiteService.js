@@ -132,8 +132,9 @@ function prereqsNotMet(reqs, sem, planner) {
     // iterate through prereqs
     reqs.forEach(req => {
         // initialise variables needed for this section
-        let [creds, coursePlanned] = [0, false];
+        let coursePlanned = false;
         req.and.forEach(andCourse => {
+            let subjectCreds = 0;
             // iterate through each sem
             for (const plan of planner) {
                 // only check till previous sem if PREreq
@@ -152,11 +153,11 @@ function prereqsNotMet(reqs, sem, planner) {
                 else if (andCourse.hourReq) {
                     plan.courses.forEach(course => {
                         if (course.courseCode.includes(andCourse.hourReq.subject.toUpperCase())) {
-                            creds++;
-                            console.log(`Taking ${course.courseCode} in ${sem} - creds++ (hours = ${creds*3} now)`);
+                            subjectCreds += course.creds;
+                            console.log(`Taking ${course.courseCode} in ${plan.sem} - creds += ${course.creds} (hours = ${subjectCreds} now)`);
                         }
                     });
-                    if (creds*3 >= andCourse.hourReq.hours) {
+                    if (subjectCreds >= andCourse.hourReq.hours) {
                         coursePlanned = true;
                     }
                 }
@@ -203,7 +204,11 @@ function isCoursePrereq(courseCode, planner, currentSem) {
                         }
                     }
                     else if (andCourse.hourReq) {
-                        console.log(`might not have enough hours of ${andCourse.hourReq.subject} if remove this course`)
+                        if (courseCode.includes(andCourse.hourReq.subject.toUpperCase())) {
+                            // check hours - future. for now just give warning and if have enough, won't update ui to say missing prereq
+                            console.log(`might not have enough hours of ${andCourse.hourReq.subject} if remove this course`);
+                            coursesWithReq.push({courseId: course.id, courseCode: course.courseCode, reqId: req.id});                        
+                        }
                     }
                 });
             }
