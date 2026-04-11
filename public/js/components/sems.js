@@ -1,5 +1,5 @@
 import { Semesters } from "../constants.js";
-import { planComparator } from "./planner.js";
+import { loadSemCourses, planComparator } from "./planner.js";
 import { semComparator } from "../services/semService.js";
 import { getSems, saveSems, getPlanner, savePlanner, insertSorted, getSchedule, saveSchedule } from '../utils/index.js'
 
@@ -26,6 +26,7 @@ async function addSem(termName, year) {
     // update UI
     loadSems();
     setCurrentSem(sem.display);
+    loadSemCourses(sem.display);
 }
 
 function deleteSem(sem) {
