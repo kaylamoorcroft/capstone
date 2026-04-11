@@ -9,7 +9,7 @@ async function addSem(termName, year) {
     let sems = getSems();
     // prevent adding duplicate sem
     const sem = {id: Semesters[termName].id, year: year, display: `${termName} ${year}`};
-    if (sems.includes(sem)) {
+    if (sems.some(curSem => curSem.display == sem.display)) {
         window.alert("Could not add " + sem.display + " because it already exists");
         return;
     }
