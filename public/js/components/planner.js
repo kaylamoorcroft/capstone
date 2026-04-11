@@ -1,11 +1,12 @@
 import { fetchCourseInfo, updateMissingCourses } from "../services/courseService.js";
-import {semComparator, isCourseOfferedInSem, getCoursesInSem} from '../services/semService.js';
+import {semComparator, isCourseOfferedInSem, getCoursesInSem, getOfferedSems} from '../services/semService.js';
 import { populateRecs } from "./recommendations.js";
 import {reqsToString, requisiteComprehension, isCoursePrereq, prereqsNotMet} from '../services/requisiteService.js';
 import { formatCourseItem } from "./courses.js";
 import { loadSems, getCurrentSem } from "./sems.js";
 import { getCourseInfo } from "../services/courseService.js";
 import { getPlanner, savePlanner, saveSchedule, getSchedule, getPrefs } from "../utils/storage.js";
+import { maxCreds } from "../constants.js";
 
 /** compare the sems within the plans to sort in order*/
 const planComparator = (plan1, plan2) => semComparator(plan1.sem, plan2.sem);
@@ -24,6 +25,7 @@ function isFirstAccess() {
 /** load courses based on sem */ 
 async function loadSemCourses(currentSem) {
     const planner = getPlanner();
+    console.log(planner);
     const plan = planner.find(plan => plan.sem.display === currentSem);
     if (plan) {
         const courses = plan.courses;
@@ -62,6 +64,24 @@ async function clearCurrentSem(currentSem) {
     }
 }
 
+/**
+ * calculate the number of credits for a given sem and check that the amount of 
+ * creds from the course to be added doesn't exceed maxCreds 
+ * @param {*} planner 
+ * @param {*} sem 
+ * @param {*} addCourseCreds 
+ * @returns true if adding course will exceed max creds. false, if course may be added with no issue
+ */
+function addCourseExceedsMaxCreds(planner, sem, addCourseCreds) {
+    const plan = planner.find(plan => plan.sem.display == sem);
+    let totalCreds = 0;
+    if (!addCourseCreds) addCourseCreds = 3; // assume 3 creds if not given (e.g., for custom courses)
+    for (const course of plan.courses) {
+        totalCreds += course.creds ?? 3; // assume 3 if not given
+    }
+    return (totalCreds + addCourseCreds) > maxCreds;
+}
+
 /** add course to sem and save to localstorage */
 async function addCourse(course, sem) {
     const planner = getPlanner();
@@ -83,8 +103,8 @@ async function addCourse(course, sem) {
         window.alert(`Sorry. Could not add ${courseInfo.name} because it is not offered in ${sem}. It is offered in: ${getOfferedSems(courseInfo.terms)}`);
         return;
     };
-    if (plan.courses.length >= 8) {
-        window.alert(`Maximum of 8 courses per semester allowed`);
+    if (addCourseExceedsMaxCreds(planner, sem, courseInfo.creds)) {
+        window.alert(`Maximum of ${maxCreds} credits (${maxCreds/3} courses, excluding labs) allowed per semester`);
         return;
     }
     courseInfo.reqs = requisiteComprehension(courseInfo.reqs);

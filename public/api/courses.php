@@ -14,6 +14,7 @@ if (!empty($id)) {
             courses.title AS name,
             courses.subjectCode AS subjectCode, 
             courses.Number AS number, 
+            courses.MinimumCredits AS creds, 
             courses.YearsOffered AS years, 
             courses.TermsOffered AS terms, 
             requisites.requirementCode AS reqId,
@@ -44,6 +45,7 @@ if (!empty($id)) {
                 "id" => $id,
                 "courseCode" => "$subjectCode-$number",
                 "name" => $name,
+                "creds" => $creds,
                 "years" => $years,
                 "terms" => $terms,
                 "reqs" => [] 

@@ -17,4 +17,6 @@ const daysOfWeek = {
     '5': { name: "Friday", abbr: "Fri", letter: "F" }
 }
 
-export {Semesters, daysOfWeek};
+const maxCreds = 21; // max 7 courses, not counting labs
+
+export {Semesters, daysOfWeek, maxCreds};

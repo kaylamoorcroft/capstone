@@ -220,7 +220,9 @@ nav.open ~ .pc-openMenu {
   border-style: solid;
   border-width: 1.5px;
   border-radius: 8px;
-  height: 220px;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 220px;
   text-align: center;
   padding: 6px 0px;
 }
@@ -241,8 +243,9 @@ nav.open ~ .pc-openMenu {
 }
 
 #dragZone {
-  height: fit-content(450px);
-  max-height: 450px;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-height: 100px;
   width: 100%;
   background-color: rgb(221, 227, 230);
   border-radius: 5px;

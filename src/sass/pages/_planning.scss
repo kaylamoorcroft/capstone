@@ -1,6 +1,6 @@
 #dragZone {
-  height: fit-content(450px);
-  max-height: 450px;
+  height: fit-content;
+  min-height: 100px;
   width: 100%;
   background-color: rgb(221, 227, 230);
   border-radius: 5px;
