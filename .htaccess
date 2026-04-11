@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# If already redirected (rewritten), stop 
+RewriteCond %{ENV:REDIRECT_STATUS} 200
+RewriteRule ^ - [L]
+
+# Otherwise, rewrite everything to /public folder
+RewriteRule ^(.*)$ public/$1 [L]
+

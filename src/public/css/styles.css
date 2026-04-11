@@ -1,0 +1,366 @@
+a {
+  text-decoration: none;
+}
+
+select {
+  margin: 5px 0;
+}
+
+.empty-msg {
+  padding: 10px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  /* grid-template-columns: auto auto auto auto; */
+  padding: 10px 30px;
+  gap: 20px;
+}
+
+.form_border {
+  padding: 14px;
+  border: 1px solid;
+  border-radius: 12px;
+  border-color: rgb(197, 197, 197);
+}
+
+.pc-navbar {
+  background-color: white;
+  height: 70px;
+  align-items: center;
+  display: flex;
+  box-shadow: 0px 2px 3px rgb(100, 100, 100);
+}
+
+.pc-menu {
+  display: flex;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+.pc-bars {
+  cursor: pointer;
+  margin-right: 20px;
+  color: rgb(100, 100, 100);
+  font-size: 30px;
+}
+
+nav .pc-sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  background-color: white;
+  height: 100%;
+  width: 235px;
+  padding: 20px 0px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+  z-index: 9999;
+}
+nav.open .pc-sidebar {
+  left: 0;
+}
+nav.open ~ .pc-openMenu {
+  opacity: 1;
+  left: 235px;
+  pointer-events: auto;
+}
+
+.pc-logo {
+  padding: 0px 20px;
+}
+
+.pc-sidebar-content {
+  padding: 30px 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pc-list {
+  list-style: none;
+  color: rgb(100, 100, 100);
+  font-size: 23px;
+  padding: 0px;
+}
+
+.pc-listItem {
+  padding: 0px 0px 8px 0px;
+}
+
+.pc-link {
+  display: flex;
+  align-items: center;
+  color: rgb(100, 100, 100);
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  text-decoration: none;
+}
+.pc-link:hover {
+  background-color: rgb(218, 239, 246);
+  text-decoration: none;
+}
+
+.pc-iconTitle {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.pc-bottom-links {
+  font-size: 16px;
+  list-style: none;
+  font-size: 23px;
+  padding: 12px 0px;
+}
+
+.pc-openMenu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 100vh;
+  width: 200%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9888;
+}
+
+.material-symbols-outlined {
+  font-size: 30px;
+  font-variation-settings: "FILL" 0;
+  /* 'wght' 600,
+  'GRAD' 0,
+  'opsz' 48; */
+}
+
+.background-div {
+  /* background-image: url('images/library-background.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: max(50vh, 300px);
+  background-color: rgb(172, 214, 227);
+  color: black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#home-navbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#logo {
+  margin-right: auto;
+}
+
+/*Styling for intake-survey.html*/
+.intake-survey {
+  padding: 1.5rem;
+  border: 1px solid;
+  border-radius: 12px;
+  border-color: rgb(197, 197, 197);
+  max-inline-size: 840px;
+  margin-inline: auto;
+}
+
+#survey {
+  display: grid;
+  gap: 1.3rem 1rem;
+}
+@media (width > 840px) {
+  #survey {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.span-across {
+  grid-column: 1/-1;
+}
+
+#survey-page {
+  background-color: rgb(220, 239, 248);
+}
+#survey-page select {
+  border-color: rgb(155, 188, 204);
+  padding: 0.5em;
+  border-width: 0.1em;
+}
+#survey-page select:hover {
+  border-color: rgb(38, 134, 134);
+}
+#survey-page label {
+  font-size: 15px;
+}
+#survey-page h1 {
+  color: rgb(0, 97, 97);
+  padding-bottom: 0.75em;
+}
+#survey-page button {
+  background-color: rgb(38, 134, 134);
+  color: white;
+  padding: 0.4em 1em;
+  border: 0;
+  border-radius: 6px;
+}
+#survey-page button:hover {
+  background-color: rgb(0, 92, 92);
+}
+
+/* planner-collection.html: created plans */
+.pc-plans {
+  background-color: white;
+  border-style: solid;
+  border-width: 1.5px;
+  border-radius: 8px;
+  height: 220px;
+  text-align: center;
+  padding: 6px 0px;
+}
+.pc-plans ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pc-plan-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+#reset-planner {
+  font-size: 1.5em;
+}
+
+#dragZone {
+  height: fit-content(450px);
+  max-height: 450px;
+  width: 100%;
+  background-color: rgb(221, 227, 230);
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+#dragZone::after {
+  content: "";
+  display: block;
+  min-height: 40px;
+  flex-shrink: 0;
+}
+
+.addCourse:hover {
+  cursor: grab;
+}
+.addCourse:active {
+  cursor: grabbing;
+}
+
+/* invalid input error message (manual course) */
+.error {
+  color: red;
+}
+
+.course-warning {
+  background-color: rgb(255, 251, 153);
+  /* background-color: rgb(255, 134, 94); */
+}
+
+.course {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+.course:hover {
+  background-color: #f8f9fa;
+}
+.course:active {
+  background-color: #e9ecef;
+}
+
+#recommendations {
+  margin-top: 80px;
+}
+
+.remove {
+  font-size: 1.5em;
+  color: rgb(0, 0, 0);
+}
+.remove:hover {
+  color: rgb(213, 53, 53);
+  cursor: pointer;
+}
+
+.course-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+}
+
+#course_search {
+  margin-bottom: 10px;
+}
+
+#planCourse {
+  margin-top: 1.5em;
+}
+
+/*profile.html*/
+#profile {
+  display: grid;
+  gap: 1.3rem 1rem;
+  margin: 1em 2em;
+}
+@media (width > 840px) {
+  #profile {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+#profile-page {
+  background-color: rgb(220, 239, 248);
+}
+
+#link-button {
+  display: flex;
+}
+#link-button a {
+  background-color: rgb(38, 134, 134);
+  color: white;
+  padding: 0.4em 1em;
+  border: 0;
+  border-radius: 6px;
+  margin-left: auto;
+  display: grid;
+  justify-content: center;
+}
+#link-button a:hover {
+  background-color: rgb(0, 92, 92);
+}
+
+.schedule {
+  table-layout: fixed;
+}
+
+.schedule th:nth-child(1) {
+  width: 10%;
+}
+
+.schedule tr {
+  height: 0.7em;
+}

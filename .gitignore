@@ -2,3 +2,7 @@
 
 # Ignore sass to css map files
 *css.map
+
+# Ignore everything in .vscode/ except settings.json
+.vscode/*
+!.vscode/settings.json
