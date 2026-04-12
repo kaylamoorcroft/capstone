@@ -1,4 +1,5 @@
 import { deleteSem } from "../components/sems.js";
+import { setProgramLink } from "../components/sidebar.js";
 import { getPlanner, savePlanner, saveSems } from "../utils/index.js";
 
 let sems = JSON.parse(localStorage.getItem("sems")) || []; 
@@ -7,6 +8,8 @@ console.log(sems);
 let schedule = JSON.parse(localStorage.getItem("schedule")) || []; 
 console.log("schedule:");
 console.log(schedule);
+
+setProgramLink();
 
 /** display sem plans in planner-collection.html */
 function displaySemPlans() {

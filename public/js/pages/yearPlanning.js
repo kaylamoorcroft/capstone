@@ -1,3 +1,4 @@
+import { setProgramLink } from "../components/sidebar.js";
 import { fetchSections } from "../services/sectionService.js";
 import { getDayText, getSems, saveSchedule, getPlanner, getSchedule } from "../utils/index.js";
 
@@ -8,6 +9,8 @@ console.log("initial planner:");
 console.log(planner);
 let currentSemIndex = -1;
 let schedule = getSchedule(); 
+
+setProgramLink();
 
 for (let i = 0; i < sems.length; i++) {
     if (i == 0) {

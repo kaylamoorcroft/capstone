@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <?php
     require_once __DIR__ . '/../src/config/dbConnection.php'; 
-    $sql_statement = "SELECT \n"
+    $progId = $_GET['program'] ?? 1;
+    $stmt = $con->prepare("SELECT \n"
 
     . "    programs.id AS progId,\n"
 
@@ -45,11 +46,13 @@
 
     . "ON subrequirementgroups.subrequirementid = subrequirements.id\n"
 
-    . "WHERE programs.id = 1\n"
+    . "WHERE programs.id = ?\n"
 
-    . "ORDER BY requirements.id, subrequirements.id, subrequirementgroups.id;";
-
-    $result = mysqli_query($con, $sql_statement);
+    . "ORDER BY requirements.id, subrequirements.id, subrequirementgroups.id;");
+    $stmt->bind_param("i", $progId);
+    $stmt->execute();
+    //$result = mysqli_query($con, $sql_statement);
+    $result = $stmt->get_result();
 ?>
 <html lang="en">
 <head>
@@ -98,7 +101,7 @@
                         </a>
                     </li>
                     <li class="pc-listItem">
-                        <a class="pc-link" href="programRequirements.php">
+                        <a class="pc-link" id="progLink" href="programRequirements.php">
                             <i class="material-icons material-symbols-outlined" style="font-size: 30px;">task</i>
                             <span class="pc-iconTitle">View Program Requirements</span>
                         </a>
@@ -145,7 +148,14 @@
                 navBar.classList.remove("open");
         });
     </script>
-    
+    <?php
+        if ($progId < 1 || $progId > 7) {
+            echo "<div class='container my-5 d-flex flex-column align-items-center'>
+                    <p>No program selected... please complete the intake survey to see this content</p>
+                    <div id='link-button'><a href='intake-survey.html'>Complete survey</a></div>
+                </div>";
+        }
+    ?>
     <div class="container my-5 accordion" id="requirements-accordion">
         <?php
             $prevReq = '';
@@ -193,4 +203,8 @@
             mysqli_close($con);
         ?>
     </div>
+    <script type="module">
+        import { setProgramLink } from "./js/components/sidebar.js";
+        setProgramLink();
+    </script>
 </body>

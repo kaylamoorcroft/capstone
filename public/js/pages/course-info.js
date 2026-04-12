@@ -1,5 +1,9 @@
+import { setProgramLink } from "../components/sidebar.js";
+
 //search bar script for course info page
 $(document).ready(function(){
+    setProgramLink();
+
     $("#info_search").keyup(function(){
         var request = $('#info_search').val();
 
